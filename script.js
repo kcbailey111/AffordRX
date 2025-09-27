@@ -1,0 +1,133 @@
+
+        // Initialize map centered on South Carolina
+        const map = L.map('map').setView([33.8361, -81.1637], 7);
+        
+        // Add OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Sample pharmacy data for South Carolina
+        const pharmacies = [
+            { name: "CVS Pharmacy", lat: 32.7767, lng: -80.1918, address: "123 King St, Charleston, SC", phone: "(843) 555-0123" },
+            { name: "Walgreens", lat: 34.0007, lng: -81.0348, address: "456 Main St, Columbia, SC", phone: "(803) 555-0124" },
+            { name: "Rite Aid", lat: 34.8526, lng: -82.3940, address: "789 Wade Hampton Blvd, Greenville, SC", phone: "(864) 555-0125" },
+            { name: "Publix Pharmacy", lat: 32.0835, lng: -81.0998, address: "321 Abercorn St, Savannah, GA", phone: "(912) 555-0126" },
+            { name: "Harris Teeter Pharmacy", lat: 35.2271, lng: -80.8431, address: "654 South Blvd, Charlotte, NC", phone: "(704) 555-0127" },
+            { name: "Food Lion Pharmacy", lat: 33.6891, lng: -78.8867, address: "987 Ocean Blvd, Myrtle Beach, SC", phone: "(843) 555-0128" },
+            { name: "Bi-Lo Pharmacy", lat: 34.5043, lng: -82.6501, address: "147 Pelham Rd, Spartanburg, SC", phone: "(864) 555-0129" },
+            { name: "Ingles Pharmacy", lat: 35.1983, lng: -82.2948, address: "258 Hendersonville Rd, Asheville, NC", phone: "(828) 555-0130" }
+        ];
+
+        let currentMarkers = [];
+
+        function clearMarkers() {
+            currentMarkers.forEach(marker => map.removeLayer(marker));
+            currentMarkers = [];
+        }
+
+        function generateRandomPrice(basePrice = 50) {
+            return (basePrice + Math.random() * 100).toFixed(2);
+        }
+
+        function calculateSavings(prices) {
+            const maxPrice = Math.max(...prices);
+            const minPrice = Math.min(...prices);
+            return Math.round(((maxPrice - minPrice) / maxPrice) * 100);
+        }
+
+        function displayResults(medication, dosage, quantity) {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '<div class="loading">Searching pharmacies...</div>';
+            
+            setTimeout(() => {
+                const results = pharmacies.map(pharmacy => ({
+                    ...pharmacy,
+                    price: generateRandomPrice()
+                })).sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+
+                const prices = results.map(r => parseFloat(r.price));
+                const savings = calculateSavings(prices);
+
+                clearMarkers();
+
+                let resultsHTML = `<div style="margin-bottom: 20px; padding: 20px; background: linear-gradient(135deg, #e8f4fd 0%, #d6eaf8 100%); border-radius: 12px; border-left: 5px solid #3498db; box-shadow: 0 4px 15px rgba(52, 152, 219, 0.1);">
+                    <strong style="color: #1e3c72;">Searching for:</strong> ${medication} ${dosage} (${quantity} tablets)<br>
+                    <strong style="color: #27ae60;">Best Price:</strong> ${results[0].price} | <strong style="color: #e74c3c;">You could save up to ${savings}%</strong>
+                </div>`;
+
+                results.forEach((pharmacy, index) => {
+                    const savingsAmount = index === 0 ? 0 : ((parseFloat(pharmacy.price) - parseFloat(results[0].price)) / parseFloat(results[0].price) * 100).toFixed(0);
+                    
+                    resultsHTML += `
+                        <div class="pharmacy-card" onclick="focusPharmacy(${pharmacy.lat}, ${pharmacy.lng})">
+                            <div class="pharmacy-name">${pharmacy.name}</div>
+                            <div class="pharmacy-address">${pharmacy.address}</div>
+                            <div class="price-info">
+                                <div class="price">$${pharmacy.price}</div>
+                                ${index === 0 ? '<div class="savings">BEST PRICE</div>' : savingsAmount > 0 ? `<div style="color: #dc3545; font-weight: 600;">+$${(parseFloat(pharmacy.price) - parseFloat(results[0].price)).toFixed(2)}</div>` : ''}
+                            </div>
+                        </div>
+                    `;
+
+                    // Add marker to map
+                    const marker = L.marker([pharmacy.lat, pharmacy.lng])
+                        .bindPopup(`
+                            <div class="popup-content">
+                                <div class="popup-pharmacy">${pharmacy.name}</div>
+                                <div>${pharmacy.address}</div>
+                                <div class="popup-price">$${pharmacy.price}</div>
+                                ${index === 0 ? '<div style="color: #28a745; font-weight: bold;">BEST PRICE</div>' : ''}
+                            </div>
+                        `)
+                        .addTo(map);
+                    
+                    currentMarkers.push(marker);
+                });
+
+                resultsDiv.innerHTML = resultsHTML;
+
+                // Fit map to show all markers
+                if (currentMarkers.length > 0) {
+                    const group = new L.featureGroup(currentMarkers);
+                    map.fitBounds(group.getBounds().pad(0.1));
+                }
+            }, 1500);
+        }
+
+        function focusPharmacy(lat, lng) {
+            map.setView([lat, lng], 15);
+        }
+
+        // Handle form submission
+        document.getElementById('searchForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const medication = document.getElementById('medication').value;
+            const dosage = document.getElementById('dosage').value;
+            const quantity = document.getElementById('quantity').value;
+            
+            if (medication && dosage && quantity) {
+                displayResults(medication, dosage, quantity);
+                
+                // Update stats with animation
+                setTimeout(() => {
+                    document.getElementById('pharmacyCount').textContent = Math.floor(Math.random() * 50 + 200) + '+';
+                    document.getElementById('avgSavings').textContent = Math.floor(Math.random() * 20 + 25) + '%';
+                    document.getElementById('searchesCount').textContent = (Math.floor(Math.random() * 10 + 15)) + 'K+';
+                }, 2000);
+            }
+        });
+
+        // Add some sample markers initially
+        pharmacies.slice(0, 4).forEach(pharmacy => {
+            const marker = L.marker([pharmacy.lat, pharmacy.lng])
+                .bindPopup(`
+                    <div class="popup-content">
+                        <div class="popup-pharmacy">${pharmacy.name}</div>
+                        <div>${pharmacy.address}</div>
+                        <div style="margin-top: 8px; color: #666;">Search for a medication to see prices</div>
+                    </div>
+                `)
+                .addTo(map);
+        });

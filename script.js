@@ -10,6 +10,8 @@
         }).addTo(map);
 
         // Sample pharmacy data for South Carolina
+        //Things to change: add more pharmacies, real data, real prices********
+
         const pharmacies = [
             { name: "CVS Pharmacy", lat: 32.7767, lng: -80.1918, address: "123 King St, Charleston, SC", phone: "(843) 555-0123" },
             { name: "Walgreens", lat: 34.0007, lng: -81.0348, address: "456 Main St, Columbia, SC", phone: "(803) 555-0124" },

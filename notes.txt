@@ -1,0 +1,6 @@
+To-Do:
+
+-Add more accurate pharamacies
+-Check to see if the prescription data is accurate
+-See what other maps are out there
+-Add an option where they can input there insurance as well: uninsured, insured -> BlueCross BlueShields,Humana, etc.

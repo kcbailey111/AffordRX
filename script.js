@@ -2,10 +2,12 @@
         // Initialize map centered on South Carolina
         const map = L.map('map').setView([33.8361, -81.1637], 7);
         
-        // Add OpenStreetMap tiles
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap contributors'
-        }).addTo(map);
+        // Add CartoDB Positron tiles for a cleaner, minimal look
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        attribution: '© OpenStreetMap contributors © CARTO',
+        subdomains: 'abcd',
+        maxZoom: 20
+    }).addTo(map);
 
         // Sample pharmacy data for South Carolina
         const pharmacies = [

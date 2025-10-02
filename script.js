@@ -30,7 +30,6 @@
             { name: "Spartanburg Regional Pharmacy - Physician Center - Spartanburg", lat: 34.971346250376314, lng: -81.93936656157912, address: "100 E Wood St #101, Spartanburg, SC 29303", phone: "(864) 560-9200" },
             { name: "Walgreens", lat: 34.9741850537861, lng: -81.93388128330479, address: "1000 N Pine St, Spartanburg, SC 29303", phone: "(864) 585-9136" },
             { name: "Smith Drug Store", lat: 34.95454798385966, lng: -81.92983949931316, address: "142 E Main St, Spartanburg, SC 29306", phone: "(864) 583-4521" },
-            { name: "Pharmacy At Main", lat: 34.95596768888898, lng: -81.92088983476026, address: "435 E Main St # 7, Spartanburg, SC 29302", phone: "(864) 515-2100" },
             { name: "CVS Pharmacy", lat: 32.7767, lng: -80.1918, address: "123 King St, Charleston, SC", phone: "(843) 555-0123" },
             { name: "Walgreens", lat: 34.0007, lng: -81.0348, address: "456 Main St, Columbia, SC", phone: "(803) 555-0124" },
             { name: "Rite Aid", lat: 34.8526, lng: -82.3940, address: "789 Wade Hampton Blvd, Greenville, SC", phone: "(864) 555-0125" },

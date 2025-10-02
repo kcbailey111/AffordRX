@@ -20,7 +20,9 @@
             { name: "Harris Teeter Pharmacy", lat: 35.2271, lng: -80.8431, address: "654 South Blvd, Charlotte, NC", phone: "(704) 555-0127" },
             { name: "Food Lion Pharmacy", lat: 33.6891, lng: -78.8867, address: "987 Ocean Blvd, Myrtle Beach, SC", phone: "(843) 555-0128" },
             { name: "Bi-Lo Pharmacy", lat: 34.5043, lng: -82.6501, address: "147 Pelham Rd, Spartanburg, SC", phone: "(864) 555-0129" },
-            { name: "Ingles Pharmacy", lat: 35.1983, lng: -82.2948, address: "258 Hendersonville Rd, Asheville, NC", phone: "(828) 555-0130" }
+            { name: "Ingles Pharmacy", lat: 35.1983, lng: -82.2948, address: "258 Hendersonville Rd, Asheville, NC", phone: "(828) 555-0130" },
+            { name: "Walgreens Pharmacy 7822", lat: 34.966263, lng: -81.895416, address: "1790 E Main St, Spartanburg, SC", phone: "(864) 555-0131" },
+            { name: "Publix Pharmacy", lat: 34.967105, lng: -81.890509, address: "1701 E Main St, Spartanburg, SC", phone: "(864) 555-0132" }
         ];
 
         let currentMarkers = [];

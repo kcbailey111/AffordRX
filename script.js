@@ -22,8 +22,17 @@
             { name: "Bi-Lo Pharmacy", lat: 34.5043, lng: -82.6501, address: "147 Pelham Rd, Spartanburg, SC", phone: "(864) 555-0129" },
             { name: "Ingles Pharmacy", lat: 35.1983, lng: -82.2948, address: "258 Hendersonville Rd, Asheville, NC", phone: "(828) 555-0130" },
             { name: "Walgreens Pharmacy 7822", lat: 34.966263, lng: -81.895416, address: "1790 E Main St, Spartanburg, SC", phone: "(864) 555-0131" },
-            { name: "Publix Pharmacy", lat: 34.967105, lng: -81.890509, address: "1701 E Main St, Spartanburg, SC", phone: "(864) 555-0132" }
-        ];
+            { name: "Publix Pharmacy", lat: 34.967105, lng: -81.890509, address: "1701 E Main St, Spartanburg, SC", phone: "(864) 555-0132" },
+            { name: "Publix Pharmacy at the Market at Boiling Springs", lat: 35.06583095100721, lng: -81.99863749814074, address: "4400 SC-9, Boiling Springs, SC 29316", phone: "(864) 274-6225" },
+            { name: "Walgreens Pharmacy", lat: 35.05121984047732, lng: -81.98158116799644, address: "3681 Boiling Springs Rd, Boiling Springs, SC 29316", phone: "(864) 578-2414" },
+            { name: "Boiling Springs Pharmacy", lat: 35.02134010093637, lng: -81.95976493176535, address: "2528 Boiling Springs Rd Suite D, Boiling Springs, SC 29316", phone: "(864) 515-2600" },
+            { name: "CVS", lat: 35.020774675372714, lng: -81.9610189759189, address: "1888 Boiling Springs Rd, Boiling Springs, SC 29316", phone: "(864) 599-0920" },
+            { name: "U Save It Pharmacy - Peach Valley", lat: 35.03235883684897, lng: -81.89635042885386, address: "2310 Chesnee Hwy, Spartanburg, SC 29303", phone: "(864) 577-0087" },
+            { name: "Spartanburg Regional Pharmacy - Physician Center - Spartanburg", lat: 34.971346250376314, lng: -81.93936656157912, address: "100 E Wood St #101, Spartanburg, SC 29303", phone: "(864) 560-9200" },
+            { name: "Walgreens", lat: 34.9741850537861, lng: -81.93388128330479, address: "1000 N Pine St, Spartanburg, SC 29303", phone: "(864) 585-9136" },
+            { name: "Smith Drug Store", lat: 34.95454798385966, lng: -81.92983949931316, address: "142 E Main St, Spartanburg, SC 29306", phone: "(864) 583-4521" },
+            { name: "Pharmacy At Main", lat: 34.95596768888898, lng: -81.92088983476026, address: "435 E Main St # 7, Spartanburg, SC 29302", phone: "(864) 515-2100" }
+    ];
 
         let currentMarkers = [];
 

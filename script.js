@@ -1,6 +1,6 @@
 
-        // Initialize map centered on South Carolina
-        const map = L.map('map').setView([33.8361, -81.1637], 7);
+        // Initialize map centered on Spartanburg, SC
+        const map = L.map('map').setView([34.91365097168322, -82.05826163777928], 7);
         
         // Add CartoDB Positron tiles for a cleaner, minimal look
         L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {

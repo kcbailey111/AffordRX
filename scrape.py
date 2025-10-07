@@ -18,11 +18,6 @@ def get_html(drug):
         # The .page_source attribute contains the full HTML of the rendered page
         html_content = driver.page_source
 
-        # Print the HTML
-        # print("\n--- Page HTML Source ---")
-        # print(html_content)
-        # print("------------------------")
-
     finally:
         # Close the browser window
         # This is important to free up system resources

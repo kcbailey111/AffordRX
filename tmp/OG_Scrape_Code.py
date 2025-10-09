@@ -61,9 +61,9 @@ service = ChromeService(ChromeDriverManager().install())
 # Initialize the Chrome browser
 driver = webdriver.Chrome(service=service)
 
-drugs = ['ibuprofen', 'acetaminophen', 'aspirin', 'amoxicillin', 'lisinopril', 'atorvastatin', 'metformin', 'omeprazole', 'simvastatin', 'hydrochlorothiazide', \
-            'albuterol', 'gabapentin', 'sertraline', 'furosemide', 'tramadol', 'prednisone', 'fluoxetine', 'citalopram', 'bupropion', 'meloxicam', \
-            'montelukast', 'clonazepam', 'rosuvastatin', 'duloxetine', 'venlafaxine', 'warfarin', 'cyclobenzaprine', 'tamsulosin', 'carvedilol', 'pravastatin']
+drugs = ['ibuprofen'] #, 'acetaminophen', 'aspirin', 'amoxicillin', 'lisinopril', 'atorvastatin', 'metformin', 'omeprazole', 'simvastatin', 'hydrochlorothiazide', \
+            #'albuterol', 'gabapentin', 'sertraline', 'furosemide', 'tramadol', 'prednisone', 'fluoxetine', 'citalopram', 'bupropion', 'meloxicam', \
+            #'montelukast', 'clonazepam', 'rosuvastatin', 'duloxetine', 'venlafaxine', 'warfarin', 'cyclobenzaprine', 'tamsulosin', 'carvedilol', 'pravastatin']
 
 all_data = []
 for drug in drugs: 

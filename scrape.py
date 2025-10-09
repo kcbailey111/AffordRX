@@ -11,6 +11,9 @@ import time
 import logging
 import argparse
 import traceback
+import random
+import os
+from datetime import datetime
 
 def get_html(driver, drug, timeout=10):
     """Navigate to the GoodRx page for `drug`, wait for results, and return HTML.
@@ -35,13 +38,54 @@ def get_html(driver, drug, timeout=10):
             EC.presence_of_element_located((By.CSS_SELECTOR, 'div.pt-2'))
         )
 
-        # Small pause to let dynamic content settle
-        time.sleep(0.5)
+        # Small randomized pause to mimic human reading/scrolling and let dynamic assets load
+        human_pause(1.0, 3.0)
+
+        # small scroll to trigger lazy-loaded content if present
+        try:
+            driver.execute_script('window.scrollBy(0, 200)')
+            time.sleep(0.2)
+        except Exception:
+            # scrolling can fail in some contexts; ignore
+            pass
 
         return driver.page_source
     except Exception as e:
         logging.warning(f"Failed to load {url}: {e}")
+        # Save a small HTML snapshot for debugging
+        save_html_on_failure(driver, drug)
         return ""
+
+def human_pause(min_s=1.0, max_s=3.0):
+    """Pause for a random duration between min_s and max_s to mimic human behavior."""
+    time.sleep(random.uniform(min_s, max_s))
+
+def save_html_on_failure(driver, drug):
+    """Save the current page HTML to tmp/ for offline inspection when page load fails."""
+    try:
+        os.makedirs('tmp', exist_ok=True)
+        filename = os.path.join('tmp', f"failed_{drug}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.html")
+        with open(filename, 'w', encoding='utf-8') as f:
+            f.write(driver.page_source if driver else '')
+        logging.info(f"Saved failure snapshot to {filename}")
+    except Exception as e:
+        logging.warning(f"Could not save failure snapshot: {e}")
+
+def fetch_with_retries(driver, drug, max_attempts=3):
+    """Fetch page HTML with exponential backoff retries on failure.
+
+    Returns the HTML string or empty string if all attempts fail.
+    """
+    for attempt in range(1, max_attempts + 1):
+        html = get_html(driver, drug, timeout=15)
+        if html:
+            return html
+        # exponential backoff with jitter
+        sleep_time = (2 ** (attempt - 1)) + random.uniform(0.5, 2.0)
+        logging.info(f"Attempt {attempt} failed for {drug}. Backing off {sleep_time:.1f}s before retry.")
+        time.sleep(sleep_time)
+    logging.warning(f"All retries failed for {drug}")
+    return ""
 
 def get_name_price(html):
     data = []
@@ -120,17 +164,21 @@ if __name__ == '__main__':
     
     # Also, something to keep in mind is that these prices are the discounted prices, not the actual prices.
     #Will need to change the html look for actual prices. And make sure the location is based on Spartanburg, SC..
-    drugs = ['ibuprofen', 'acetaminophen', 'aspirin']
+    drugs = ['ibuprofen', 'acetaminophen']
 
     all_data = []
     try:
         for drug in drugs:
-            html_content = get_html(driver, drug, timeout=15)
+            # Use retry wrapper to be resilient against transient failures and anti-bot measures
+            html_content = fetch_with_retries(driver, drug, max_attempts=3)
             if not html_content:
                 logging.info(f"No HTML returned for {drug}; skipping")
                 continue
             name_price = get_name_price(html_content)
             all_data.extend(name_price)
+
+            # Pause between drugs to avoid hammering the site (longer randomized pause)
+            human_pause(6.0, 14.0)
 
         print(all_data)
     except Exception as e:

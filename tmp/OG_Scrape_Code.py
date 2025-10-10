@@ -3,6 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 from bs4 import BeautifulSoup
+import time
 
 def get_html(drug): 
 
@@ -61,7 +62,8 @@ service = ChromeService(ChromeDriverManager().install())
 # Initialize the Chrome browser
 driver = webdriver.Chrome(service=service)
 
-drugs = ['ibuprofen'] #, 'acetaminophen', 'aspirin', 'amoxicillin', 'lisinopril', 'atorvastatin', 'metformin', 'omeprazole', 'simvastatin', 'hydrochlorothiazide', \
+drugs = ['ibuprofen', 'aspirin'] 
+            #, 'acetaminophen', 'aspirin', 'amoxicillin', 'lisinopril', 'atorvastatin', 'metformin', 'omeprazole', 'simvastatin', 'hydrochlorothiazide', \
             #'albuterol', 'gabapentin', 'sertraline', 'furosemide', 'tramadol', 'prednisone', 'fluoxetine', 'citalopram', 'bupropion', 'meloxicam', \
             #'montelukast', 'clonazepam', 'rosuvastatin', 'duloxetine', 'venlafaxine', 'warfarin', 'cyclobenzaprine', 'tamsulosin', 'carvedilol', 'pravastatin']
 
@@ -72,3 +74,4 @@ for drug in drugs:
     name_price = get_name_price(html_content)
     all_data = all_data + name_price
     
+print(all_data)

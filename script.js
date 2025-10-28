@@ -1,16 +1,20 @@
-
-        // Initialize map centered on Spartanburg, SC
+/**
+ * Author: Kyler Bailey
+ * Date: 2024-06-15
+ * Description: JavaScript code for AffordRX web application to find affordable medication prices.
+ */
+        
+        // Initialize map to be centered on Spartanburg, SC
         const map = L.map('map').setView([34.91365097168322, -82.05826163777928], 13);
         
-        // Addition of satellite tile layer
+        // Addition of Map 
         L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
             attribution: '© OpenStreetMap contributors © CARTO',
             subdomains: 'abcd',
             maxZoom: 20
         }).addTo(map);
 
-        //Things to change: add more pharmacies, real data, real prices********
-
+        // Locations of Pharmacies in Spartanburg, SC area
         const pharmacies = [
             { name: "Walgreens", lat: 34.0007, lng: -81.0348, address: "456 Main St, Columbia, SC", phone: "(803) 555-0124" },
             { name: "Rite Aid", lat: 34.8526, lng: -82.3940, address: "789 Wade Hampton Blvd, Greenville, SC", phone: "(864) 555-0125" },

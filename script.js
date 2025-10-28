@@ -1,9 +1,9 @@
 
         // Initialize map centered on Spartanburg, SC
-        const map = L.map('map').setView([34.91365097168322, -82.05826163777928], 7);
+        const map = L.map('map').setView([34.91365097168322, -82.05826163777928], 13);
         
         // Add CartoDB Positron tiles for a cleaner, minimal look
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
             attribution: '© OpenStreetMap contributors © CARTO',
             subdomains: 'abcd',
             maxZoom: 20

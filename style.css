@@ -313,8 +313,9 @@
             font-size: 1.1rem;
             font-weight: bold;
         }
-/* Header Changes */
 
+
+/* *****Header Changes***** */
 
 header {
     text-align: center;
@@ -338,10 +339,7 @@ h1 {
     font-size: 3.5rem;
     font-weight: 800;
     margin-bottom: 10px;
-    background: linear-gradient(135deg, #fff 0%, #3498db 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: white;
     text-shadow: 0 0 30px rgba(52, 152, 219, 0.5);
     letter-spacing: -1px;
 }
@@ -413,10 +411,7 @@ h1 {
     font-size: 2.5rem;
     font-weight: 800;
     margin-bottom: 8px;
-    background: linear-gradient(135deg, #3498db 0%, #2ecc71 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: white;
 }
 
 .stat-label {
@@ -424,8 +419,8 @@ h1 {
     opacity: 0.9;
     font-weight: 500;
     letter-spacing: 0.5px;
+    color: white;
 }
-
 
 
 /* Money-Saving Resources Section */

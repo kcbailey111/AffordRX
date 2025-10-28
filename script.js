@@ -2,13 +2,11 @@
         // Initialize map centered on Spartanburg, SC
         const map = L.map('map').setView([34.91365097168322, -82.05826163777928], 13);
         
-        // Add CartoDB Positron tiles for a cleaner, minimal look
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-            attribution: '© OpenStreetMap contributors © CARTO',
-            subdomains: 'abcd',
-            maxZoom: 20
+        // Addition of satellite tile layer
+        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            attribution: 'Tiles © Esri',
+            maxZoom: 19
         }).addTo(map);
-
         //Things to change: add more pharmacies, real data, real prices********
 
         const pharmacies = [

@@ -14,10 +14,6 @@
         const pharmacies = [
             { name: "Walgreens", lat: 34.0007, lng: -81.0348, address: "456 Main St, Columbia, SC", phone: "(803) 555-0124" },
             { name: "Rite Aid", lat: 34.8526, lng: -82.3940, address: "789 Wade Hampton Blvd, Greenville, SC", phone: "(864) 555-0125" },
-            { name: "Publix Pharmacy", lat: 32.0835, lng: -81.0998, address: "321 Abercorn St, Savannah, GA", phone: "(912) 555-0126" },
-            { name: "Harris Teeter Pharmacy", lat: 35.2271, lng: -80.8431, address: "654 South Blvd, Charlotte, NC", phone: "(704) 555-0127" },
-            { name: "Food Lion Pharmacy", lat: 33.6891, lng: -78.8867, address: "987 Ocean Blvd, Myrtle Beach, SC", phone: "(843) 555-0128" },
-            { name: "Ingles Pharmacy", lat: 35.1983, lng: -82.2948, address: "258 Hendersonville Rd, Asheville, NC", phone: "(828) 555-0130" },
             { name: "Walgreens", lat: 34.966263, lng: -81.895416, address: "1790 E Main St, Spartanburg, SC", phone: "(864) 555-0131" },
             { name: "Publix Pharmacy", lat: 34.967105, lng: -81.890509, address: "1701 E Main St, Spartanburg, SC", phone: "(864) 555-0132" },
             { name: "Publix Pharmacy at the Market at Boiling Springs", lat: 35.06583095100721, lng: -81.99863749814074, address: "4400 SC-9, Boiling Springs, SC 29316", phone: "(864) 274-6225" },

@@ -46,6 +46,16 @@
             currentMarkers = [];
         }
 
+        // Pull price and drug name from all_data.csv instead of generating random prices
+        function getPriceFromData(drugName) {
+            // This function would read from all_data.csv and return the price for the given drugName
+            // For now, we will return a placeholder value
+            return (50 + Math.random() * 100).toFixed(2);
+        }
+
+
+
+        // Generate random price for demonstration purposes *ONLY*
         function generateRandomPrice(basePrice = 50) {
             return (basePrice + Math.random() * 100).toFixed(2);
         }

@@ -4,15 +4,30 @@
  * Description: JavaScript code for AffordRX web application to find affordable medication prices.
  */
         
-        // Initialize map to be centered on Spartanburg, SC
-        const map = L.map('map').setView([34.91365097168322, -82.05826163777928], 13);
+// Wait for the page to fully load before initializing the map
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize map centered on Spartanburg, SC
+    const map = L.map('map').setView([34.91365097168322, -82.05826163777928], 13);
+    
+    // Add CartoDB Voyager tiles for a colorful map
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+        attribution: '© OpenStreetMap contributors © CARTO',
+        subdomains: 'abcd',
+        maxZoom: 20
+    }).addTo(map);
+    
+    // Force the map to refresh its size after a brief delay
+    setTimeout(function() {
+        map.invalidateSize();
+    }, 100);
+});
         
-        // Addition of Map 
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-            attribution: '© OpenStreetMap contributors © CARTO',
-            subdomains: 'abcd',
-            maxZoom: 20
-        }).addTo(map);
+// Addition of Map 
+L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+    attribution: '© OpenStreetMap contributors © CARTO',
+    subdomains: 'abcd',
+    maxZoom: 20
+}).addTo(map);
 
         // Locations of Pharmacies in Spartanburg, SC area
         const pharmacies = [

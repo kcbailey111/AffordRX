@@ -334,17 +334,16 @@ function setupFormHandler() {
 }
 
 // Add some initial sample markers
-
-// function addInitialMarkers() {
-//     pharmacies.slice(0, 4).forEach(pharmacy => {
-//         const marker = L.marker([pharmacy.lat, pharmacy.lng])
-//             .bindPopup(`
-//                 <div class="popup-content">
-//                     <div class="popup-pharmacy">${pharmacy.name}</div>
-//                     <div>${pharmacy.address}</div>
-//                     <div style="margin-top: 8px; color: #666;">Search for a medication to see prices</div>
-//                 </div>
-//             `)
-//             .addTo(map);
-//     });
-// }
+function addInitialMarkers() {
+     pharmacies.slice(0, 4).forEach(pharmacy => {
+         const marker = L.marker([pharmacy.lat, pharmacy.lng])
+             .bindPopup(`
+                <div class="popup-content">
+                    <div class="popup-pharmacy">${pharmacy.name}</div>
+                    <div>${pharmacy.address}</div>
+                     <div style="margin-top: 8px; color: #666;">Search for a medication to see prices</div>
+                </div>
+            `)
+            .addTo(map);
+    });
+}

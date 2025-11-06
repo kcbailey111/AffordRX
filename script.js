@@ -79,6 +79,34 @@ const pharmacies = [
     { name: "Buy Low Pharmacy", lat: 34.93633859193823, lng: -82.00418944666549, address: "8007 Warren H Abernathy Hwy, Spartanburg, SC 29301", phone: "(864) 572-5727" }
 ];
 
+// Custom colored marker icons for highlighting top results
+const greenIcon = new L.Icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+});
+
+const orangeIcon = new L.Icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+});
+
+const blueIcon = new L.Icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+});
+
 function clearMarkers() {
     currentMarkers.forEach(marker => map.removeLayer(marker));
     currentMarkers = [];
@@ -239,18 +267,31 @@ function displayResults(medication, dosage, quantity) {
                 </div>
             `;
 
-            // Add marker to map
-            const marker = L.marker([pharmacy.lat, pharmacy.lng])
-                .bindPopup(`
-                    <div class="popup-content">
-                        <div class="popup-pharmacy">${pharmacy.name}</div>
-                        <div>${pharmacy.address}</div>
-                        <div class="popup-price">$${pharmacy.price}</div>
-                        ${index === 0 ? '<div style="color: #28a745; font-weight: bold;">BEST PRICE</div>' : ''}
-                    </div>
-                `)
-                .addTo(map);
-            
+            // Add marker to map and visually highlight the cheapest results
+            let marker;
+            const popupHtml = `
+                <div class="popup-content">
+                    <div class="popup-pharmacy">${pharmacy.name}</div>
+                    <div>${pharmacy.address}</div>
+                    <div class="popup-price">$${pharmacy.price}</div>
+                    ${index === 0 ? '<div style="color: #28a745; font-weight: bold;">BEST PRICE</div>' : ''}
+                </div>
+            `;
+
+            if (index === 0) {
+                // Best price: green marker icon
+                marker = L.marker([pharmacy.lat, pharmacy.lng], { icon: greenIcon }).bindPopup(popupHtml).addTo(map);
+            } else if (index === 1) {
+                // 2nd best: orange marker icon
+                marker = L.marker([pharmacy.lat, pharmacy.lng], { icon: orangeIcon }).bindPopup(popupHtml).addTo(map);
+            } else if (index === 2) {
+                // 3rd best: blue marker icon
+                marker = L.marker([pharmacy.lat, pharmacy.lng], { icon: blueIcon }).bindPopup(popupHtml).addTo(map);
+            } else {
+                // Default marker for others
+                marker = L.marker([pharmacy.lat, pharmacy.lng]).bindPopup(popupHtml).addTo(map);
+            }
+
             currentMarkers.push(marker);
         });
 

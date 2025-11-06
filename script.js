@@ -4,40 +4,17 @@
  * Description: JavaScript code for AffordRX web 
  * application to find affordable medication prices.
  */
-        
-// Wait for the page to fully load before initializing the map
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize map centered on South Carolina
-    const map = L.map('map').setView([33.8361, -81.1637], 7);
-    
-    // Add CartoDB Voyager tiles for a colorful map
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-        attribution: '© OpenStreetMap contributors © CARTO',
-        subdomains: 'abcd',
-        maxZoom: 20
-    }).addTo(map);
-    
-    // Force the map to refresh its size after a brief delay
-    setTimeout(function() {
-        map.invalidateSize();
-    }, 100);
-});
-        
-// Addition of Map 
-L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-    attribution: '© OpenStreetMap contributors © CARTO',
-    subdomains: 'abcd',
-    maxZoom: 20
-}).addTo(map);
 
-// Global variable to store parsed CSV data
+// Global variables
 let medicationData = [];
 let csvLoaded = false;
+let map;
+let currentMarkers = [];
 
-// Load and parse the CSV file when the page loads
+// Wait for the page to fully load before initializing
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize map centered on Spartanburg, SC
-    const map = L.map('map').setView([34.91365097168322, -82.05826163777928], 13);
+    map = L.map('map').setView([34.91365097168322, -82.05826163777928], 13);
     
     // Add CartoDB Voyager tiles for a colorful map
     L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
@@ -53,6 +30,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Load CSV data
     loadCSVData();
+    
+    // Add initial markers
+    addInitialMarkers();
+    
+    // Setup form submission
+    setupFormHandler();
 });
 
 // Function to load and parse CSV data
@@ -75,8 +58,6 @@ function loadCSVData() {
 
 // Locations of Pharmacies in Spartanburg, SC area
 const pharmacies = [
-    { name: "Walgreens", lat: 34.0007, lng: -81.0348, address: "456 Main St, Columbia, SC", phone: "(803) 555-0124" },
-    { name: "Rite Aid", lat: 34.8526, lng: -82.3940, address: "789 Wade Hampton Blvd, Greenville, SC", phone: "(864) 555-0125" },
     { name: "Walgreens", lat: 34.966263, lng: -81.895416, address: "1790 E Main St, Spartanburg, SC", phone: "(864) 555-0131" },
     { name: "Publix Pharmacy", lat: 34.967105, lng: -81.890509, address: "1701 E Main St, Spartanburg, SC", phone: "(864) 555-0132" },
     { name: "Publix Pharmacy at the Market at Boiling Springs", lat: 35.06583095100721, lng: -81.99863749814074, address: "4400 SC-9, Boiling Springs, SC 29316", phone: "(864) 274-6225" },
@@ -96,17 +77,19 @@ const pharmacies = [
     { name: "Reidville Road Pharmacy", lat: 34.92075568909083, lng: -82.00061319449726, address: "2660 Reidville Rd #8, Spartanburg, SC 29301", phone: "(864) 435-9400" },
     { name: "CVS", lat: 34.934579497121796, lng: -82.00891013499744, address: "8199 Warren H Abernathy Hwy, Spartanburg, SC 29301", phone: "(864) 576-7591" },
     { name: "Buy Low Pharmacy", lat: 34.93633859193823, lng: -82.00418944666549, address: "8007 Warren H Abernathy Hwy, Spartanburg, SC 29301", phone: "(864) 572-5727" }
-    ];
-
-let currentMarkers = [];
+];
 
 function clearMarkers() {
     currentMarkers.forEach(marker => map.removeLayer(marker));
     currentMarkers = [];
 }
 
-// Function to get price from CSV data
-function getPriceFromData(drugName, pharmacyName) {
+// Function to get base price from CSV data
+function getBasePriceFromData(drugName, pharmacyName) {
+    if (!csvLoaded || medicationData.length === 0) {
+        return null;
+    }
+    
     // Normalize the drug name for comparison (case-insensitive)
     const normalizedDrug = drugName.trim().toLowerCase();
     
@@ -116,8 +99,8 @@ function getPriceFromData(drugName, pharmacyName) {
         const csvPharmacy = (row.Pharmacy || '').trim().toLowerCase();
         const targetPharmacy = pharmacyName.trim().toLowerCase();
         
-        // Match drug name and pharmacy name
-        return csvDrug === normalizedDrug && csvPharmacy.includes(targetPharmacy.split(' ')[0]);
+        // Match drug name and pharmacy name (check if pharmacy name contains the target)
+        return csvDrug === normalizedDrug && csvPharmacy.includes(targetPharmacy.split(' ')[0].toLowerCase());
     });
     
     if (matches.length > 0) {
@@ -126,23 +109,48 @@ function getPriceFromData(drugName, pharmacyName) {
         return parseFloat(priceStr.replace('$', '').replace(',', ''));
     }
     
-    return null; // Return null if no match found
+    return null;
 }
 
-
-
-// Pull price and drug name from all_data.csv instead of generating random prices
-function getPriceFromData(drugName) {
-    // This function would read from all_data.csv and return the price for the given drugName
-    // For now, we will return a placeholder value
-    return (50 + Math.random() * 100).toFixed(2);
-}
-
-
-
-// Generate random price for demonstration purposes *ONLY*
-function generateRandomPrice(basePrice = 50) {
-    return (basePrice + Math.random() * 100).toFixed(2);
+// Calculate price based on base price, dosage, and quantity
+function calculatePrice(basePrice, dosage, quantity) {
+    if (basePrice === null) {
+        return null;
+    }
+    
+    // Dosage multiplier (assuming base price is for a standard dosage like 10mg or 50mg)
+    const dosageValue = parseInt(dosage);
+    let dosageMultiplier = 1.0;
+    
+    if (dosageValue <= 10) {
+        dosageMultiplier = 0.8;
+    } else if (dosageValue <= 25) {
+        dosageMultiplier = 1.0;
+    } else if (dosageValue <= 100) {
+        dosageMultiplier = 1.3;
+    } else if (dosageValue <= 500) {
+        dosageMultiplier = 1.6;
+    } else {
+        dosageMultiplier = 2.0;
+    }
+    
+    // Quantity multiplier (bulk discount)
+    const quantityValue = parseInt(quantity);
+    let quantityMultiplier = 1.0;
+    
+    if (quantityValue === 30) {
+        quantityMultiplier = 1.0;
+    } else if (quantityValue === 60) {
+        quantityMultiplier = 1.85; // slight discount for bulk
+    } else if (quantityValue === 90) {
+        quantityMultiplier = 2.6; // better discount
+    } else if (quantityValue === 180) {
+        quantityMultiplier = 4.8; // best discount
+    }
+    
+    // Calculate final price
+    const finalPrice = basePrice * dosageMultiplier * quantityMultiplier;
+    return finalPrice;
 }
 
 function calculateSavings(prices) {
@@ -153,14 +161,45 @@ function calculateSavings(prices) {
 
 function displayResults(medication, dosage, quantity) {
     const resultsDiv = document.getElementById('results');
+    
+    if (!csvLoaded) {
+        resultsDiv.innerHTML = '<div class="loading">Loading medication data...</div>';
+        return;
+    }
+    
     resultsDiv.innerHTML = '<div class="loading">Searching pharmacies...</div>';
     
     setTimeout(() => {
-        const results = pharmacies.map(pharmacy => ({
-            ...pharmacy,
-            price: generateRandomPrice()
-        })).sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
-
+        // Get prices for each pharmacy
+        const results = [];
+        
+        pharmacies.forEach(pharmacy => {
+            const basePrice = getBasePriceFromData(medication, pharmacy.name);
+            
+            if (basePrice !== null) {
+                const calculatedPrice = calculatePrice(basePrice, dosage, quantity);
+                results.push({
+                    ...pharmacy,
+                    price: calculatedPrice.toFixed(2)
+                });
+            }
+        });
+        
+        // Check if we found any results
+        if (results.length === 0) {
+            resultsDiv.innerHTML = `
+                <div class="no-results">
+                    <strong>No results found for "${medication}"</strong><br>
+                    Please check the spelling or try another medication.<br><br>
+                    <em>Available medications include: Ibuprofen, Acetaminophen, Amlodipine, Atorvastatin, Metformin, and more.</em>
+                </div>
+            `;
+            return;
+        }
+        
+        // Sort by price (lowest first)
+        results.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+        
         const prices = results.map(r => parseFloat(r.price));
         const savings = calculateSavings(prices);
 
@@ -168,7 +207,8 @@ function displayResults(medication, dosage, quantity) {
 
         let resultsHTML = `<div style="margin-bottom: 20px; padding: 20px; background: linear-gradient(135deg, #e8f4fd 0%, #d6eaf8 100%); border-radius: 12px; border-left: 5px solid #3498db; box-shadow: 0 4px 15px rgba(52, 152, 219, 0.1);">
             <strong style="color: #1e3c72;">Searching for:</strong> ${medication} ${dosage} (${quantity} tablets)<br>
-            <strong style="color: #27ae60;">Best Price:</strong> ${results[0].price} | <strong style="color: #e74c3c;">You could save up to ${savings}%</strong>
+            <strong style="color: #27ae60;">Best Price:</strong> $${results[0].price} at ${results[0].name}<br>
+            <strong style="color: #e74c3c;">You could save up to ${savings}%</strong> by choosing the best price!
         </div>`;
 
         results.forEach((pharmacy, index) => {
@@ -180,7 +220,7 @@ function displayResults(medication, dosage, quantity) {
                     <div class="pharmacy-address">${pharmacy.address}</div>
                     <div class="price-info">
                         <div class="price">$${pharmacy.price}</div>
-                        ${index === 0 ? '<div class="savings">BEST PRICE</div>' : savingsAmount > 0 ? `<div style="color: #dc3545; font-weight: 600;">+$${(parseFloat(pharmacy.price) - parseFloat(results[0].price)).toFixed(2)}</div>` : ''}
+                        ${index === 0 ? '<div class="savings">BEST PRICE</div>' : savingsAmount > 0 ? `<div style="color: #dc3545; font-weight: 600;">+$${(parseFloat(pharmacy.price) - parseFloat(results[0].price)).toFixed(2)} more</div>` : ''}
                     </div>
                 </div>
             `;
@@ -207,7 +247,14 @@ function displayResults(medication, dosage, quantity) {
             const group = new L.featureGroup(currentMarkers);
             map.fitBounds(group.getBounds().pad(0.1));
         }
-    }, 1500);
+        
+        // Update stats with animation
+        setTimeout(() => {
+            document.getElementById('pharmacyCount').textContent = results.length + '+';
+            document.getElementById('avgSavings').textContent = savings + '%';
+            document.getElementById('searchesCount').textContent = (Math.floor(Math.random() * 10 + 15)) + 'K+';
+        }, 500);
+    }, 1000);
 }
 
 function focusPharmacy(lat, lng) {
@@ -215,34 +262,33 @@ function focusPharmacy(lat, lng) {
 }
 
 // Handle form submission
-document.getElementById('searchForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const medication = document.getElementById('medication').value;
-    const dosage = document.getElementById('dosage').value;
-    const quantity = document.getElementById('quantity').value;
-    
-    if (medication && dosage && quantity) {
-        displayResults(medication, dosage, quantity);
+function setupFormHandler() {
+    document.getElementById('searchForm').addEventListener('submit', function(e) {
+        e.preventDefault();
         
-        // Update stats with animation
-        setTimeout(() => {
-            document.getElementById('pharmacyCount').textContent = Math.floor(Math.random() * 50 + 200) + '+';
-            document.getElementById('avgSavings').textContent = Math.floor(Math.random() * 20 + 25) + '%';
-            document.getElementById('searchesCount').textContent = (Math.floor(Math.random() * 10 + 15)) + 'K+';
-        }, 2000);
-    }
-});
+        const medication = document.getElementById('medication').value.trim();
+        const dosage = document.getElementById('dosage').value;
+        const quantity = document.getElementById('quantity').value;
+        
+        if (medication && dosage && quantity) {
+            displayResults(medication, dosage, quantity);
+        } else {
+            alert('Please fill in all fields');
+        }
+    });
+}
 
-// Add some sample markers initially
-pharmacies.slice(0, 4).forEach(pharmacy => {
-    const marker = L.marker([pharmacy.lat, pharmacy.lng])
-        .bindPopup(`
-            <div class="popup-content">
-                <div class="popup-pharmacy">${pharmacy.name}</div>
-                <div>${pharmacy.address}</div>
-                <div style="margin-top: 8px; color: #666;">Search for a medication to see prices</div>
-            </div>
-        `)
-        .addTo(map);
-});
+// Add some initial sample markers
+function addInitialMarkers() {
+    pharmacies.slice(0, 4).forEach(pharmacy => {
+        const marker = L.marker([pharmacy.lat, pharmacy.lng])
+            .bindPopup(`
+                <div class="popup-content">
+                    <div class="popup-pharmacy">${pharmacy.name}</div>
+                    <div>${pharmacy.address}</div>
+                    <div style="margin-top: 8px; color: #666;">Search for a medication to see prices</div>
+                </div>
+            `)
+            .addTo(map);
+    });
+}

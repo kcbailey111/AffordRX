@@ -23,9 +23,30 @@ document.addEventListener('DOMContentLoaded', function() {
         maxZoom: 20
     }).addTo(map);
     
-    // Force the map to refresh its size after a brief delay
+    // Force the map to refresh its size after a brief delay and re-center it
     setTimeout(function() {
         map.invalidateSize();
+        // ensure map is centered on Spartanburg after size fix (prevents off-center render)
+        map.setView([34.91365097168322, -82.05826163777928], 13);
+        // Add a small legend control explaining marker colors
+        try {
+            const legend = L.control({ position: 'topright' });
+            legend.onAdd = function(map) {
+                const div = L.DomUtil.create('div', 'map-legend');
+                div.innerHTML = `
+                    <div class="legend-title">Legend</div>
+                    <div class="legend-item"><img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png" alt="green"> Best price</div>
+                    <div class="legend-item"><img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png" alt="orange"> 2nd best</div>
+                    <div class="legend-item"><img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-violet.png" alt="violet"> 3rd best</div>
+                    <div class="legend-item"><img src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png" alt="default"> Other pharmacies</div>
+                `;
+                return div;
+            };
+            legend.addTo(map);
+        } catch (e) {
+            // non-fatal: if Leaflet isn't available yet, skip legend
+            console.warn('Could not add legend control:', e);
+        }
     }, 100);
 
     // Load CSV data
@@ -98,8 +119,9 @@ const orangeIcon = new L.Icon({
     shadowSize: [41, 41]
 });
 
-const blueIcon = new L.Icon({
-    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
+// 3rd-best marker (violet)
+const violetIcon = new L.Icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-violet.png',
     shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
     iconSize: [25, 41],
     iconAnchor: [12, 41],
@@ -274,7 +296,7 @@ function displayResults(medication, dosage, quantity) {
                     <div class="popup-pharmacy">${pharmacy.name}</div>
                     <div>${pharmacy.address}</div>
                     <div class="popup-price">$${pharmacy.price}</div>
-                    ${index === 0 ? '<div style="color: #28a745; font-weight: bold;">BEST PRICE</div>' : ''}
+                        ${index === 0 ? '<div style="color: #28a745; font-weight: bold;">BEST PRICE</div>' : ''}
                 </div>
             `;
 
@@ -285,8 +307,8 @@ function displayResults(medication, dosage, quantity) {
                 // 2nd best: orange marker icon
                 marker = L.marker([pharmacy.lat, pharmacy.lng], { icon: orangeIcon }).bindPopup(popupHtml).addTo(map);
             } else if (index === 2) {
-                // 3rd best: blue marker icon
-                marker = L.marker([pharmacy.lat, pharmacy.lng], { icon: blueIcon }).bindPopup(popupHtml).addTo(map);
+                // 3rd best: violet marker icon
+                marker = L.marker([pharmacy.lat, pharmacy.lng], { icon: violetIcon }).bindPopup(popupHtml).addTo(map);
             } else {
                 // Default marker for others
                 marker = L.marker([pharmacy.lat, pharmacy.lng]).bindPopup(popupHtml).addTo(map);

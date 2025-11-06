@@ -170,6 +170,20 @@ function displayResults(medication, dosage, quantity) {
     resultsDiv.innerHTML = '<div class="loading">Searching pharmacies...</div>';
     
     setTimeout(() => {
+        // If the medication doesn't exist anywhere in the CSV, show a clear "not found" message
+        const normalizedMedication = medication.trim().toLowerCase();
+        const medicationExists = medicationData.some(row => ((row.Name || '').trim().toLowerCase()).includes(normalizedMedication));
+        if (!medicationExists) {
+            resultsDiv.innerHTML = `
+                <div class="no-results">
+                    <strong>Drug not found:</strong> "${medication}" was not found in our database.<br>
+                    Please check the spelling or try another medication.
+                </div>
+            `;
+            console.warn(`Medication "${medication}" not found in CSV.`);
+            return;
+        }
+
         // Get prices for each pharmacy
         const results = [];
         

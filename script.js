@@ -79,8 +79,8 @@ function loadCSVData() {
 
 // Locations of Pharmacies in Spartanburg, SC area
 const pharmacies = [
-    { name: "Walgreens", lat: 34.966263, lng: -81.895416, address: "1790 E Main St, Spartanburg, SC", phone: "(864) 555-0131" },
-    { name: "Publix Pharmacy", lat: 34.967105, lng: -81.890509, address: "1701 E Main St, Spartanburg, SC", phone: "(864) 555-0132" },
+    { name: "Walgreens", lat: 34.966263, lng: -81.895416, address: "1790 E Main St, Spartanburg, SC 29307", phone: "(864) 555-0131" },
+    { name: "Publix Pharmacy", lat: 34.967105, lng: -81.890509, address: "1701 E Main St, Spartanburg, SC 29307", phone: "(864) 555-0132" },
     { name: "Publix Pharmacy at the Market at Boiling Springs", lat: 35.06583095100721, lng: -81.99863749814074, address: "4400 SC-9, Boiling Springs, SC 29316", phone: "(864) 274-6225" },
     { name: "Walgreens", lat: 35.05121984047732, lng: -81.98158116799644, address: "3681 Boiling Springs Rd, Boiling Springs, SC 29316", phone: "(864) 578-2414" },
     { name: "Boiling Springs Pharmacy", lat: 35.02134010093637, lng: -81.95976493176535, address: "2528 Boiling Springs Rd Suite D, Boiling Springs, SC 29316", phone: "(864) 515-2600" },
@@ -91,7 +91,7 @@ const pharmacies = [
     { name: "Walgreens", lat: 34.926385420512275, lng: -81.8871120656588, address: "2198 Southport Rd, Spartanburg, SC 29306", phone: "(864) 582-5822" },
     { name: "CVS", lat: 34.92010471452222, lng: -81.99260180058504, address: "2397 Reidville Rd, Spartanburg, SC 29301", phone: "(864) 576-9268" },
     { name: "Walgreens", lat: 34.9225310478231, lng: -81.99433399372431, address: "2410 Reidville Rd, Spartanburg, SC 29301", phone: "(864) 587-9486" },
-    { name: "CVS", lat: 34.934579497121796, lng: -82.00891013499744, address: "8199 Warren H Abernathy Hwy, Spartanburg, SC 29301", phone: "(864) 576-7591" },
+    { name: "CVS", lat: 34.934579497121796, lng: -82.00891013499744, address: "8199 Warren H Abernathy Hwy, Spartanburg, SC 29301", phone: "(864) 576-7591" }
 ];
 
 // Custom colored marker icons for highlighting top results
@@ -122,6 +122,26 @@ const violetIcon = new L.Icon({
     popupAnchor: [1, -34],
     shadowSize: [41, 41]
 });
+
+// ZIP-code multipliers (relative to Spartanburg baseline)
+const zipMultipliers = {
+    "29301": 1.106,
+    "29316": 1.481,
+    "29303": 0.893,
+    "29307": 1.198,
+    "29306": 0.759
+};
+
+// Fallback if ZIP is not listed
+function getZipMultiplier(zip) {
+    return zipMultipliers[zip] || 1.0;
+}
+
+// Extract ZIP code from pharmacy address
+function extractZipCode(address) {
+    const zipMatch = address.match(/\b\d{5}\b/);
+    return zipMatch ? zipMatch[0] : null;
+}
 
 function clearMarkers() {
     currentMarkers.forEach(marker => map.removeLayer(marker));
@@ -156,12 +176,15 @@ function getBasePriceFromData(drugName, pharmacyName) {
     return null;
 }
 
-// Calculate price based on base price, dosage, and quantity
-function calculatePrice(basePrice, dosage, quantity) {
+// Calculate price based on base price, dosage, quantity, and ZIP code
+function calculatePrice(basePrice, dosage, quantity, zipCode) {
     if (basePrice === null) {
         return null;
     }
     
+    // Get the ZIP Code multiplier
+    const zipMultiplier = getZipMultiplier(zipCode);
+
     // Dosage multiplier (assuming base price is for a standard dosage like 10mg or 50mg)
     const dosageValue = parseInt(dosage);
     let dosageMultiplier = 1.0;
@@ -192,8 +215,8 @@ function calculatePrice(basePrice, dosage, quantity) {
         quantityMultiplier = 4.8; // best discount
     }
     
-    // Calculate final price
-    const finalPrice = basePrice * dosageMultiplier * quantityMultiplier;
+    // Calculate final price with ZIP code multiplier
+    const finalPrice = basePrice * dosageMultiplier * quantityMultiplier * zipMultiplier;
     return finalPrice;
 }
 
@@ -233,12 +256,19 @@ function displayResults(medication, dosage, quantity) {
         
         pharmacies.forEach(pharmacy => {
             const basePrice = getBasePriceFromData(medication, pharmacy.name);
-            
+
             if (basePrice !== null) {
-                const calculatedPrice = calculatePrice(basePrice, dosage, quantity);
+                // Extract ZIP code from pharmacy address
+                const pharmacyZip = extractZipCode(pharmacy.address);
+                
+                // Calculate price with ZIP code multiplier
+                const calculatedPrice = calculatePrice(basePrice, dosage, quantity, pharmacyZip);
+                
                 results.push({
                     ...pharmacy,
-                    price: calculatedPrice.toFixed(2)
+                    price: calculatedPrice.toFixed(2),
+                    zipCode: pharmacyZip,
+                    zipMultiplier: getZipMultiplier(pharmacyZip)
                 });
             }
         });
@@ -285,12 +315,14 @@ function displayResults(medication, dosage, quantity) {
 
             // Add marker to map and visually highlight the cheapest results
             let marker;
+            const zipInfo = pharmacy.zipMultiplier !== 1.0 ? `<div style="font-size:0.85rem;color:#666;">ZIP ${pharmacy.zipCode} multiplier: ${pharmacy.zipMultiplier}x</div>` : '';
             const popupHtml = `
                 <div class="popup-content">
                     <div class="popup-pharmacy">${pharmacy.name}</div>
                     <div>${pharmacy.address}</div>
                     <div class="popup-price">$${pharmacy.price}</div>
-                        ${index === 0 ? '<div style="color: #28a745; font-weight: bold;">BEST PRICE</div>' : ''}
+                    ${index === 0 ? '<div style="color: #28a745; font-weight: bold;">BEST PRICE</div>' : ''}
+                    ${zipInfo}
                 </div>
             `;
 

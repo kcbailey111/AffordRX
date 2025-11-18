@@ -85,19 +85,13 @@ const pharmacies = [
     { name: "Walgreens", lat: 35.05121984047732, lng: -81.98158116799644, address: "3681 Boiling Springs Rd, Boiling Springs, SC 29316", phone: "(864) 578-2414" },
     { name: "Boiling Springs Pharmacy", lat: 35.02134010093637, lng: -81.95976493176535, address: "2528 Boiling Springs Rd Suite D, Boiling Springs, SC 29316", phone: "(864) 515-2600" },
     { name: "CVS", lat: 35.020774675372714, lng: -81.9610189759189, address: "1888 Boiling Springs Rd, Boiling Springs, SC 29316", phone: "(864) 599-0920" },
-    { name: "U Save It Pharmacy - Peach Valley", lat: 35.03235883684897, lng: -81.89635042885386, address: "2310 Chesnee Hwy, Spartanburg, SC 29303", phone: "(864) 577-0087" },
     { name: "Spartanburg Regional Pharmacy - Physician Center - Spartanburg", lat: 34.971346250376314, lng: -81.93936656157912, address: "100 E Wood St #101, Spartanburg, SC 29303", phone: "(864) 560-9200" },
     { name: "Walgreens", lat: 34.9741850537861, lng: -81.93388128330479, address: "1000 N Pine St, Spartanburg, SC 29303", phone: "(864) 585-9136" },
-    { name: "Smith Drug Store", lat: 34.95454798385966, lng: -81.92983949931316, address: "142 E Main St, Spartanburg, SC 29306", phone: "(864) 583-4521" },
-    { name: "Pharmacy At Main", lat: 34.95596768888898, lng: -81.92088983476026, address: "435 E Main St # 7, Spartanburg, SC 29302", phone: "(864) 515-2100" },
     { name: "Publix Pharmacy at Hillcrest Shopping Center", lat: 34.97039996027779, lng: -81.88913295765462, address: "1905 E Main St, Spartanburg, SC 29307", phone: "(864) 253-1833" },
     { name: "Walgreens", lat: 34.926385420512275, lng: -81.8871120656588, address: "2198 Southport Rd, Spartanburg, SC 29306", phone: "(864) 582-5822" },
-    { name: "Hub City Pharmacy", lat: 34.92591201708974, lng: -81.98498098351865, address: "1735 John B White Sr Blvd # 8, Spartanburg, SC 29301", phone: "(864) 586-3886" },
     { name: "CVS", lat: 34.92010471452222, lng: -81.99260180058504, address: "2397 Reidville Rd, Spartanburg, SC 29301", phone: "(864) 576-9268" },
     { name: "Walgreens", lat: 34.9225310478231, lng: -81.99433399372431, address: "2410 Reidville Rd, Spartanburg, SC 29301", phone: "(864) 587-9486" },
-    { name: "Reidville Road Pharmacy", lat: 34.92075568909083, lng: -82.00061319449726, address: "2660 Reidville Rd #8, Spartanburg, SC 29301", phone: "(864) 435-9400" },
     { name: "CVS", lat: 34.934579497121796, lng: -82.00891013499744, address: "8199 Warren H Abernathy Hwy, Spartanburg, SC 29301", phone: "(864) 576-7591" },
-    { name: "Buy Low Pharmacy", lat: 34.93633859193823, lng: -82.00418944666549, address: "8007 Warren H Abernathy Hwy, Spartanburg, SC 29301", phone: "(864) 572-5727" }
 ];
 
 // Custom colored marker icons for highlighting top results

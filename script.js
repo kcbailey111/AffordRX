@@ -125,11 +125,11 @@ const violetIcon = new L.Icon({
 
 // ZIP-code multipliers (relative to Spartanburg baseline)
 const zipMultipliers = {
-    "29301": 1.106,
-    "29316": 1.481,
-    "29303": 0.893,
-    "29307": 1.198,
-    "29306": 0.759
+    "29306": 1.08,  // Poorest area ($38,858) - slightly higher prices
+    "29303": 1.05,  // Low income ($45,713)
+    "29301": 1.02,  // Mid income ($56,606)
+    "29307": 1.00,  // Mid-high income ($61,330) - baseline
+    "29316": 0.97   // Wealthiest area ($75,808) - slightly lower prices
 };
 
 // Fallback if ZIP is not listed

@@ -394,9 +394,7 @@ function displayResults(medication, dosage, quantity) {
         
         // Update stats with animation
         setTimeout(() => {
-            document.getElementById('pharmacyCount').textContent = results.length + '+';
             document.getElementById('avgSavings').textContent = savings + '%';
-            document.getElementById('searchesCount').textContent = (Math.floor(Math.random() * 10 + 15)) + 'K+';
         }, 500);
     }, 1000);
 }

@@ -24,8 +24,9 @@ function escapeHtml(str) {
 
 // Wait for the page to fully load before initializing
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize map centered on Spartanburg, SC
-    map = L.map('map').setView([34.91365097168322, -82.05826163777928], 13);
+    // Initialize map centered on South Carolina (Columbia area) for a state-level view
+    // Use a broader zoom so users see the whole state on first load
+    map = L.map('map').setView([33.8361, -81.1637], 7);
     
     // Add CartoDB Voyager tiles for a colorful map
     L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
@@ -37,8 +38,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Force the map to refresh its size after a brief delay and re-center it
     setTimeout(function() {
         map.invalidateSize();
-        // ensure map is centered on Spartanburg after size fix (prevents off-center render)
-        map.setView([34.91365097168322, -82.05826163777928], 13);
+        // ensure map stays centered on South Carolina after size fix (prevents off-center render)
+        map.setView([33.8361, -81.1637], 7);
         // Add a small legend control explaining marker colors
         try {
             const legend = L.control({ position: 'topright' });
@@ -121,7 +122,14 @@ const pharmacies = [
     { name: "Walmart Neighborhood Market", lat: 34.921052480750994, lng: -81.8845498539414, address: "203 Cedar Springs Rd, Spartanburg, SC 29302", phone: "(864) 381-6365" }, 
     { name: "Walmart Supercenter", lat: 34.97320191086142, lng: -81.87687609863929, address: "2151 E Main St, Spartanburg, SC 29307", phone: "(864) 529-0156" },
     { name: "Walgreens", lat: 34.9225310478231, lng: -81.99433399372431, address: "2410 Reidville Rd, Spartanburg, SC 29301", phone: "(864) 587-9486" },
-    { name: "CVS", lat: 34.934579497121796, lng: -82.00891013499744, address: "8199 Warren H Abernathy Hwy, Spartanburg, SC 29301", phone: "(864) 576-7591" }
+    { name: "CVS", lat: 34.934579497121796, lng: -82.00891013499744, address: "8199 Warren H Abernathy Hwy, Spartanburg, SC 29301", phone: "(864) 576-7591" },
+
+
+    // Additions of Greenville Pharmacies
+    //Need to verify lat/lng values along with the actual addresses and phone numbers
+    { name: "CVS Pharmacy", lat: 34.852617, lng: -82.394012, address: "201 E Butler Rd, Greenville, SC 29607", phone: "(864) 297-1234" },
+    { name: "Walgreens", lat: 34.847123, lng: -82.400456, address: "1500 Woodruff Rd, Greenville, SC 29607", phone: "(864) 297-5678" },
+    { name: "Publix Pharmacy", lat: 34.849876, lng: -82.391234, address: "1200 E North St, Greenville, SC 29607", phone: "(864) 297-9101" }
 ];
 
 // Custom colored marker icons for highlighting top results

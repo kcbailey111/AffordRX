@@ -352,7 +352,7 @@ function displayResults(medication, dosage, quantity) {
             const savingsAmount = index === 0 ? 0 : ((parseFloat(pharmacy.price) - parseFloat(results[0].price)) / parseFloat(results[0].price) * 100).toFixed(0);
             
             resultsHTML += `
-                <div class="pharmacy-card" onclick="focusPharmacy(${pharmacy.lat}, ${pharmacy.lng})">
+                <div class="pharmacy-card" data-lat="${pharmacy.lat}" data-lng="${pharmacy.lng}">
                     <div class="pharmacy-name">${escapeHtml(pharmacy.name)}</div>
                     <div class="pharmacy-address">${escapeHtml(pharmacy.address)}</div>
                     <div class="price-info">
@@ -393,6 +393,16 @@ function displayResults(medication, dosage, quantity) {
         });
 
         resultsDiv.innerHTML = resultsHTML;
+
+        // Attach click handlers to pharmacy cards (avoid inline event handlers which CSP blocks)
+        const cards = resultsDiv.querySelectorAll('.pharmacy-card');
+        cards.forEach(card => {
+            const lat = parseFloat(card.getAttribute('data-lat'));
+            const lng = parseFloat(card.getAttribute('data-lng'));
+            if (!Number.isNaN(lat) && !Number.isNaN(lng)) {
+                card.addEventListener('click', () => focusPharmacy(lat, lng));
+            }
+        });
 
         // Fit map to show all markers
         if (currentMarkers.length > 0) {

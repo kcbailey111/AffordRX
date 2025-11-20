@@ -90,6 +90,9 @@ const pharmacies = [
     { name: "Publix Pharmacy at Hillcrest Shopping Center", lat: 34.97039996027779, lng: -81.88913295765462, address: "1905 E Main St, Spartanburg, SC 29307", phone: "(864) 253-1833" },
     { name: "Walgreens", lat: 34.926385420512275, lng: -81.8871120656588, address: "2198 Southport Rd, Spartanburg, SC 29306", phone: "(864) 582-5822" },
     { name: "CVS", lat: 34.92010471452222, lng: -81.99260180058504, address: "2397 Reidville Rd, Spartanburg, SC 29301", phone: "(864) 576-9268" },
+    { name: "Walmart Supercenter", lat: 34.93364371932264, lng: -81.98464891678711, address: "141 Dorman Centre Dr, Spartanburg, SC 29301", phone: "(864) 574-6452" },
+    { name: "Walmart Neighborhood Market", lat: 34.921052480750994, lng: -81.8845498539414, address: "203 Cedar Springs Rd, Spartanburg, SC 29302", phone: "(864) 381-6365" }, 
+    { name: "Walmart Supercenter", lat: 34.97320191086142, lng: -81.87687609863929, address: "2151 E Main St, Spartanburg, SC 29307", phone: "(864) 529-0156" },
     { name: "Walgreens", lat: 34.9225310478231, lng: -81.99433399372431, address: "2410 Reidville Rd, Spartanburg, SC 29301", phone: "(864) 587-9486" },
     { name: "CVS", lat: 34.934579497121796, lng: -82.00891013499744, address: "8199 Warren H Abernathy Hwy, Spartanburg, SC 29301", phone: "(864) 576-7591" }
 ];
@@ -125,11 +128,11 @@ const violetIcon = new L.Icon({
 
 // ZIP-code multipliers (relative to Spartanburg baseline)
 const zipMultipliers = {
-    "29306": 1.08,  // Poorest area ($38,858) - slightly higher prices
+    "29306": 1.08,  // Poorest area ($38,858) - slightly higher prices = less competition
     "29303": 1.05,  // Low income ($45,713)
     "29301": 1.02,  // Mid income ($56,606)
     "29307": 1.00,  // Mid-high income ($61,330) - baseline
-    "29316": 0.97   // Wealthiest area ($75,808) - slightly lower prices
+    "29316": 0.97   // Wealthiest area ($75,808) - slightly lower prices = more competition
 };
 
 // Fallback if ZIP is not listed

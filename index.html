@@ -12,6 +12,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Security headers (meta-based; prefer setting these as HTTP response headers on the server/CDN) -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com https://cdnjs.cloudflare.com; style-src 'self' https://unpkg.com; img-src 'self' data: https:; font-src 'self' https://unpkg.com https://cdnjs.cloudflare.com; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none';">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta name="permissions-policy" content="geolocation=(), microphone=(), camera=()">
     <title>AffordRX - Find Affordable Prescriptions in South Carolina</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="style.css">
@@ -30,7 +34,7 @@
             
             <div class="stats">
                 <div class="stat-card">
-                    <div class="stat-number" id="pharmacyCount">100+</div>
+                    <div class="stat-number" id="pharmacyCount">16+</div>
                     <div class="stat-label">Pharmacies</div>
                 </div>
                 <div class="stat-card">
@@ -103,24 +107,24 @@
                 <div class="resource-card">
                     <h3>🏥🛡️ Need Health Insurance?</h3>
                     <p>Need Health Insurance? Access a trusted community team that provides free, personalized help for South Carolinians.</p>
-                    <a href="https://www.rucoveredsc.org/" target="_blank" class="resource-link">Visit RUCoveredSC →</a>
+                    <a href="https://www.rucoveredsc.org/" target="_blank" rel="noopener noreferrer" class="resource-link">Visit RUCoveredSC →</a>
                 </div>
 
 
                 <div class="resource-card">
                     <h3>💳 Discount Cards</h3>
                     <p>Free prescription discount cards can save you up to 80% on medications.</p>
-                    <a href="https://www.goodrx.com" target="_blank" class="resource-link">Visit GoodRx →</a>
+                    <a href="https://www.goodrx.com" target="_blank" rel="noopener noreferrer" class="resource-link">Visit GoodRx →</a>
                 </div>
                 <div class="resource-card">
                     <h3>🏥 Patient Assistance</h3>
                     <p>Pharmaceutical companies offer free or low-cost medications to those who qualify.</p>
-                    <a href="https://www.needymeds.org" target="_blank" class="resource-link">Visit NeedyMeds →</a>
+                    <a href="https://www.needymeds.org" target="_blank" rel="noopener noreferrer" class="resource-link">Visit NeedyMeds →</a>
                 </div>
                 <div class="resource-card">
                     <h3>🔍 Price Comparison</h3>
                     <p>Compare live prices at local pharmacies to find the best deal.</p>
-                    <a href="https://www.rxsaver.com" target="_blank" class="resource-link">Visit RxSaver →</a>
+                    <a href="https://www.rxsaver.com" target="_blank" rel="noopener noreferrer" class="resource-link">Visit RxSaver →</a>
                 </div>
 
                 <!--Need to find a new link.-->
@@ -132,12 +136,12 @@
                 <div class="resource-card">
                     <h3>📋 Medicare Extra Help</h3>
                     <p>If you have Medicare, you may qualify for help paying for prescriptions.</p>
-                    <a href="https://www.ssa.gov/benefits/medicare/prescriptionhelp.html" target="_blank" class="resource-link">Check Eligibility →</a>
+                    <a href="https://www.ssa.gov/benefits/medicare/prescriptionhelp.html" target="_blank" rel="noopener noreferrer" class="resource-link">Check Eligibility →</a>
                 </div>
                 <div class="resource-card">
                     <h3>🏪 SC Free Clinics</h3>
                     <p>South Carolina has free and charitable clinics that may help with medications.</p>
-                    <a href="https://www.scfreeclinics.org" target="_blank" class="resource-link">Find a Clinic →</a>
+                    <a href="https://www.scfreeclinics.org" target="_blank" rel="noopener noreferrer" class="resource-link">Find a Clinic →</a>
                 </div>
             </div>
     </div>

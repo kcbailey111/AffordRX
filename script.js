@@ -11,6 +11,17 @@ let csvLoaded = false;
 let map;
 let currentMarkers = [];
 
+// Escape user-provided or external strings before inserting into HTML
+function escapeHtml(str) {
+    if (str === null || str === undefined) return '';
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
 // Wait for the page to fully load before initializing
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize map centered on Spartanburg, SC
@@ -33,13 +44,29 @@ document.addEventListener('DOMContentLoaded', function() {
             const legend = L.control({ position: 'topright' });
             legend.onAdd = function(map) {
                 const div = L.DomUtil.create('div', 'map-legend');
-                div.innerHTML = `
-                    <div class="legend-title">Legend</div>
-                    <div class="legend-item"><img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png" alt="green"> Best price</div>
-                    <div class="legend-item"><img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png" alt="orange"> 2nd best</div>
-                    <div class="legend-item"><img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-violet.png" alt="violet"> 3rd best</div>
-                    <div class="legend-item"><img src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png" alt="default"> Other pharmacies</div>
-                `;
+                const title = document.createElement('div');
+                title.className = 'legend-title';
+                title.textContent = 'Legend';
+                div.appendChild(title);
+
+                const addItem = (imgSrc, alt, text) => {
+                    const item = document.createElement('div');
+                    item.className = 'legend-item';
+                    const img = document.createElement('img');
+                    img.src = imgSrc;
+                    img.alt = alt;
+                    item.appendChild(img);
+                    const span = document.createElement('span');
+                    span.textContent = ' ' + text;
+                    item.appendChild(span);
+                    div.appendChild(item);
+                };
+
+                addItem('https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png', 'green', 'Best price');
+                addItem('https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png', 'orange', '2nd best');
+                addItem('https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-violet.png', 'violet', '3rd best');
+                addItem('https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png', 'default', 'Other pharmacies');
+
                 return div;
             };
             legend.addTo(map);
@@ -233,11 +260,18 @@ function displayResults(medication, dosage, quantity) {
     const resultsDiv = document.getElementById('results');
     
     if (!csvLoaded) {
-        resultsDiv.innerHTML = '<div class="loading">Loading medication data...</div>';
+        resultsDiv.innerHTML = '';
+        const ld = document.createElement('div');
+        ld.className = 'loading';
+        ld.textContent = 'Loading medication data...';
+        resultsDiv.appendChild(ld);
         return;
     }
-    
-    resultsDiv.innerHTML = '<div class="loading">Searching pharmacies...</div>';
+    resultsDiv.innerHTML = '';
+    const searching = document.createElement('div');
+    searching.className = 'loading';
+    searching.textContent = 'Searching pharmacies...';
+    resultsDiv.appendChild(searching);
     
     setTimeout(() => {
         // If the medication doesn't exist anywhere in the CSV, show a clear "not found" message
@@ -246,10 +280,12 @@ function displayResults(medication, dosage, quantity) {
         if (!medicationExists) {
             resultsDiv.innerHTML = `
                 <div class="no-results">
-                    <strong>Drug not found:</strong> "${medication}" was not found in our database.<br>
+                    <strong>Drug not found:</strong> <span id="nf-med">""</span> was not found in our database.<br>
                     Please check the spelling or try another medication.
                 </div>
             `;
+            const nfSpan = resultsDiv.querySelector('#nf-med');
+            if (nfSpan) nfSpan.textContent = '"' + medication + '"';
             console.warn(`Medication "${medication}" not found in CSV.`);
             return;
         }
@@ -280,11 +316,13 @@ function displayResults(medication, dosage, quantity) {
         if (results.length === 0) {
             resultsDiv.innerHTML = `
                 <div class="no-results">
-                    <strong>No results found for "${medication}"</strong><br>
+                    <strong>No results found for "<span id=nr-med></span>"</strong><br>
                     Please check the spelling or try another medication.<br><br>
                     <em>Available medications include: Ibuprofen, Acetaminophen, Amlodipine, Atorvastatin, Metformin, and more.</em>
                 </div>
             `;
+            const nrSpan = resultsDiv.querySelector('#nr-med');
+            if (nrSpan) nrSpan.textContent = escapeHtml(medication);
             return;
         }
         
@@ -296,10 +334,10 @@ function displayResults(medication, dosage, quantity) {
 
         clearMarkers();
 
-        let resultsHTML = `<div style="margin-bottom: 20px; padding: 20px; background: linear-gradient(135deg, #e8f4fd 0%, #d6eaf8 100%); border-radius: 12px; border-left: 5px solid #3498db; box-shadow: 0 4px 15px rgba(52, 152, 219, 0.1);">
-            <strong style="color: #1e3c72;">Searching for:</strong> ${medication} ${dosage} (${quantity} tablets)<br>
-            <strong style="color: #27ae60;">Best Price:</strong> $${results[0].price} at ${results[0].name}<br>
-            <strong style="color: #e74c3c;">You could save up to ${savings}%</strong> by choosing the best price!
+        let resultsHTML = `<div class="results-banner">
+            <strong class="banner-title">Searching for:</strong> ${escapeHtml(medication)} ${escapeHtml(dosage)} (${escapeHtml(quantity)} tablets)<br>
+            <strong class="banner-best">Best Price:</strong> $${escapeHtml(results[0].price)} at ${escapeHtml(results[0].name)}<br>
+            <strong class="banner-savings">You could save up to ${escapeHtml(savings)}%</strong> by choosing the best price!
         </div>`;
 
         results.forEach((pharmacy, index) => {
@@ -307,24 +345,24 @@ function displayResults(medication, dosage, quantity) {
             
             resultsHTML += `
                 <div class="pharmacy-card" onclick="focusPharmacy(${pharmacy.lat}, ${pharmacy.lng})">
-                    <div class="pharmacy-name">${pharmacy.name}</div>
-                    <div class="pharmacy-address">${pharmacy.address}</div>
+                    <div class="pharmacy-name">${escapeHtml(pharmacy.name)}</div>
+                    <div class="pharmacy-address">${escapeHtml(pharmacy.address)}</div>
                     <div class="price-info">
-                        <div class="price">$${pharmacy.price}</div>
-                        ${index === 0 ? '<div class="savings">BEST PRICE</div>' : savingsAmount > 0 ? `<div style="color: #dc3545; font-weight: 600;">+$${(parseFloat(pharmacy.price) - parseFloat(results[0].price)).toFixed(2)} more</div>` : ''}
+                        <div class="price">$${escapeHtml(pharmacy.price)}</div>
+                        ${index === 0 ? '<div class="savings">BEST PRICE</div>' : savingsAmount > 0 ? `<div class="price-more">+$${escapeHtml((parseFloat(pharmacy.price) - parseFloat(results[0].price)).toFixed(2))} more</div>` : ''}
                     </div>
                 </div>
             `;
 
             // Add marker to map and visually highlight the cheapest results
             let marker;
-            const zipInfo = pharmacy.zipMultiplier !== 1.0 ? `<div style="font-size:0.85rem;color:#666;">ZIP ${pharmacy.zipCode} multiplier: ${pharmacy.zipMultiplier}x</div>` : '';
+            const zipInfo = pharmacy.zipMultiplier !== 1.0 ? `<div class="zip-info">ZIP ${pharmacy.zipCode} multiplier: ${pharmacy.zipMultiplier}x</div>` : '';
             const popupHtml = `
                 <div class="popup-content">
-                    <div class="popup-pharmacy">${pharmacy.name}</div>
-                    <div>${pharmacy.address}</div>
-                    <div class="popup-price">$${pharmacy.price}</div>
-                    ${index === 0 ? '<div style="color: #28a745; font-weight: bold;">BEST PRICE</div>' : ''}
+                    <div class="popup-pharmacy">${escapeHtml(pharmacy.name)}</div>
+                    <div>${escapeHtml(pharmacy.address)}</div>
+                    <div class="popup-price">$${escapeHtml(pharmacy.price)}</div>
+                    ${index === 0 ? '<div class="popup-best">BEST PRICE</div>' : ''}
                     ${zipInfo}
                 </div>
             `;
@@ -388,13 +426,13 @@ function setupFormHandler() {
 function addInitialMarkers() {
      pharmacies.slice(0, 4).forEach(pharmacy => {
          const marker = L.marker([pharmacy.lat, pharmacy.lng])
-             .bindPopup(`
-                <div class="popup-content">
-                    <div class="popup-pharmacy">${pharmacy.name}</div>
-                    <div>${pharmacy.address}</div>
-                     <div style="margin-top: 8px; color: #666;">Search for a medication to see prices</div>
-                </div>
-            `)
+            .bindPopup(`
+               <div class="popup-content">
+                   <div class="popup-pharmacy">${escapeHtml(pharmacy.name)}</div>
+                   <div>${escapeHtml(pharmacy.address)}</div>
+                    <div class="popup-note">Search for a medication to see prices</div>
+               </div>
+           `)
             .addTo(map);
     });
 }

@@ -180,13 +180,21 @@ const violetIcon = new L.Icon({
     shadowSize: [41, 41]
 });
 
-// ZIP-code multipliers (relative to Spartanburg baseline)
+// Narrow ZIP multipliers for OTCs (small neighborhood effect)
+// OTC drugs have minimal price variation by location due to:
+// - Standardized manufacturer pricing and national chain competition
+// - High price transparency (easy comparison shopping)
+// Range: 0.99-1.03 (±3% max) reflects subtle differences in local competition
+// Higher income areas (29615, 29601) = slightly lower prices (more competition)
+// Lower income areas (29611, 29617) = slightly higher prices (fewer options)
 const zipMultipliers = {
-    "29306": 1.08,  // Poorest area ($38,858) - slightly higher prices = less competition
-    "29303": 1.05,  // Low income ($45,713)
-    "29301": 1.02,  // Mid income ($56,606)
-    "29307": 1.00,  // Mid-high income ($61,330) - baseline
-    "29316": 0.97   // Wealthiest area ($75,808) - slightly lower prices = more competition
+  "29615": 0.99,  // Pelham Rd - highest income, heavy retail competition
+  "29601": 0.995, // Downtown - high income, multiple pharmacy options
+  "29607": 1.00,  // Baseline - mid income, high store density
+  "29605": 1.01,  // Lower-mid income, moderate competition
+  "29609": 1.01,  // Lower-mid income, similar to 29605
+  "29617": 1.02,  // Lower income, fewer pharmacy options
+  "29611": 1.03   // Lowest income, limited competition
 };
 
 // Fallback if ZIP is not listed

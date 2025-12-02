@@ -1,0 +1,160 @@
+Name,Pharmacy,Price
+Amlodipine,PublixPay online,$2.00
+Amlodipine,Walgreens,$10.11
+Amlodipine,CVS Pharmacy,$15.42
+Amlodipine,Walmart,$9.00
+Amlodipine,Costco,$7.99
+Amlodipine,Sams Club,$2.00
+Amlodipine,Target (CVS),$15.42
+Amlodipine,Harris TeeterPay online,$2.53
+Amlodipine,Walmart Neighborhood Market,$9.00
+Aspirin,Walgreens,$2.80
+Aspirin,Walmart,$10.42
+Aspirin,Walmart Neighborhood Market,$10.42
+Aspirin,Costco,$4.48
+Aspirin,Harris Teeter,$9.44
+Aspirin,Food Lion Pharmacy,$14.34
+Aspirin,Publix,$2.00
+Aspirin,"Community, a Walgreens Pharmacy",$2.72
+Aspirin,Kroger Pharmacy,$9.44
+Azelastine,CVS Pharmacy,$19.17
+Azelastine,Walgreens,$15.29
+Azelastine,Walmart,$20.17
+Azelastine,Costco,$7.99
+Azelastine,Target (CVS),$19.17
+Azelastine,Harris Teeter,$17.49
+Azelastine,Walmart Neighborhood Market,$20.17
+Azelastine,Publix,$4.01
+Azithromycin,PublixPay online,$2.00
+Azithromycin,CVS Pharmacy,$15.74
+Azithromycin,Walgreens,$7.94
+Azithromycin,Walmart,$7.74
+Azithromycin,Walmart Neighborhood Market,$7.74
+Azithromycin,Target (CVS),$15.74
+Azithromycin,Costco,$3.49
+Azithromycin,Sams Club,$46.32
+Azithromycin,Harris TeeterPay online,$9.38
+Benadryl,Walgreens,$2.00
+Benadryl,Walmart,$11.16
+Benadryl,Walmart Neighborhood Market,$11.16
+Benadryl,Costco,$5.16
+Benadryl,Harris Teeter,$19.13
+Benadryl,Food Lion Pharmacy,$15.22
+Benadryl,Publix,$7.63
+Benadryl,"Community, a Walgreens Pharmacy",$2.00
+Benadryl,Kroger Pharmacy,$19.13
+Clotrimazole,Publix,$9.94
+Clotrimazole,CVS Pharmacy,$18.08
+Clotrimazole,Walgreens,$3.64
+Clotrimazole,Walmart,$16.78
+Clotrimazole,Walmart Neighborhood Market,$16.78
+Clotrimazole,Costco,$13.99
+Clotrimazole,Target (CVS),$18.08
+Clotrimazole,Harris Teeter,$18.19
+Fluticasone_Salmeterol,CVS Pharmacy,$48.16
+Fluticasone_Salmeterol,Walmart,$104.98
+Fluticasone_Salmeterol,Walgreens,$112.81
+Fluticasone_Salmeterol,Walmart Neighborhood Market,$104.98
+Fluticasone_Salmeterol,Harris TeeterPay online,$95.84
+Fluticasone_Salmeterol,Costco,$98.99
+Fluticasone_Salmeterol,Target (CVS),$48.16
+Fluticasone_Salmeterol,PublixPay online,$97.53
+Fluticasone_Salmeterol,Kroger PharmacyPay online,$95.84
+Hydrocortisone,CVS Pharmacy,$22.72
+Hydrocortisone,Walgreens,$2.00
+Hydrocortisone,Walmart,$15.89
+Hydrocortisone,Walmart Neighborhood Market,$15.89
+Hydrocortisone,Costco,$12.99
+Hydrocortisone,Target (CVS),$22.72
+Hydrocortisone,Harris TeeterPay online,$11.44
+Hydrocortisone,Food Lion Pharmacy,$16.44
+Hydrocortisone,PublixPay online,$11.45
+Hydrocortisone,Kroger PharmacyPay online,$11.44
+Ibuprofen,CVS Pharmacy,$20.23
+Ibuprofen,Walgreens,$3.07
+Ibuprofen,Walmart,$15.20
+Ibuprofen,Target (CVS),$20.23
+Ibuprofen,Harris Teeter,$8.92
+Ibuprofen,Costco,$8.83
+Ibuprofen,Walmart Neighborhood Market,$15.20
+Ibuprofen,Publix,$3.11
+Ibuprofen,Kroger Pharmacy,$8.92
+Loratadine,Walgreens,$2.00
+Loratadine,Walmart,$7.35
+Loratadine,Walmart Neighborhood Market,$7.35
+Loratadine,Costco,$4.97
+Loratadine,Harris Teeter,$19.69
+Loratadine,Food Lion Pharmacy,$22.55
+Loratadine,Publix,$5.04
+Loratadine,"Community, a Walgreens Pharmacy",$2.00
+Loratadine,Kroger Pharmacy,$19.69
+Melatonin,Walgreens,$4.17
+Melatonin,Walmart,$11.70
+Melatonin,Walmart Neighborhood Market,$11.18
+Melatonin,Costco,$5.18
+Melatonin,Harris Teeter,$11.00
+Melatonin,Food Lion Pharmacy,$15.79
+Melatonin,Publix,$4.75
+Melatonin,"Community, a Walgreens Pharmacy",$4.27
+Melatonin,Kroger Pharmacy,$11.00
+Metformin,CVS Pharmacy,$19.84
+Metformin,Walgreens,$4.87
+Metformin,Target (CVS),$19.84
+Metformin,Walmart,$9.00
+Metformin,Costco,$9.49
+Metformin,Harris TeeterPay online,$9.88
+Metformin,Sams Club,$9.82
+Metformin,Walmart Neighborhood Market,$9.00
+Metformin,PublixPay online,$2.00
+Miconazole,Walgreens,$6.28
+Miconazole,Walmart,$14.22
+Miconazole,Walmart Neighborhood Market,$15.76
+Miconazole,Costco,$9.04
+Miconazole,Harris Teeter,$24.14
+Miconazole,Food Lion Pharmacy,$22.82
+Miconazole,Publix,$10.57
+Miconazole,"Community, a Walgreens Pharmacy",$6.07
+Miconazole,Kroger Pharmacy,$22.07
+Minoxidil,Walgreens,$2.00
+Minoxidil,CVS Pharmacy,$20.23
+Minoxidil,Costco,$2.00
+Minoxidil,Walmart,$16.97
+Minoxidil,Walmart Neighborhood Market,$16.97
+Minoxidil,Target (CVS),$20.23
+Minoxidil,Harris Teeter,$16.90
+Minoxidil,Publix,$2.92
+Omeprazole,Publix,$2.01
+Omeprazole,CVS Pharmacy,$16.23
+Omeprazole,Walgreens,$10.78
+Omeprazole,Walmart,$2.00
+Omeprazole,Costco,$16.16
+Omeprazole,Target (CVS),$16.23
+Omeprazole,Harris Teeter,$6.10
+Omeprazole,Walmart Neighborhood Market,$2.00
+Pantoprazole,PublixPay online,$15.08
+Pantoprazole,CVS Pharmacy,$28.37
+Pantoprazole,Walmart,$15.61
+Pantoprazole,Walgreens,$23.73
+Pantoprazole,Walmart Neighborhood Market,$15.61
+Pantoprazole,Target (CVS),$28.37
+Pantoprazole,Costco,$23.99
+Pantoprazole,Sams Club,$9.87
+Pantoprazole,Harris TeeterPay online,$11.56
+Polyethylene,Walgreens,$26.78
+Polyethylene,Walmart,$51.16
+Polyethylene,Walmart Neighborhood Market,$51.16
+Polyethylene,Costco,$49.19
+Polyethylene,Harris Teeter,$53.74
+Polyethylene,Food Lion Pharmacy,$61.45
+Polyethylene,Publix,$43.74
+Polyethylene,"Community, a Walgreens Pharmacy",$26.78
+Polyethylene,Kroger Pharmacy,$53.74
+Vitamin,Walgreens,$2.99
+Vitamin,Walmart,$11.89
+Vitamin,Walmart Neighborhood Market,$11.89
+Vitamin,Costco,$10.98
+Vitamin,Harris Teeter,$11.88
+Vitamin,Food Lion Pharmacy,$15.98
+Vitamin,Publix,$2.25
+Vitamin,"Community, a Walgreens Pharmacy",$2.99
+Vitamin,Kroger Pharmacy,$11.88

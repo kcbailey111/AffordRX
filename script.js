@@ -127,27 +127,28 @@ const pharmacies = [
 
     // Additions of Greenville Pharmacies
     //Need to verify lat/lng values along with the actual addresses and phone numbers
-    { name: "CVS Pharmacy", lat: 34.852617, lng: -82.394012, address: "201 E Butler Rd, Greenville, SC 29607", phone: "(864) 297-1234" },
+    { name: "CVS", lat: 34.852617, lng: -82.394012, address: "201 E Butler Rd, Greenville, SC 29607", phone: "(864) 297-1234" },
     { name: "Walgreens", lat: 34.847123, lng: -82.400456, address: "1500 Woodruff Rd, Greenville, SC 29607", phone: "(864) 297-5678" },
     { name: "Publix Pharmacy", lat: 34.849876, lng: -82.391234, address: "1200 E North St, Greenville, SC 29607", phone: "(864) 297-9101" },
     {name: "Walmart", lat: 34.911906169106146, lng: -82.43086384247985, address: "5009 Old Buncombe Rd, Greenville, SC 29617", phone: "(864) 605-6370"},
     {name: "Walmart Pharmacy", lat: 34.86168092564008, lng: -82.26315161189558, address: "3925 Pelham Rd, Greenville, SC 29615", phone: "(864) 288-8171"},
 
-    {name: "CVS Pharmacy",  lat: 34.849905999942756, lng: -82.39907721361867, address: "35 S Main St, Greenville, SC 29601", phone: "(864) 370-4848"},
-    {name: "CVS Pharmacy",  lat: 34.83496584081104, lng: -82.35269326944147, address: "2210 Laurens Rd, Greenville, SC 29607", phone: "(864) 288-8280"},
-    {name: "CVS Pharmacy",  lat: 34.89456999763415, lng: -82.43125552156793, address:"4102 Old Buncombe Rd, Greenville, SC 29617", phone: "(864) 371-3651"},
-    {name: "CVS Pharmacy", lat: 34.8221701027552, lng: -82.41569138293511, address: "718 Mills Ave, Greenville, SC 29605", phone: "(864) 421-1586"},
-    {name: "CVS Pharmacy", lat: 34.83680665742059, lng: -82.2788953350616, address: "1509 Roper Mountain Rd, Greenville, SC 29615", phone: "(864) 213-1082"},
-    {name: "CVS Pharmacy", lat: 34.9048783820055, lng: -82.38764627128955, address: "1141 State Park Rd, Greenville, SC 29609", phone: "(864) 240-7421"},
-    {name: "CVS Pharmacy", lat: 34.86944913958712, lng: -82.35777330012502, address: "2401 E North St, Greenville, SC 29615", phone: "(864) 244-1851"},
-    {name: "CVS Pharmacy", lat: 34.81487069649635, lng: -82.2732805424541, address: "1200 E Butler Rd, Greenville, SC 29607", phone: "(864) 297-2501"},
-    {name: "CVS Pharmacy", lat: 34.86053347901237, lng: -82.2651722136187, address: "3901 Pelham Rd, Greenville, SC 29615", phone: "(864) 288-3672"},
-    {name: "CVS Pharmacy", lat: 34.824319340578526, lng: -82.3940478197198, address: "2100 Augusta St, Greenville, SC 29605", phone: "(864) 255-3878"},
-    {name: "Walgreens Pharmacy", lat: 34.89758379288567, lng: -82.33893648108698, address: "2700 Wade Hampton Blvd, Greenville, SC 29615", phone: "(864) 268-7123"},
-    {name: "Walgreens Pharmacy", lat: 34.86912415051832, lng: -82.35866010622615, address: "2323 E North St, Greenville, SC 29607", phone: "(864) 233-9401"},
-    {name: "Walgreens Pharmacy", lat: 34.851497238012925, lng: -82.4517113019731, address: "6057 White Horse Rd, Greenville, SC 29611", phone: "(864) 295-0243"},
-    {name: "Walgreens Pharmacy", lat: 34.85477357220053, lng: -82.32014825835267, address: "902 Pelham Rd, Greenville, SC 29615", phone: "(864) 234-6462"},
-    {name: "Walgreens Pharmacy", lat: 34.78837370768248, lng: -82.4832648099224, address: "3501 SC-153, Greenville, SC 29611", phone: "(864) 295-2029"}
+    {name: "CVS",  lat: 34.849905999942756, lng: -82.39907721361867, address: "35 S Main St, Greenville, SC 29601", phone: "(864) 370-4848"},
+    {name: "CVS",  lat: 34.83496584081104, lng: -82.35269326944147, address: "2210 Laurens Rd, Greenville, SC 29607", phone: "(864) 288-8280"},
+    {name: "CVS",  lat: 34.89456999763415, lng: -82.43125552156793, address:"4102 Old Buncombe Rd, Greenville, SC 29617", phone: "(864) 371-3651"},
+    {name: "CVS", lat: 34.8221701027552, lng: -82.41569138293511, address: "718 Mills Ave, Greenville, SC 29605", phone: "(864) 421-1586"},
+    {name: "CVS", lat: 34.83680665742059, lng: -82.2788953350616, address: "1509 Roper Mountain Rd, Greenville, SC 29615", phone: "(864) 213-1082"},
+    {name: "CVS", lat: 34.9048783820055, lng: -82.38764627128955, address: "1141 State Park Rd, Greenville, SC 29609", phone: "(864) 240-7421"},
+    {name: "CVS", lat: 34.86944913958712, lng: -82.35777330012502, address: "2401 E North St, Greenville, SC 29615", phone: "(864) 244-1851"},
+    {name: "CVS", lat: 34.81487069649635, lng: -82.2732805424541, address: "1200 E Butler Rd, Greenville, SC 29607", phone: "(864) 297-2501"},
+    {name: "CVS", lat: 34.86053347901237, lng: -82.2651722136187, address: "3901 Pelham Rd, Greenville, SC 29615", phone: "(864) 288-3672"},
+    {name: "CVS", lat: 34.824319340578526, lng: -82.3940478197198, address: "2100 Augusta St, Greenville, SC 29605", phone: "(864) 255-3878"},
+    
+    {name: "Walgreens", lat: 34.89758379288567, lng: -82.33893648108698, address: "2700 Wade Hampton Blvd, Greenville, SC 29615", phone: "(864) 268-7123"},
+    {name: "Walgreens", lat: 34.86912415051832, lng: -82.35866010622615, address: "2323 E North St, Greenville, SC 29607", phone: "(864) 233-9401"},
+    {name: "Walgreens", lat: 34.851497238012925, lng: -82.4517113019731, address: "6057 White Horse Rd, Greenville, SC 29611", phone: "(864) 295-0243"},
+    {name: "Walgreens", lat: 34.85477357220053, lng: -82.32014825835267, address: "902 Pelham Rd, Greenville, SC 29615", phone: "(864) 234-6462"},
+    {name: "Walgreens", lat: 34.78837370768248, lng: -82.4832648099224, address: "3501 SC-153, Greenville, SC 29611", phone: "(864) 295-2029"}
 ];
 
 // Custom colored marker icons for highlighting top results

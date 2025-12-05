@@ -7,9 +7,14 @@
 
 // Global variables
 let medicationData = [];
+let greenvilleMedicationData = [];  // NEW: Store Greenville-specific data
 let csvLoaded = false;
+let greenvilleCsvLoaded = false;    // NEW: Track Greenville CSV load status
 let map;
 let currentMarkers = [];
+
+// Define Greenville ZIP codes for identification
+const greenvilleZips = ["29601", "29605", "29607", "29609", "29611", "29615", "29617"];
 
 // Escape user-provided or external strings before inserting into HTML
 function escapeHtml(str) {
@@ -89,6 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Function to load and parse CSV data
 function loadCSVData() {
+    // Load main CSV (all_data.csv)
     Papa.parse('all_data.csv', {
         download: true,
         header: true,
@@ -101,6 +107,22 @@ function loadCSVData() {
         error: function(error) {
             console.error('Error loading CSV:', error);
             alert('Error loading medication data. Please ensure all_data.csv is in the same directory.');
+        }
+    });
+
+    // Load Greenville CSV (greenville_data.csv)
+    Papa.parse('greenville_data.csv', {
+        download: true,
+        header: true,
+        skipEmptyLines: true,
+        complete: function(results) {
+            greenvilleMedicationData = results.data;
+            greenvilleCsvLoaded = true;
+            console.log('Greenville CSV data loaded successfully:', greenvilleMedicationData.length, 'records');
+        },
+        error: function(error) {
+            console.error('Error loading Greenville CSV:', error);
+            console.warn('Greenville data not available, will use main data as fallback.');
         }
     });
 }
@@ -208,14 +230,27 @@ function extractZipCode(address) {
     return zipMatch ? zipMatch[0] : null;
 }
 
+// Check if pharmacy is in Greenville based on ZIP code
+function isGreenvillePharmacy(zipCode) {
+    return greenvilleZips.includes(zipCode);
+}
+
 function clearMarkers() {
     currentMarkers.forEach(marker => map.removeLayer(marker));
     currentMarkers = [];
 }
 
 // Function to get base price from CSV data
-function getBasePriceFromData(drugName, pharmacyName) {
-    if (!csvLoaded || medicationData.length === 0) {
+function getBasePriceFromData(drugName, pharmacyName, zipCode) {
+    // Determine which dataset to use based on location
+    const isGreenville = isGreenvillePharmacy(zipCode);
+    const dataSource = isGreenville && greenvilleCsvLoaded ? greenvilleMedicationData : medicationData;
+    
+    if ((!csvLoaded && !isGreenville) || (!greenvilleCsvLoaded && isGreenville)) {
+        return null;
+    }
+    
+    if (dataSource.length === 0) {
         return null;
     }
     
@@ -223,7 +258,7 @@ function getBasePriceFromData(drugName, pharmacyName) {
     const normalizedDrug = drugName.trim().toLowerCase();
     
     // Find matching entries in the CSV data
-    const matches = medicationData.filter(row => {
+    const matches = dataSource.filter(row => {
         const csvDrug = (row.Name || '').trim().toLowerCase();
         const csvPharmacy = (row.Pharmacy || '').trim().toLowerCase();
         const targetPharmacy = pharmacyName.trim().toLowerCase();
@@ -294,7 +329,7 @@ function calculateSavings(prices) {
 function displayResults(medication, dosage, quantity) {
     const resultsDiv = document.getElementById('results');
     
-    if (!csvLoaded) {
+    if (!csvLoaded && !greenvilleCsvLoaded) {
         resultsDiv.innerHTML = '';
         const ld = document.createElement('div');
         ld.className = 'loading';
@@ -309,10 +344,12 @@ function displayResults(medication, dosage, quantity) {
     resultsDiv.appendChild(searching);
     
     setTimeout(() => {
-        // If the medication doesn't exist anywhere in the CSV, show a clear "not found" message
+        // Check if the medication exists in either dataset
         const normalizedMedication = medication.trim().toLowerCase();
-        const medicationExists = medicationData.some(row => ((row.Name || '').trim().toLowerCase()).includes(normalizedMedication));
-        if (!medicationExists) {
+        const existsInMain = medicationData.some(row => ((row.Name || '').trim().toLowerCase()).includes(normalizedMedication));
+        const existsInGreenville = greenvilleMedicationData.some(row => ((row.Name || '').trim().toLowerCase()).includes(normalizedMedication));
+        
+        if (!existsInMain && !existsInGreenville) {
             resultsDiv.innerHTML = `
                 <div class="no-results">
                     <strong>Drug not found:</strong> <span id="nf-med">""</span> was not found in our database.<br>
@@ -329,12 +366,13 @@ function displayResults(medication, dosage, quantity) {
         const results = [];
         
         pharmacies.forEach(pharmacy => {
-            const basePrice = getBasePriceFromData(medication, pharmacy.name);
+            // Extract ZIP code from pharmacy address
+            const pharmacyZip = extractZipCode(pharmacy.address);
+            
+            // Get base price using the appropriate dataset
+            const basePrice = getBasePriceFromData(medication, pharmacy.name, pharmacyZip);
 
             if (basePrice !== null) {
-                // Extract ZIP code from pharmacy address
-                const pharmacyZip = extractZipCode(pharmacy.address);
-                
                 // Calculate price with ZIP code multiplier
                 const calculatedPrice = calculatePrice(basePrice, dosage, quantity, pharmacyZip);
                 

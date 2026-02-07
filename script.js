@@ -13,6 +13,375 @@ let greenvilleCsvLoaded = false;    // NEW: Track Greenville CSV load status
 let map;
 let currentMarkers = [];
 
+// Store the original dosage dropdown options so we can restore them
+let defaultDosageOptions = null;
+
+// --- Usual dosage guidance (informational only) ---
+// Notes:
+// - Dosing varies by indication, age, kidney/liver function, and formulation.
+// - This is a lightweight UX helper, not medical advice.
+// - We keep values simple and human-readable.
+const DOSAGE_GUIDANCE = {
+    acetaminophen: {
+        guidance: 'Adults: 325–1,000 mg every 4–6 hours as needed; do not exceed 3,000 mg/day OTC (some regimens allow up to 4,000 mg/day under clinician guidance).',
+        options: ['325mg', '500mg', '650mg', '1000mg'],
+        defaultOption: '500mg'
+    },
+    aluminum: {
+        guidance: 'Antacid products vary. Follow the product label; typical adult doses are taken after meals and at bedtime as needed.',
+    },
+    amlodipine: {
+        guidance: 'Adults (HTN/angina): typically 5 mg once daily; range 2.5–10 mg once daily.',
+        options: ['2.5mg', '5mg', '10mg'],
+        defaultOption: '5mg'
+    },
+    aspirin: {
+        guidance: 'Pain/fever: 325–650 mg every 4–6 hours as needed. Cardioprotection (if prescribed): commonly 81 mg once daily.',
+        options: ['81mg', '325mg', '500mg'],
+        defaultOption: '325mg'
+    },
+    atorvastatin: {
+        guidance: 'Adults: typically 10–20 mg once daily to start; range 10–80 mg once daily depending on cholesterol goals.',
+        options: ['10mg', '20mg', '40mg', '80mg'],
+        defaultOption: '20mg'
+    },
+    azelastine: {
+        guidance: 'Nasal spray: commonly 1–2 sprays in each nostril twice daily (depends on product/indication).',
+    },
+    azithromycin: {
+        guidance: 'Typical adult regimens depend on infection. Common “Z-Pak”: 500 mg on day 1, then 250 mg daily on days 2–5 (if prescribed).',
+        options: ['250mg', '500mg'],
+        defaultOption: '250mg'
+    },
+    bactrim: {
+        guidance: 'Formulations vary (TMP-SMX). A common adult regimen is DS 800/160 mg every 12 hours for certain infections (if prescribed).',
+        options: ['80mg', '160mg', '400mg', '800mg'],
+    },
+    benadryl: {
+        guidance: 'Diphenhydramine (adult): 25–50 mg every 4–6 hours as needed; max 300 mg/day (check label).',
+        options: ['25mg', '50mg'],
+        defaultOption: '25mg'
+    },
+    benzocaine: {
+        guidance: 'Topical/oral products vary by % and form. Follow the product label; use the smallest amount needed.',
+    },
+    bisacodyl: {
+        guidance: 'Constipation (adult): oral 5–15 mg once daily as needed; suppository 10 mg once daily as needed (follow label).',
+        options: ['5mg', '10mg', '15mg'],
+        defaultOption: '5mg'
+    },
+    calcium: {
+        guidance: 'Supplement/antacid products vary (carbonate vs citrate). Typical supplemental elemental calcium is often 500–600 mg per dose; follow label/clinician advice.',
+        options: ['500mg', '600mg'],
+    },
+    capsaicin: {
+        guidance: 'Topical products vary by % (e.g., 0.025–0.1%). Apply thin layer as directed on label.',
+    },
+    cetirizine: {
+        guidance: 'Allergies (adult): 10 mg once daily (some start with 5 mg).',
+        options: ['5mg', '10mg'],
+        defaultOption: '10mg'
+    },
+    chlorpheniramine: {
+        guidance: 'Allergies (adult): commonly 4 mg every 4–6 hours as needed; max 24 mg/day (check label).',
+        options: ['4mg'],
+        defaultOption: '4mg'
+    },
+    clotrimazole: {
+        guidance: 'Topical/vaginal products vary by % and form. Follow the product label for duration and frequency.',
+    },
+    dextromethorphan: {
+        guidance: 'Cough: dosing depends on formulation (IR vs ER). Many adult IR products are 10–20 mg every 4 hours or 30 mg every 6–8 hours; follow label.',
+        options: ['10mg', '20mg', '30mg'],
+    },
+    diphenhydramine: {
+        guidance: 'Allergy (adult): 25–50 mg every 4–6 hours as needed; max 300 mg/day (check label).',
+        options: ['25mg', '50mg'],
+        defaultOption: '25mg'
+    },
+    duloxetine: {
+        guidance: 'Adults: commonly 30 mg once daily to start, then 60 mg once daily; max varies by indication (if prescribed).',
+        options: ['20mg', '30mg', '60mg'],
+        defaultOption: '30mg'
+    },
+    escitalopram: {
+        guidance: 'Adults: commonly 10 mg once daily; some increase to 20 mg once daily (if prescribed).',
+        options: ['5mg', '10mg', '20mg'],
+        defaultOption: '10mg'
+    },
+    esomeprazole: {
+        guidance: 'GERD: commonly 20–40 mg once daily (duration varies).',
+        options: ['20mg', '40mg'],
+        defaultOption: '20mg'
+    },
+    famotidine: {
+        guidance: 'Heartburn/GERD: OTC often 10–20 mg once or twice daily; prescriptions may use higher doses (follow label/prescriber).',
+        options: ['10mg', '20mg', '40mg'],
+        defaultOption: '20mg'
+    },
+    fexofenadine: {
+        guidance: 'Allergies (adult): 60 mg twice daily or 180 mg once daily (depends on product).',
+        options: ['60mg', '180mg'],
+        defaultOption: '180mg'
+    },
+    fluticasonesalmeterol: {
+        guidance: 'Inhaler dosing varies by product strength. Common adult maintenance is 1 inhalation twice daily (if prescribed).',
+        options: ['100/50mcg', '250/50mcg', '500/50mcg'],
+    },
+    guaifenesin: {
+        guidance: 'Expectorant: IR often 200–400 mg every 4 hours as needed; ER often 600–1,200 mg every 12 hours (max varies; follow label).',
+        options: ['200mg', '400mg', '600mg', '1200mg'],
+        defaultOption: '600mg'
+    },
+    hydrocortisone: {
+        guidance: 'Topical products commonly 0.5–1%. Apply a thin layer 1–4 times daily as directed (follow label).',
+    },
+    ibuprofen: {
+        guidance: 'Pain/fever (adult): 200–400 mg every 4–6 hours as needed; max 1,200 mg/day OTC (higher doses only if prescribed).',
+        options: ['200mg', '400mg', '600mg', '800mg'],
+        defaultOption: '200mg'
+    },
+    lansoprazole: {
+        guidance: 'GERD: commonly 15–30 mg once daily (duration varies).',
+        options: ['15mg', '30mg'],
+        defaultOption: '15mg'
+    },
+    loperamide: {
+        guidance: 'Diarrhea (adult): 4 mg initially, then 2 mg after each loose stool; max 8 mg/day OTC (follow label).',
+        options: ['2mg'],
+        defaultOption: '2mg'
+    },
+    loratadine: {
+        guidance: 'Allergies (adult): 10 mg once daily.',
+        options: ['10mg'],
+        defaultOption: '10mg'
+    },
+    losartan: {
+        guidance: 'Adults (HTN): commonly 50 mg once daily to start; range 25–100 mg/day (once daily or divided) (if prescribed).',
+        options: ['25mg', '50mg', '100mg'],
+        defaultOption: '50mg'
+    },
+    meclizine: {
+        guidance: 'Motion sickness/vertigo: commonly 25–50 mg once daily or every 24 hours as needed (follow label/prescriber).',
+        options: ['25mg', '50mg'],
+        defaultOption: '25mg'
+    },
+    melatonin: {
+        guidance: 'Sleep: commonly 1–5 mg 30–60 minutes before bedtime; start low (follow label).',
+        options: ['1mg', '3mg', '5mg', '10mg'],
+        defaultOption: '3mg'
+    },
+    miconazole: {
+        guidance: 'Topical/vaginal products vary by % and duration. Follow the product label.',
+    },
+    minoxidil: {
+        guidance: 'Topical hair loss products commonly 2% or 5% solution/foam; apply as directed on the label.',
+    },
+    miralax: {
+        guidance: 'Constipation: commonly 17 g powder dissolved in liquid once daily as needed (follow label).',
+        options: ['17g'],
+        defaultOption: '17g'
+    },
+    naproxen: {
+        guidance: 'Pain (adult): OTC naproxen sodium 220 mg every 8–12 hours; max 660 mg/day OTC (follow label).',
+        options: ['220mg', '250mg', '375mg', '500mg'],
+        defaultOption: '220mg'
+    },
+    nicotine: {
+        guidance: 'Smoking cessation products vary (gum/lozenge/patch). Follow the product label for a taper schedule.',
+    },
+    omega3acid: {
+        guidance: 'Omega-3 products vary. Prescription omega-3 acid ethyl esters are often 2 g twice daily with meals (if prescribed).',
+        options: ['1000mg', '2000mg'],
+    },
+    omeprazole: {
+        guidance: 'Heartburn/GERD: commonly 20 mg once daily before a meal (OTC courses are typically 14 days).',
+        options: ['10mg', '20mg', '40mg'],
+        defaultOption: '20mg'
+    },
+    pantoprazole: {
+        guidance: 'GERD: commonly 40 mg once daily (if prescribed).',
+        options: ['20mg', '40mg'],
+        defaultOption: '40mg'
+    },
+    phenylephrine: {
+        guidance: 'Decongestant: many adult oral products are 10 mg every 4 hours as needed (follow label).',
+        options: ['10mg'],
+        defaultOption: '10mg'
+    },
+    planb: {
+        guidance: 'Emergency contraception (levonorgestrel): 1.5 mg as a single dose as soon as possible after unprotected sex (follow product label).',
+        options: ['1.5mg'],
+        defaultOption: '1.5mg'
+    },
+    polyethylene: {
+        guidance: 'Polyethylene glycol products vary. For PEG 3350 constipation products, a common adult dose is 17 g once daily (follow label).',
+        options: ['17g'],
+        defaultOption: '17g'
+    },
+    pseudoephedrine: {
+        guidance: 'Decongestant: IR commonly 60 mg every 4–6 hours; ER commonly 120 mg every 12 hours (max varies; follow label).',
+        options: ['30mg', '60mg', '120mg'],
+        defaultOption: '60mg'
+    },
+    sertraline: {
+        guidance: 'Adults: commonly 25–50 mg once daily to start; may increase up to 200 mg/day depending on indication (if prescribed).',
+        options: ['25mg', '50mg', '100mg', '150mg', '200mg'],
+        defaultOption: '50mg'
+    },
+    sildenafil: {
+        guidance: 'Erectile dysfunction: commonly 50 mg taken as needed about 1 hour before sexual activity; range 25–100 mg (max once daily) (if prescribed).',
+        options: ['25mg', '50mg', '100mg'],
+        defaultOption: '50mg'
+    },
+    simethicone: {
+        guidance: 'Gas relief: products vary. Common adult dosing is 40–125 mg after meals and at bedtime as needed (follow label).',
+        options: ['40mg', '80mg', '125mg'],
+        defaultOption: '80mg'
+    },
+    terbinafine: {
+        guidance: 'Athlete’s foot/ringworm creams vary; oral terbinafine (if prescribed) is often 250 mg once daily. Follow label/prescriber.',
+        options: ['250mg'],
+    },
+    tolnaftate: {
+        guidance: 'Topical antifungal products vary by % and form. Follow the product label for frequency/duration.',
+    },
+    vitamin: {
+        guidance: 'Vitamins vary by type and strength. Follow the product label or clinician advice.',
+    }
+};
+
+// Common aliases/brand names -> canonical keys used above
+const DOSAGE_ALIASES = {
+    tylenol: 'acetaminophen',
+    benadryl: 'diphenhydramine',
+    'polyethylene glycol': 'polyethylene',
+    'polyethylene glycol 3350': 'miralax',
+    advair: 'fluticasonesalmeterol',
+    planb: 'planb',
+    lipitor: 'atorvastatin',
+    zpak: 'azithromycin',
+    zithromax: 'azithromycin'
+};
+
+function normalizeMedicationName(name) {
+    return (name || '')
+        .toString()
+        .trim()
+        .toLowerCase()
+        .replace(/_/g, ' ')
+        .replace(/\s+/g, ' ');
+}
+
+function medicationKey(name) {
+    // keep only a-z0-9 for stable lookups (e.g., "Plan B" -> "planb")
+    return normalizeMedicationName(name).replace(/[^a-z0-9]/g, '');
+}
+
+function getDosageInfo(medicationName) {
+    const normalized = normalizeMedicationName(medicationName);
+    const key = medicationKey(normalized);
+
+    // Also try alias matching with the normalized string
+    const aliasKey = DOSAGE_ALIASES[normalized] || DOSAGE_ALIASES[key];
+    const canonicalKey = aliasKey || key;
+    return DOSAGE_GUIDANCE[canonicalKey] || null;
+}
+
+function setDosageSelectOptions(dosageSelect, values) {
+    const current = dosageSelect.value;
+    dosageSelect.innerHTML = '';
+
+    const placeholder = document.createElement('option');
+    placeholder.value = '';
+    placeholder.textContent = 'Select dosage';
+    dosageSelect.appendChild(placeholder);
+
+    values.forEach(v => {
+        const opt = document.createElement('option');
+        opt.value = v;
+        opt.textContent = v;
+        dosageSelect.appendChild(opt);
+    });
+
+    // Restore prior selection if still available
+    if (current && Array.from(dosageSelect.options).some(o => o.value === current)) {
+        dosageSelect.value = current;
+    }
+}
+
+function restoreDefaultDosageSelectOptions(dosageSelect) {
+    if (!defaultDosageOptions) return;
+    const current = dosageSelect.value;
+    dosageSelect.innerHTML = '';
+    defaultDosageOptions.forEach(o => {
+        const opt = document.createElement('option');
+        opt.value = o.value;
+        opt.textContent = o.text;
+        dosageSelect.appendChild(opt);
+    });
+    if (current && Array.from(dosageSelect.options).some(o => o.value === current)) {
+        dosageSelect.value = current;
+    } else {
+        dosageSelect.value = '';
+    }
+}
+
+function updateDosageGuidanceUI() {
+    const medicationInput = document.getElementById('medication');
+    const dosageSelect = document.getElementById('dosage');
+    const hint = document.getElementById('usualDosage');
+    if (!medicationInput || !dosageSelect || !hint) return;
+
+    const medication = medicationInput.value.trim();
+    if (!medication) {
+        hint.textContent = 'Usual dosage guidance will appear here (informational only).';
+        restoreDefaultDosageSelectOptions(dosageSelect);
+        return;
+    }
+
+    const info = getDosageInfo(medication);
+    if (!info) {
+        hint.textContent = 'No usual dosage guidance available for this medication (informational only).';
+        restoreDefaultDosageSelectOptions(dosageSelect);
+        return;
+    }
+
+    hint.textContent = info.guidance;
+
+    if (Array.isArray(info.options) && info.options.length > 0) {
+        setDosageSelectOptions(dosageSelect, info.options);
+        if (!dosageSelect.value && info.defaultOption) {
+            dosageSelect.value = info.defaultOption;
+        }
+    } else {
+        restoreDefaultDosageSelectOptions(dosageSelect);
+    }
+}
+
+function populateMedicationDatalist() {
+    const datalist = document.getElementById('medicationList');
+    if (!datalist) return;
+
+    const names = new Set();
+    medicationData.forEach(row => {
+        const name = (row.Name || '').toString().trim();
+        if (name) names.add(name);
+    });
+    greenvilleMedicationData.forEach(row => {
+        const name = (row.Name || '').toString().trim();
+        if (name) names.add(name);
+    });
+
+    const sorted = Array.from(names).sort((a, b) => a.localeCompare(b));
+    datalist.innerHTML = '';
+    sorted.forEach(name => {
+        const opt = document.createElement('option');
+        opt.value = name;
+        datalist.appendChild(opt);
+    });
+}
+
 // Define Greenville ZIP codes for identification
 const greenvilleZips = ["29601", "29605", "29607", "29609", "29611", "29615", "29617"];
 
@@ -90,6 +459,18 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Setup form submission
     setupFormHandler();
+
+    // Initialize dynamic dosage guidance UI
+    const dosageSelect = document.getElementById('dosage');
+    if (dosageSelect && !defaultDosageOptions) {
+        defaultDosageOptions = Array.from(dosageSelect.options).map(o => ({ value: o.value, text: o.textContent }));
+    }
+    const medicationInput = document.getElementById('medication');
+    if (medicationInput) {
+        medicationInput.addEventListener('input', updateDosageGuidanceUI);
+        medicationInput.addEventListener('change', updateDosageGuidanceUI);
+    }
+    updateDosageGuidanceUI();
 });
 
 // Function to load and parse CSV data
@@ -103,6 +484,7 @@ function loadCSVData() {
             medicationData = results.data;
             csvLoaded = true;
             console.log('CSV data loaded successfully:', medicationData.length, 'records');
+            populateMedicationDatalist();
         },
         error: function(error) {
             console.error('Error loading CSV:', error);
@@ -119,6 +501,7 @@ function loadCSVData() {
             greenvilleMedicationData = results.data;
             greenvilleCsvLoaded = true;
             console.log('Greenville CSV data loaded successfully:', greenvilleMedicationData.length, 'records');
+            populateMedicationDatalist();
         },
         error: function(error) {
             console.error('Error loading Greenville CSV:', error);

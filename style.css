@@ -73,10 +73,43 @@
         background: rgba(255, 255, 255, 0.9);
     }
 
+    /* Make the medication field feel like a dropdown while keeping typeahead via <datalist> */
+    .combo {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+
+    .combo input {
+        width: 100%;
+        padding-right: 38px;
+    }
+
+    .combo-arrow {
+        position: absolute;
+        right: 14px;
+        color: #6b7c93;
+        font-size: 14px;
+        line-height: 1;
+        pointer-events: none;
+        user-select: none;
+    }
+
     input:focus, select:focus {
         outline: none;
         border-color: #3498db;
         box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.15);
+    }
+
+    .dosage-hint {
+        margin-top: 8px;
+        padding: 10px 12px;
+        border-radius: 12px;
+        background: #f4f8ff;
+        border: 1px solid #e3f2fd;
+        color: #425a70;
+        font-size: 0.9rem;
+        line-height: 1.3;
     }
 
     .search-btn {

@@ -15,6 +15,89 @@ let currentMarkers = [];
 
 // Store the original dosage dropdown options so we can restore them
 let defaultDosageOptions = null;
+let defaultQuantityOptions = null;
+
+// Quantity options by product form type
+const QUANTITY_OPTIONS = {
+    tablets: [
+        { value: '30', text: '30 tablets' },
+        { value: '60', text: '60 tablets' },
+        { value: '90', text: '90 tablets' },
+        { value: '180', text: '180 tablets' }
+    ],
+    capsules: [
+        { value: '30', text: '30 capsules' },
+        { value: '60', text: '60 capsules' },
+        { value: '90', text: '90 capsules' },
+        { value: '180', text: '180 capsules' }
+    ],
+    cream: [
+        { value: '15g', text: '15g tube' },
+        { value: '30g', text: '30g tube' },
+        { value: '45g', text: '45g tube' },
+        { value: '60g', text: '60g tube' }
+    ],
+    ointment: [
+        { value: '15g', text: '15g tube' },
+        { value: '30g', text: '30g tube' },
+        { value: '45g', text: '45g tube' }
+    ],
+    liquid: [
+        { value: '120ml', text: '120ml (4 oz)' },
+        { value: '240ml', text: '240ml (8 oz)' },
+        { value: '480ml', text: '480ml (16 oz)' }
+    ],
+    powder: [
+        { value: '1', text: '1 bottle (238g)' },
+        { value: '2', text: '2 bottles' },
+        { value: '3', text: '3 bottles' }
+    ],
+    inhaler: [
+        { value: '1', text: '1 inhaler' },
+        { value: '2', text: '2 inhalers' },
+        { value: '3', text: '3 inhalers' }
+    ],
+    nasalspray: [
+        { value: '1', text: '1 bottle' },
+        { value: '2', text: '2 bottles' },
+        { value: '3', text: '3 bottles' }
+    ],
+    patch: [
+        { value: '7', text: '7 patches (1 week)' },
+        { value: '14', text: '14 patches (2 weeks)' },
+        { value: '28', text: '28 patches (4 weeks)' }
+    ],
+    gum: [
+        { value: '20', text: '20 pieces' },
+        { value: '40', text: '40 pieces' },
+        { value: '100', text: '100 pieces' },
+        { value: '200', text: '200 pieces' }
+    ],
+    lozenge: [
+        { value: '24', text: '24 lozenges' },
+        { value: '72', text: '72 lozenges' },
+        { value: '108', text: '108 lozenges' }
+    ],
+    suppository: [
+        { value: '8', text: '8 suppositories' },
+        { value: '12', text: '12 suppositories' },
+        { value: '50', text: '50 suppositories' }
+    ],
+    single: [
+        { value: '1', text: '1 dose' }
+    ],
+    topicalsolution: [
+        { value: '60ml', text: '60ml bottle' },
+        { value: '1', text: '1 month supply' },
+        { value: '3', text: '3 month supply' }
+    ],
+    softgel: [
+        { value: '30', text: '30 softgels' },
+        { value: '60', text: '60 softgels' },
+        { value: '90', text: '90 softgels' },
+        { value: '120', text: '120 softgels' }
+    ]
+};
 
 // --- Usual dosage guidance (informational only) ---
 // Notes:
@@ -25,229 +108,280 @@ const DOSAGE_GUIDANCE = {
     acetaminophen: {
         guidance: 'Adults: 325–1,000 mg every 4–6 hours as needed; do not exceed 3,000 mg/day OTC (some regimens allow up to 4,000 mg/day under clinician guidance).',
         options: ['325mg', '500mg', '650mg', '1000mg'],
-        defaultOption: '500mg'
+        defaultOption: '500mg',
+        quantityType: 'tablets'
     },
     aluminum: {
         guidance: 'Antacid products vary. Follow the product label; typical adult doses are taken after meals and at bedtime as needed.',
+        quantityType: 'liquid'
     },
     amlodipine: {
         guidance: 'Adults (HTN/angina): typically 5 mg once daily; range 2.5–10 mg once daily.',
         options: ['2.5mg', '5mg', '10mg'],
-        defaultOption: '5mg'
+        defaultOption: '5mg',
+        quantityType: 'tablets'
     },
     aspirin: {
         guidance: 'Pain/fever: 325–650 mg every 4–6 hours as needed. Cardioprotection (if prescribed): commonly 81 mg once daily.',
         options: ['81mg', '325mg', '500mg'],
-        defaultOption: '325mg'
+        defaultOption: '325mg',
+        quantityType: 'tablets'
     },
     atorvastatin: {
         guidance: 'Adults: typically 10–20 mg once daily to start; range 10–80 mg once daily depending on cholesterol goals.',
         options: ['10mg', '20mg', '40mg', '80mg'],
-        defaultOption: '20mg'
+        defaultOption: '20mg',
+        quantityType: 'tablets'
     },
     azelastine: {
         guidance: 'Nasal spray: commonly 1–2 sprays in each nostril twice daily (depends on product/indication).',
+        quantityType: 'nasalspray'
     },
     azithromycin: {
         guidance: 'Typical adult regimens depend on infection. Common “Z-Pak”: 500 mg on day 1, then 250 mg daily on days 2–5 (if prescribed).',
         options: ['250mg', '500mg'],
-        defaultOption: '250mg'
+        defaultOption: '250mg',
+        quantityType: 'tablets'
     },
     bactrim: {
         guidance: 'Formulations vary (TMP-SMX). A common adult regimen is DS 800/160 mg every 12 hours for certain infections (if prescribed).',
         options: ['80mg', '160mg', '400mg', '800mg'],
+        quantityType: 'tablets'
     },
     benadryl: {
         guidance: 'Diphenhydramine (adult): 25–50 mg every 4–6 hours as needed; max 300 mg/day (check label).',
         options: ['25mg', '50mg'],
-        defaultOption: '25mg'
+        defaultOption: '25mg',
+        quantityType: 'tablets'
     },
     benzocaine: {
         guidance: 'Topical/oral products vary by % and form. Follow the product label; use the smallest amount needed.',
+        quantityType: 'cream'
     },
     bisacodyl: {
         guidance: 'Constipation (adult): oral 5–15 mg once daily as needed; suppository 10 mg once daily as needed (follow label).',
         options: ['5mg', '10mg', '15mg'],
-        defaultOption: '5mg'
+        defaultOption: '5mg',
+        quantityType: 'tablets'
     },
     calcium: {
         guidance: 'Supplement/antacid products vary (carbonate vs citrate). Typical supplemental elemental calcium is often 500–600 mg per dose; follow label/clinician advice.',
         options: ['500mg', '600mg'],
+        quantityType: 'tablets'
     },
     capsaicin: {
         guidance: 'Topical products vary by % (e.g., 0.025–0.1%). Apply thin layer as directed on label.',
+        quantityType: 'cream'
     },
     cetirizine: {
         guidance: 'Allergies (adult): 10 mg once daily (some start with 5 mg).',
         options: ['5mg', '10mg'],
-        defaultOption: '10mg'
+        defaultOption: '10mg',
+        quantityType: 'tablets'
     },
     chlorpheniramine: {
         guidance: 'Allergies (adult): commonly 4 mg every 4–6 hours as needed; max 24 mg/day (check label).',
         options: ['4mg'],
-        defaultOption: '4mg'
+        defaultOption: '4mg',
+        quantityType: 'tablets'
     },
     clotrimazole: {
         guidance: 'Topical/vaginal products vary by % and form. Follow the product label for duration and frequency.',
+        quantityType: 'cream'
     },
     dextromethorphan: {
         guidance: 'Cough: dosing depends on formulation (IR vs ER). Many adult IR products are 10–20 mg every 4 hours or 30 mg every 6–8 hours; follow label.',
         options: ['10mg', '20mg', '30mg'],
+        quantityType: 'liquid'
     },
     diphenhydramine: {
         guidance: 'Allergy (adult): 25–50 mg every 4–6 hours as needed; max 300 mg/day (check label).',
         options: ['25mg', '50mg'],
-        defaultOption: '25mg'
+        defaultOption: '25mg',
+        quantityType: 'tablets'
     },
     duloxetine: {
         guidance: 'Adults: commonly 30 mg once daily to start, then 60 mg once daily; max varies by indication (if prescribed).',
         options: ['20mg', '30mg', '60mg'],
-        defaultOption: '30mg'
+        defaultOption: '30mg',
+        quantityType: 'capsules'
     },
     escitalopram: {
         guidance: 'Adults: commonly 10 mg once daily; some increase to 20 mg once daily (if prescribed).',
         options: ['5mg', '10mg', '20mg'],
-        defaultOption: '10mg'
+        defaultOption: '10mg',
+        quantityType: 'tablets'
     },
     esomeprazole: {
         guidance: 'GERD: commonly 20–40 mg once daily (duration varies).',
         options: ['20mg', '40mg'],
-        defaultOption: '20mg'
+        defaultOption: '20mg',
+        quantityType: 'capsules'
     },
     famotidine: {
         guidance: 'Heartburn/GERD: OTC often 10–20 mg once or twice daily; prescriptions may use higher doses (follow label/prescriber).',
         options: ['10mg', '20mg', '40mg'],
-        defaultOption: '20mg'
+        defaultOption: '20mg',
+        quantityType: 'tablets'
     },
     fexofenadine: {
         guidance: 'Allergies (adult): 60 mg twice daily or 180 mg once daily (depends on product).',
         options: ['60mg', '180mg'],
-        defaultOption: '180mg'
+        defaultOption: '180mg',
+        quantityType: 'tablets'
     },
     fluticasonesalmeterol: {
         guidance: 'Inhaler dosing varies by product strength. Common adult maintenance is 1 inhalation twice daily (if prescribed).',
         options: ['100/50mcg', '250/50mcg', '500/50mcg'],
+        quantityType: 'inhaler'
     },
     guaifenesin: {
         guidance: 'Expectorant: IR often 200–400 mg every 4 hours as needed; ER often 600–1,200 mg every 12 hours (max varies; follow label).',
         options: ['200mg', '400mg', '600mg', '1200mg'],
-        defaultOption: '600mg'
+        defaultOption: '600mg',
+        quantityType: 'liquid'
     },
     hydrocortisone: {
         guidance: 'Topical products commonly 0.5–1%. Apply a thin layer 1–4 times daily as directed (follow label).',
+        quantityType: 'cream'
     },
     ibuprofen: {
         guidance: 'Pain/fever (adult): 200–400 mg every 4–6 hours as needed; max 1,200 mg/day OTC (higher doses only if prescribed).',
         options: ['200mg', '400mg', '600mg', '800mg'],
-        defaultOption: '200mg'
+        defaultOption: '200mg',
+        quantityType: 'tablets'
     },
     lansoprazole: {
         guidance: 'GERD: commonly 15–30 mg once daily (duration varies).',
         options: ['15mg', '30mg'],
-        defaultOption: '15mg'
+        defaultOption: '15mg',
+        quantityType: 'capsules'
     },
     loperamide: {
         guidance: 'Diarrhea (adult): 4 mg initially, then 2 mg after each loose stool; max 8 mg/day OTC (follow label).',
         options: ['2mg'],
-        defaultOption: '2mg'
+        defaultOption: '2mg',
+        quantityType: 'tablets'
     },
     loratadine: {
         guidance: 'Allergies (adult): 10 mg once daily.',
         options: ['10mg'],
-        defaultOption: '10mg'
+        defaultOption: '10mg',
+        quantityType: 'tablets'
     },
     losartan: {
         guidance: 'Adults (HTN): commonly 50 mg once daily to start; range 25–100 mg/day (once daily or divided) (if prescribed).',
         options: ['25mg', '50mg', '100mg'],
-        defaultOption: '50mg'
+        defaultOption: '50mg',
+        quantityType: 'tablets'
     },
     meclizine: {
         guidance: 'Motion sickness/vertigo: commonly 25–50 mg once daily or every 24 hours as needed (follow label/prescriber).',
         options: ['25mg', '50mg'],
-        defaultOption: '25mg'
+        defaultOption: '25mg',
+        quantityType: 'tablets'
     },
     melatonin: {
         guidance: 'Sleep: commonly 1–5 mg 30–60 minutes before bedtime; start low (follow label).',
         options: ['1mg', '3mg', '5mg', '10mg'],
-        defaultOption: '3mg'
+        defaultOption: '3mg',
+        quantityType: 'tablets'
     },
     miconazole: {
         guidance: 'Topical/vaginal products vary by % and duration. Follow the product label.',
+        quantityType: 'cream'
     },
     minoxidil: {
         guidance: 'Topical hair loss products commonly 2% or 5% solution/foam; apply as directed on the label.',
+        quantityType: 'topicalsolution'
     },
     miralax: {
         guidance: 'Constipation: commonly 17 g powder dissolved in liquid once daily as needed (follow label).',
         options: ['17g'],
-        defaultOption: '17g'
+        defaultOption: '17g',
+        quantityType: 'powder'
     },
     naproxen: {
         guidance: 'Pain (adult): OTC naproxen sodium 220 mg every 8–12 hours; max 660 mg/day OTC (follow label).',
         options: ['220mg', '250mg', '375mg', '500mg'],
-        defaultOption: '220mg'
+        defaultOption: '220mg',
+        quantityType: 'tablets'
     },
     nicotine: {
         guidance: 'Smoking cessation products vary (gum/lozenge/patch). Follow the product label for a taper schedule.',
+        quantityType: 'patch'
     },
     omega3acid: {
         guidance: 'Omega-3 products vary. Prescription omega-3 acid ethyl esters are often 2 g twice daily with meals (if prescribed).',
         options: ['1000mg', '2000mg'],
+        quantityType: 'softgel'
     },
     omeprazole: {
         guidance: 'Heartburn/GERD: commonly 20 mg once daily before a meal (OTC courses are typically 14 days).',
         options: ['10mg', '20mg', '40mg'],
-        defaultOption: '20mg'
+        defaultOption: '20mg',
+        quantityType: 'capsules'
     },
     pantoprazole: {
         guidance: 'GERD: commonly 40 mg once daily (if prescribed).',
         options: ['20mg', '40mg'],
-        defaultOption: '40mg'
+        defaultOption: '40mg',
+        quantityType: 'tablets'
     },
     phenylephrine: {
         guidance: 'Decongestant: many adult oral products are 10 mg every 4 hours as needed (follow label).',
         options: ['10mg'],
-        defaultOption: '10mg'
+        defaultOption: '10mg',
+        quantityType: 'tablets'
     },
     planb: {
         guidance: 'Emergency contraception (levonorgestrel): 1.5 mg as a single dose as soon as possible after unprotected sex (follow product label).',
         options: ['1.5mg'],
-        defaultOption: '1.5mg'
+        defaultOption: '1.5mg',
+        quantityType: 'single'
     },
     polyethylene: {
         guidance: 'Polyethylene glycol products vary. For PEG 3350 constipation products, a common adult dose is 17 g once daily (follow label).',
         options: ['17g'],
-        defaultOption: '17g'
+        defaultOption: '17g',
+        quantityType: 'powder'
     },
     pseudoephedrine: {
         guidance: 'Decongestant: IR commonly 60 mg every 4–6 hours; ER commonly 120 mg every 12 hours (max varies; follow label).',
         options: ['30mg', '60mg', '120mg'],
-        defaultOption: '60mg'
+        defaultOption: '60mg',
+        quantityType: 'tablets'
     },
     sertraline: {
         guidance: 'Adults: commonly 25–50 mg once daily to start; may increase up to 200 mg/day depending on indication (if prescribed).',
         options: ['25mg', '50mg', '100mg', '150mg', '200mg'],
-        defaultOption: '50mg'
+        defaultOption: '50mg',
+        quantityType: 'tablets'
     },
     sildenafil: {
         guidance: 'Erectile dysfunction: commonly 50 mg taken as needed about 1 hour before sexual activity; range 25–100 mg (max once daily) (if prescribed).',
         options: ['25mg', '50mg', '100mg'],
-        defaultOption: '50mg'
+        defaultOption: '50mg',
+        quantityType: 'tablets'
     },
     simethicone: {
         guidance: 'Gas relief: products vary. Common adult dosing is 40–125 mg after meals and at bedtime as needed (follow label).',
         options: ['40mg', '80mg', '125mg'],
-        defaultOption: '80mg'
+        defaultOption: '80mg',
+        quantityType: 'tablets'
     },
     terbinafine: {
         guidance: 'Athlete’s foot/ringworm creams vary; oral terbinafine (if prescribed) is often 250 mg once daily. Follow label/prescriber.',
         options: ['250mg'],
+        quantityType: 'cream'
     },
     tolnaftate: {
         guidance: 'Topical antifungal products vary by % and form. Follow the product label for frequency/duration.',
+        quantityType: 'cream'
     },
     vitamin: {
         guidance: 'Vitamins vary by type and strength. Follow the product label or clinician advice.',
+        quantityType: 'tablets'
     }
 };
 
@@ -327,27 +461,75 @@ function restoreDefaultDosageSelectOptions(dosageSelect) {
     }
 }
 
+function setQuantitySelectOptions(quantitySelect, options) {
+    if (!quantitySelect) return;
+    const current = quantitySelect.value;
+    quantitySelect.innerHTML = '';
+
+    const placeholder = document.createElement('option');
+    placeholder.value = '';
+    placeholder.textContent = 'Select quantity';
+    quantitySelect.appendChild(placeholder);
+
+    options.forEach(o => {
+        const opt = document.createElement('option');
+        opt.value = o.value;
+        opt.textContent = o.text;
+        quantitySelect.appendChild(opt);
+    });
+
+    // Restore prior selection if still available, otherwise select first real option
+    if (current && Array.from(quantitySelect.options).some(o => o.value === current)) {
+        quantitySelect.value = current;
+    } else if (options.length > 0) {
+        quantitySelect.value = options[0].value;
+    }
+}
+
+function restoreDefaultQuantitySelectOptions(quantitySelect) {
+    if (!quantitySelect || !defaultQuantityOptions) return;
+    const current = quantitySelect.value;
+    quantitySelect.innerHTML = '';
+    defaultQuantityOptions.forEach(o => {
+        const opt = document.createElement('option');
+        opt.value = o.value;
+        opt.textContent = o.text;
+        quantitySelect.appendChild(opt);
+    });
+    if (current && Array.from(quantitySelect.options).some(o => o.value === current)) {
+        quantitySelect.value = current;
+    } else {
+        quantitySelect.value = '';
+    }
+}
+
 function updateDosageGuidanceUI() {
     const medicationInput = document.getElementById('medication');
     const dosageSelect = document.getElementById('dosage');
+    const quantitySelect = document.getElementById('quantity');
     const hint = document.getElementById('usualDosage');
     if (!medicationInput || !dosageSelect || !hint) return;
 
     const medication = medicationInput.value.trim();
     if (!medication) {
-        hint.textContent = 'Usual dosage guidance will appear here (informational only).';
+        hint.hidden = true;
+        hint.textContent = '';
         restoreDefaultDosageSelectOptions(dosageSelect);
+        restoreDefaultQuantitySelectOptions(quantitySelect);
         return;
     }
 
     const info = getDosageInfo(medication);
     if (!info) {
-        hint.textContent = 'No usual dosage guidance available for this medication (informational only).';
+        hint.hidden = true;
+        hint.textContent = '';
         restoreDefaultDosageSelectOptions(dosageSelect);
+        restoreDefaultQuantitySelectOptions(quantitySelect);
         return;
     }
 
-    hint.textContent = info.guidance;
+    hint.textContent = '💊 ' + info.guidance;
+    hint.hidden = false;
 
     if (Array.isArray(info.options) && info.options.length > 0) {
         setDosageSelectOptions(dosageSelect, info.options);
@@ -356,6 +538,13 @@ function updateDosageGuidanceUI() {
         }
     } else {
         restoreDefaultDosageSelectOptions(dosageSelect);
+    }
+
+    // Update quantity dropdown based on medication form type
+    if (info.quantityType && QUANTITY_OPTIONS[info.quantityType]) {
+        setQuantitySelectOptions(quantitySelect, QUANTITY_OPTIONS[info.quantityType]);
+    } else {
+        restoreDefaultQuantitySelectOptions(quantitySelect);
     }
 }
 
@@ -464,6 +653,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const dosageSelect = document.getElementById('dosage');
     if (dosageSelect && !defaultDosageOptions) {
         defaultDosageOptions = Array.from(dosageSelect.options).map(o => ({ value: o.value, text: o.textContent }));
+    }
+    const quantitySelect = document.getElementById('quantity');
+    if (quantitySelect && !defaultQuantityOptions) {
+        defaultQuantityOptions = Array.from(quantitySelect.options).map(o => ({ value: o.value, text: o.textContent }));
     }
     const medicationInput = document.getElementById('medication');
     if (medicationInput) {
@@ -660,7 +853,7 @@ function getBasePriceFromData(drugName, pharmacyName, zipCode) {
 }
 
 // Calculate price based on base price, dosage, quantity, and ZIP code
-function calculatePrice(basePrice, dosage, quantity, zipCode) {
+function calculatePrice(basePrice, dosage, quantity, zipCode, medicationName) {
     if (basePrice === null) {
         return null;
     }
@@ -669,7 +862,7 @@ function calculatePrice(basePrice, dosage, quantity, zipCode) {
     const zipMultiplier = getZipMultiplier(zipCode);
 
     // Dosage multiplier (assuming base price is for a standard dosage like 10mg or 50mg)
-    const dosageValue = parseInt(dosage);
+    const dosageValue = parseInt(dosage) || 0;
     let dosageMultiplier = 1.0;
     
     if (dosageValue <= 10) {
@@ -684,18 +877,174 @@ function calculatePrice(basePrice, dosage, quantity, zipCode) {
         dosageMultiplier = 2.0;
     }
     
-    // Quantity multiplier (bulk discount)
-    const quantityValue = parseInt(quantity);
-    let quantityMultiplier = 1.0;
+    // Get medication info to determine quantity type
+    const medInfo = getDosageInfo(medicationName);
+    const quantityType = medInfo?.quantityType || 'tablets';
     
-    if (quantityValue === 30) {
-        quantityMultiplier = 1.0;
-    } else if (quantityValue === 60) {
-        quantityMultiplier = 1.85; // slight discount for bulk
-    } else if (quantityValue === 90) {
-        quantityMultiplier = 2.6; // better discount
-    } else if (quantityValue === 180) {
-        quantityMultiplier = 4.8; // best discount
+    // Quantity multiplier based on product form type
+    let quantityMultiplier = 1.0;
+    const qtyVal = parseFloat(quantity) || 1;
+    
+    switch (quantityType) {
+        case 'tablets':
+        case 'capsules':
+            // Tablet/capsule bulk pricing (base = 30 count)
+            if (qtyVal <= 30) {
+                quantityMultiplier = 1.0;
+            } else if (qtyVal <= 60) {
+                quantityMultiplier = 1.85;
+            } else if (qtyVal <= 90) {
+                quantityMultiplier = 2.6;
+            } else {
+                quantityMultiplier = 4.8;
+            }
+            break;
+            
+        case 'cream':
+        case 'ointment':
+            // Cream/ointment pricing (base = 15g tube)
+            if (quantity === '15g') {
+                quantityMultiplier = 1.0;
+            } else if (quantity === '30g') {
+                quantityMultiplier = 1.7;
+            } else if (quantity === '45g') {
+                quantityMultiplier = 2.3;
+            } else if (quantity === '60g') {
+                quantityMultiplier = 2.9;
+            } else {
+                quantityMultiplier = qtyVal / 15;
+            }
+            break;
+            
+        case 'liquid':
+            // Liquid pricing (base = 120ml)
+            if (quantity === '120ml') {
+                quantityMultiplier = 1.0;
+            } else if (quantity === '240ml') {
+                quantityMultiplier = 1.8;
+            } else if (quantity === '480ml') {
+                quantityMultiplier = 3.2;
+            } else {
+                quantityMultiplier = qtyVal / 120;
+            }
+            break;
+            
+        case 'powder':
+            // Powder bottles (base = 1 bottle)
+            quantityMultiplier = qtyVal * 0.95; // slight bulk discount
+            if (quantityMultiplier < 1) quantityMultiplier = 1;
+            break;
+            
+        case 'inhaler':
+            // Inhalers (base = 1 inhaler)
+            if (qtyVal === 1) {
+                quantityMultiplier = 1.0;
+            } else if (qtyVal === 2) {
+                quantityMultiplier = 1.9;
+            } else {
+                quantityMultiplier = qtyVal * 0.93;
+            }
+            break;
+            
+        case 'nasalspray':
+            // Nasal spray bottles (base = 1 bottle)
+            if (qtyVal === 1) {
+                quantityMultiplier = 1.0;
+            } else if (qtyVal === 2) {
+                quantityMultiplier = 1.85;
+            } else {
+                quantityMultiplier = qtyVal * 0.9;
+            }
+            break;
+            
+        case 'patch':
+            // Patches (base = 7 patches / 1 week)
+            if (qtyVal <= 7) {
+                quantityMultiplier = 1.0;
+            } else if (qtyVal <= 14) {
+                quantityMultiplier = 1.9;
+            } else if (qtyVal <= 28) {
+                quantityMultiplier = 3.5;
+            } else {
+                quantityMultiplier = qtyVal / 7 * 0.9;
+            }
+            break;
+            
+        case 'gum':
+            // Nicotine gum pieces (base = 20 pieces)
+            if (qtyVal <= 20) {
+                quantityMultiplier = 1.0;
+            } else if (qtyVal <= 40) {
+                quantityMultiplier = 1.8;
+            } else if (qtyVal <= 100) {
+                quantityMultiplier = 4.0;
+            } else {
+                quantityMultiplier = 7.5;
+            }
+            break;
+            
+        case 'lozenge':
+            // Lozenges (base = 24 lozenges)
+            if (qtyVal <= 24) {
+                quantityMultiplier = 1.0;
+            } else if (qtyVal <= 72) {
+                quantityMultiplier = 2.7;
+            } else {
+                quantityMultiplier = 3.8;
+            }
+            break;
+            
+        case 'suppository':
+            // Suppositories (base = 8 count)
+            if (qtyVal <= 8) {
+                quantityMultiplier = 1.0;
+            } else if (qtyVal <= 12) {
+                quantityMultiplier = 1.4;
+            } else {
+                quantityMultiplier = 4.5;
+            }
+            break;
+            
+        case 'single':
+            // Single dose products (Plan B, etc.)
+            quantityMultiplier = 1.0;
+            break;
+            
+        case 'topicalsolution':
+            // Topical solutions like Minoxidil (base = 1 month)
+            if (quantity === '60ml' || qtyVal === 1) {
+                quantityMultiplier = 1.0;
+            } else if (qtyVal === 3) {
+                quantityMultiplier = 2.7;
+            } else {
+                quantityMultiplier = qtyVal * 0.9;
+            }
+            break;
+            
+        case 'softgel':
+            // Softgels like Omega-3 (base = 30 count)
+            if (qtyVal <= 30) {
+                quantityMultiplier = 1.0;
+            } else if (qtyVal <= 60) {
+                quantityMultiplier = 1.85;
+            } else if (qtyVal <= 90) {
+                quantityMultiplier = 2.6;
+            } else {
+                quantityMultiplier = 3.4;
+            }
+            break;
+            
+        default:
+            // Fallback to tablet-style pricing
+            if (qtyVal <= 30) {
+                quantityMultiplier = 1.0;
+            } else if (qtyVal <= 60) {
+                quantityMultiplier = 1.85;
+            } else if (qtyVal <= 90) {
+                quantityMultiplier = 2.6;
+            } else {
+                quantityMultiplier = 4.8;
+            }
     }
     
     // Calculate final price with ZIP code multiplier
@@ -757,7 +1106,7 @@ function displayResults(medication, dosage, quantity) {
 
             if (basePrice !== null) {
                 // Calculate price with ZIP code multiplier
-                const calculatedPrice = calculatePrice(basePrice, dosage, quantity, pharmacyZip);
+                const calculatedPrice = calculatePrice(basePrice, dosage, quantity, pharmacyZip, medication);
                 
                 results.push({
                     ...pharmacy,

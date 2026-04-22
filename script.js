@@ -306,7 +306,7 @@ const DOSAGE_GUIDANCE = {
     },
     ibuprofen: {
         guidance: 'Pain/fever (adult): 200–400 mg every 4–6 hours as needed; max 1,200 mg/day OTC (higher doses only if prescribed).',
-        options: ['200mg', '400mg', '600mg', '800mg'],
+        options: ['200mg', '400mg'],
         defaultOption: '200mg',
         quantityType: 'tablets',
         otc: true,

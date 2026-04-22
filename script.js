@@ -109,279 +109,395 @@ const DOSAGE_GUIDANCE = {
         guidance: 'Adults: 325–1,000 mg every 4–6 hours as needed; do not exceed 3,000 mg/day OTC (some regimens allow up to 4,000 mg/day under clinician guidance).',
         options: ['325mg', '500mg', '650mg', '1000mg'],
         defaultOption: '500mg',
-        quantityType: 'tablets'
+        quantityType: 'tablets',
+        otc: true,
+        baselineDosage: 500,
+        baselineQuantity: 30
     },
     aluminum: {
         guidance: 'Antacid products vary. Follow the product label; typical adult doses are taken after meals and at bedtime as needed.',
-        quantityType: 'liquid'
+        quantityType: 'liquid',
+        otc: true
     },
     amlodipine: {
         guidance: 'Adults (HTN/angina): typically 5 mg once daily; range 2.5–10 mg once daily.',
         options: ['2.5mg', '5mg', '10mg'],
         defaultOption: '5mg',
-        quantityType: 'tablets'
+        quantityType: 'tablets',
+        baselineDosage: 5,
+        baselineQuantity: 30
     },
     aspirin: {
         guidance: 'Pain/fever: 325–650 mg every 4–6 hours as needed. Cardioprotection (if prescribed): commonly 81 mg once daily.',
         options: ['81mg', '325mg', '500mg'],
         defaultOption: '325mg',
-        quantityType: 'tablets'
+        quantityType: 'tablets',
+        otc: true,
+        baselineDosage: 325,
+        baselineQuantity: 30
     },
     atorvastatin: {
         guidance: 'Adults: typically 10–20 mg once daily to start; range 10–80 mg once daily depending on cholesterol goals.',
         options: ['10mg', '20mg', '40mg', '80mg'],
         defaultOption: '20mg',
-        quantityType: 'tablets'
+        quantityType: 'tablets',
+        baselineDosage: 20,
+        baselineQuantity: 30
     },
     azelastine: {
         guidance: 'Nasal spray: commonly 1–2 sprays in each nostril twice daily (depends on product/indication).',
-        quantityType: 'nasalspray'
+        quantityType: 'nasalspray',
+        otc: true
     },
     azithromycin: {
         guidance: 'Typical adult regimens depend on infection. Common “Z-Pak”: 500 mg on day 1, then 250 mg daily on days 2–5 (if prescribed).',
         options: ['250mg', '500mg'],
         defaultOption: '250mg',
-        quantityType: 'tablets'
+        quantityType: 'tablets',
+        baselineDosage: 250,
+        baselineQuantity: 30
     },
     bactrim: {
         guidance: 'Formulations vary (TMP-SMX). A common adult regimen is DS 800/160 mg every 12 hours for certain infections (if prescribed).',
         options: ['80mg', '160mg', '400mg', '800mg'],
-        quantityType: 'tablets'
+        quantityType: 'tablets',
+        baselineDosage: 800,
+        baselineQuantity: 30
     },
     benadryl: {
         guidance: 'Diphenhydramine (adult): 25–50 mg every 4–6 hours as needed; max 300 mg/day (check label).',
         options: ['25mg', '50mg'],
         defaultOption: '25mg',
-        quantityType: 'tablets'
+        quantityType: 'tablets',
+        otc: true,
+        baselineDosage: 25,
+        baselineQuantity: 30
     },
     benzocaine: {
         guidance: 'Topical/oral products vary by % and form. Follow the product label; use the smallest amount needed.',
-        quantityType: 'cream'
+        quantityType: 'cream',
+        otc: true
     },
     bisacodyl: {
         guidance: 'Constipation (adult): oral 5–15 mg once daily as needed; suppository 10 mg once daily as needed (follow label).',
         options: ['5mg', '10mg', '15mg'],
         defaultOption: '5mg',
-        quantityType: 'tablets'
+        quantityType: 'tablets',
+        otc: true,
+        baselineDosage: 5,
+        baselineQuantity: 30
     },
     calcium: {
         guidance: 'Supplement/antacid products vary (carbonate vs citrate). Typical supplemental elemental calcium is often 500–600 mg per dose; follow label/clinician advice.',
         options: ['500mg', '600mg'],
-        quantityType: 'tablets'
+        quantityType: 'tablets',
+        otc: true,
+        baselineDosage: 500,
+        baselineQuantity: 30
     },
     capsaicin: {
         guidance: 'Topical products vary by % (e.g., 0.025–0.1%). Apply thin layer as directed on label.',
-        quantityType: 'cream'
+        quantityType: 'cream',
+        otc: true
     },
     cetirizine: {
         guidance: 'Allergies (adult): 10 mg once daily (some start with 5 mg).',
         options: ['5mg', '10mg'],
         defaultOption: '10mg',
-        quantityType: 'tablets'
+        quantityType: 'tablets',
+        otc: true,
+        baselineDosage: 10,
+        baselineQuantity: 30
     },
     chlorpheniramine: {
         guidance: 'Allergies (adult): commonly 4 mg every 4–6 hours as needed; max 24 mg/day (check label).',
         options: ['4mg'],
         defaultOption: '4mg',
-        quantityType: 'tablets'
+        quantityType: 'tablets',
+        otc: true,
+        baselineDosage: 4,
+        baselineQuantity: 30
     },
     clotrimazole: {
         guidance: 'Topical/vaginal products vary by % and form. Follow the product label for duration and frequency.',
-        quantityType: 'cream'
+        quantityType: 'cream',
+        otc: true
     },
     dextromethorphan: {
         guidance: 'Cough: dosing depends on formulation (IR vs ER). Many adult IR products are 10–20 mg every 4 hours or 30 mg every 6–8 hours; follow label.',
         options: ['10mg', '20mg', '30mg'],
-        quantityType: 'liquid'
+        quantityType: 'liquid',
+        otc: true,
+        baselineDosage: 15,
+        baselineQuantity: 120
     },
     diphenhydramine: {
         guidance: 'Allergy (adult): 25–50 mg every 4–6 hours as needed; max 300 mg/day (check label).',
         options: ['25mg', '50mg'],
         defaultOption: '25mg',
-        quantityType: 'tablets'
+        quantityType: 'tablets',
+        otc: true,
+        baselineDosage: 25,
+        baselineQuantity: 30
     },
     duloxetine: {
         guidance: 'Adults: commonly 30 mg once daily to start, then 60 mg once daily; max varies by indication (if prescribed).',
         options: ['20mg', '30mg', '60mg'],
         defaultOption: '30mg',
-        quantityType: 'capsules'
+        quantityType: 'capsules',
+        baselineDosage: 30,
+        baselineQuantity: 30
     },
     escitalopram: {
         guidance: 'Adults: commonly 10 mg once daily; some increase to 20 mg once daily (if prescribed).',
         options: ['5mg', '10mg', '20mg'],
         defaultOption: '10mg',
-        quantityType: 'tablets'
+        quantityType: 'tablets',
+        baselineDosage: 10,
+        baselineQuantity: 30
     },
     esomeprazole: {
         guidance: 'GERD: commonly 20–40 mg once daily (duration varies).',
         options: ['20mg', '40mg'],
         defaultOption: '20mg',
-        quantityType: 'capsules'
+        quantityType: 'capsules',
+        otc: true,
+        baselineDosage: 20,
+        baselineQuantity: 30
     },
     famotidine: {
         guidance: 'Heartburn/GERD: OTC often 10–20 mg once or twice daily; prescriptions may use higher doses (follow label/prescriber).',
         options: ['10mg', '20mg', '40mg'],
         defaultOption: '20mg',
-        quantityType: 'tablets'
+        quantityType: 'tablets',
+        otc: true,
+        baselineDosage: 20,
+        baselineQuantity: 30
     },
     fexofenadine: {
         guidance: 'Allergies (adult): 60 mg twice daily or 180 mg once daily (depends on product).',
         options: ['60mg', '180mg'],
         defaultOption: '180mg',
-        quantityType: 'tablets'
+        quantityType: 'tablets',
+        otc: true,
+        baselineDosage: 180,
+        baselineQuantity: 30
     },
     fluticasonesalmeterol: {
         guidance: 'Inhaler dosing varies by product strength. Common adult maintenance is 1 inhalation twice daily (if prescribed).',
         options: ['100/50mcg', '250/50mcg', '500/50mcg'],
-        quantityType: 'inhaler'
+        quantityType: 'inhaler',
+        baselineDosage: 100,
+        baselineQuantity: 1
     },
     guaifenesin: {
         guidance: 'Expectorant: IR often 200–400 mg every 4 hours as needed; ER often 600–1,200 mg every 12 hours (max varies; follow label).',
         options: ['200mg', '400mg', '600mg', '1200mg'],
         defaultOption: '600mg',
-        quantityType: 'liquid'
+        quantityType: 'liquid',
+        otc: true,
+        baselineDosage: 400,
+        baselineQuantity: 120
     },
     hydrocortisone: {
         guidance: 'Topical products commonly 0.5–1%. Apply a thin layer 1–4 times daily as directed (follow label).',
-        quantityType: 'cream'
+        quantityType: 'cream',
+        otc: true
     },
     ibuprofen: {
         guidance: 'Pain/fever (adult): 200–400 mg every 4–6 hours as needed; max 1,200 mg/day OTC (higher doses only if prescribed).',
         options: ['200mg', '400mg', '600mg', '800mg'],
         defaultOption: '200mg',
-        quantityType: 'tablets'
+        quantityType: 'tablets',
+        otc: true,
+        baselineDosage: 200,
+        baselineQuantity: 30
     },
     lansoprazole: {
         guidance: 'GERD: commonly 15–30 mg once daily (duration varies).',
         options: ['15mg', '30mg'],
         defaultOption: '15mg',
-        quantityType: 'capsules'
+        quantityType: 'capsules',
+        otc: true,
+        baselineDosage: 15,
+        baselineQuantity: 30
     },
     loperamide: {
         guidance: 'Diarrhea (adult): 4 mg initially, then 2 mg after each loose stool; max 8 mg/day OTC (follow label).',
         options: ['2mg'],
         defaultOption: '2mg',
-        quantityType: 'tablets'
+        quantityType: 'tablets',
+        otc: true,
+        baselineDosage: 2,
+        baselineQuantity: 30
     },
     loratadine: {
         guidance: 'Allergies (adult): 10 mg once daily.',
         options: ['10mg'],
         defaultOption: '10mg',
-        quantityType: 'tablets'
+        quantityType: 'tablets',
+        otc: true,
+        baselineDosage: 10,
+        baselineQuantity: 30
     },
     losartan: {
         guidance: 'Adults (HTN): commonly 50 mg once daily to start; range 25–100 mg/day (once daily or divided) (if prescribed).',
         options: ['25mg', '50mg', '100mg'],
         defaultOption: '50mg',
-        quantityType: 'tablets'
+        quantityType: 'tablets',
+        baselineDosage: 50,
+        baselineQuantity: 30
     },
     meclizine: {
         guidance: 'Motion sickness/vertigo: commonly 25–50 mg once daily or every 24 hours as needed (follow label/prescriber).',
         options: ['25mg', '50mg'],
         defaultOption: '25mg',
-        quantityType: 'tablets'
+        quantityType: 'tablets',
+        otc: true,
+        baselineDosage: 25,
+        baselineQuantity: 30
     },
     melatonin: {
         guidance: 'Sleep: commonly 1–5 mg 30–60 minutes before bedtime; start low (follow label).',
         options: ['1mg', '3mg', '5mg', '10mg'],
         defaultOption: '3mg',
-        quantityType: 'tablets'
+        quantityType: 'tablets',
+        otc: true,
+        baselineDosage: 3,
+        baselineQuantity: 30
     },
     miconazole: {
         guidance: 'Topical/vaginal products vary by % and duration. Follow the product label.',
-        quantityType: 'cream'
+        quantityType: 'cream',
+        otc: true
     },
     minoxidil: {
         guidance: 'Topical hair loss products commonly 2% or 5% solution/foam; apply as directed on the label.',
-        quantityType: 'topicalsolution'
+        quantityType: 'topicalsolution',
+        otc: true
     },
     miralax: {
         guidance: 'Constipation: commonly 17 g powder dissolved in liquid once daily as needed (follow label).',
         options: ['17g'],
         defaultOption: '17g',
-        quantityType: 'powder'
+        quantityType: 'powder',
+        otc: true,
+        baselineDosage: 17,
+        baselineQuantity: 1
     },
     naproxen: {
         guidance: 'Pain (adult): OTC naproxen sodium 220 mg every 8–12 hours; max 660 mg/day OTC (follow label).',
         options: ['220mg', '250mg', '375mg', '500mg'],
         defaultOption: '220mg',
-        quantityType: 'tablets'
+        quantityType: 'tablets',
+        otc: true,
+        baselineDosage: 220,
+        baselineQuantity: 30
     },
     nicotine: {
         guidance: 'Smoking cessation products vary (gum/lozenge/patch). Follow the product label for a taper schedule.',
-        quantityType: 'patch'
+        quantityType: 'patch',
+        otc: true
     },
     omega3acid: {
         guidance: 'Omega-3 products vary. Prescription omega-3 acid ethyl esters are often 2 g twice daily with meals (if prescribed).',
         options: ['1000mg', '2000mg'],
-        quantityType: 'softgel'
+        quantityType: 'softgel',
+        otc: true,
+        baselineDosage: 1000,
+        baselineQuantity: 30
     },
     omeprazole: {
         guidance: 'Heartburn/GERD: commonly 20 mg once daily before a meal (OTC courses are typically 14 days).',
         options: ['10mg', '20mg', '40mg'],
         defaultOption: '20mg',
-        quantityType: 'capsules'
+        quantityType: 'capsules',
+        otc: true,
+        baselineDosage: 20,
+        baselineQuantity: 30
     },
     pantoprazole: {
         guidance: 'GERD: commonly 40 mg once daily (if prescribed).',
         options: ['20mg', '40mg'],
         defaultOption: '40mg',
-        quantityType: 'tablets'
+        quantityType: 'tablets',
+        baselineDosage: 40,
+        baselineQuantity: 30
     },
     phenylephrine: {
         guidance: 'Decongestant: many adult oral products are 10 mg every 4 hours as needed (follow label).',
         options: ['10mg'],
         defaultOption: '10mg',
-        quantityType: 'tablets'
+        quantityType: 'tablets',
+        otc: true,
+        baselineDosage: 10,
+        baselineQuantity: 30
     },
     planb: {
         guidance: 'Emergency contraception (levonorgestrel): 1.5 mg as a single dose as soon as possible after unprotected sex (follow product label).',
         options: ['1.5mg'],
         defaultOption: '1.5mg',
-        quantityType: 'single'
+        quantityType: 'single',
+        otc: true
     },
     polyethylene: {
         guidance: 'Polyethylene glycol products vary. For PEG 3350 constipation products, a common adult dose is 17 g once daily (follow label).',
         options: ['17g'],
         defaultOption: '17g',
-        quantityType: 'powder'
+        quantityType: 'powder',
+        otc: true,
+        baselineDosage: 17,
+        baselineQuantity: 1
     },
     pseudoephedrine: {
         guidance: 'Decongestant: IR commonly 60 mg every 4–6 hours; ER commonly 120 mg every 12 hours (max varies; follow label).',
         options: ['30mg', '60mg', '120mg'],
         defaultOption: '60mg',
-        quantityType: 'tablets'
+        quantityType: 'tablets',
+        otc: true,
+        baselineDosage: 60,
+        baselineQuantity: 30
     },
     sertraline: {
         guidance: 'Adults: commonly 25–50 mg once daily to start; may increase up to 200 mg/day depending on indication (if prescribed).',
         options: ['25mg', '50mg', '100mg', '150mg', '200mg'],
         defaultOption: '50mg',
-        quantityType: 'tablets'
+        quantityType: 'tablets',
+        baselineDosage: 50,
+        baselineQuantity: 30
     },
     sildenafil: {
         guidance: 'Erectile dysfunction: commonly 50 mg taken as needed about 1 hour before sexual activity; range 25–100 mg (max once daily) (if prescribed).',
         options: ['25mg', '50mg', '100mg'],
         defaultOption: '50mg',
-        quantityType: 'tablets'
+        quantityType: 'tablets',
+        baselineDosage: 50,
+        baselineQuantity: 30
     },
     simethicone: {
         guidance: 'Gas relief: products vary. Common adult dosing is 40–125 mg after meals and at bedtime as needed (follow label).',
         options: ['40mg', '80mg', '125mg'],
         defaultOption: '80mg',
-        quantityType: 'tablets'
+        quantityType: 'tablets',
+        otc: true,
+        baselineDosage: 80,
+        baselineQuantity: 30
     },
     terbinafine: {
         guidance: 'Athlete’s foot/ringworm creams vary; oral terbinafine (if prescribed) is often 250 mg once daily. Follow label/prescriber.',
         options: ['250mg'],
-        quantityType: 'cream'
+        quantityType: 'cream',
+        otc: true
     },
     tolnaftate: {
         guidance: 'Topical antifungal products vary by % and form. Follow the product label for frequency/duration.',
-        quantityType: 'cream'
+        quantityType: 'cream',
+        otc: true
     },
     vitamin: {
         guidance: 'Vitamins vary by type and strength. Follow the product label or clinician advice.',
-        quantityType: 'tablets'
+        quantityType: 'tablets',
+        otc: true
     }
 };
 
@@ -853,18 +969,52 @@ function getBasePriceFromData(drugName, pharmacyName, zipCode) {
 }
 
 // Calculate price based on base price, dosage, quantity, and ZIP code
+//
+// Pricing model (designed to avoid runaway prices, e.g. Ibuprofen >$200):
+//   1. If the medication declares a baselineDosage/baselineQuantity, we scale
+//      the CSV base price as a *ratio* against those baselines, using a
+//      sub-linear power curve (mimics real bulk/strength discounts).
+//   2. If no baseline is declared, we fall back to the original stepwise
+//      multipliers (with a flatter tablet curve).
+//   3. The combined dosage × quantity multiplier is always clamped to
+//      MAX_COMBINED_MULTIPLIER as a safety net.
+//   4. OTC drugs get an even tighter cap because OTC prices barely move with
+//      strength or bottle size in the real world.
+const MAX_COMBINED_MULTIPLIER = 6.0;      // Rx / unknown drugs
+const MAX_COMBINED_MULTIPLIER_OTC = 3.5;  // OTC drugs (ibuprofen, acetaminophen, etc.)
+const DOSAGE_SCALING_POWER = 0.6;         // Sub-linear: doubling mg < doubles price
+const QUANTITY_SCALING_POWER = 0.75;      // Sub-linear: bulk discount built in
+
 function calculatePrice(basePrice, dosage, quantity, zipCode, medicationName) {
     if (basePrice === null) {
         return null;
     }
-    
-    // Get the ZIP Code multiplier
+
     const zipMultiplier = getZipMultiplier(zipCode);
 
-    // Dosage multiplier (assuming base price is for a standard dosage like 10mg or 50mg)
+    const medInfo = getDosageInfo(medicationName);
+    const quantityType = medInfo?.quantityType || 'tablets';
+    const isOtc = !!medInfo?.otc;
+
     const dosageValue = parseInt(dosage) || 0;
+    const qtyVal = parseFloat(quantity) || 1;
+
+    // --- Calibrated path: medication has explicit baselines ---
+    if (medInfo?.baselineDosage && medInfo?.baselineQuantity && dosageValue > 0) {
+        const dosageRatio = dosageValue / medInfo.baselineDosage;
+        const qtyRatio = qtyVal / medInfo.baselineQuantity;
+
+        const dosageMult = Math.pow(Math.max(dosageRatio, 0.01), DOSAGE_SCALING_POWER);
+        const qtyMult = Math.pow(Math.max(qtyRatio, 0.01), QUANTITY_SCALING_POWER);
+
+        const cap = isOtc ? MAX_COMBINED_MULTIPLIER_OTC : MAX_COMBINED_MULTIPLIER;
+        const combined = Math.min(dosageMult * qtyMult, cap);
+
+        return basePrice * combined * zipMultiplier;
+    }
+
+    // --- Legacy path: stepwise multipliers (with flatter quantity curve) ---
     let dosageMultiplier = 1.0;
-    
     if (dosageValue <= 10) {
         dosageMultiplier = 0.8;
     } else if (dosageValue <= 25) {
@@ -877,26 +1027,23 @@ function calculatePrice(basePrice, dosage, quantity, zipCode, medicationName) {
         dosageMultiplier = 2.0;
     }
     
-    // Get medication info to determine quantity type
-    const medInfo = getDosageInfo(medicationName);
-    const quantityType = medInfo?.quantityType || 'tablets';
-    
     // Quantity multiplier based on product form type
     let quantityMultiplier = 1.0;
-    const qtyVal = parseFloat(quantity) || 1;
-    
+
     switch (quantityType) {
         case 'tablets':
         case 'capsules':
-            // Tablet/capsule bulk pricing (base = 30 count)
+            // Tablet/capsule bulk pricing (base = 30 count).
+            // Flattened from 4.8 -> 3.0 at 180 ct so OTC bulk packs don't
+            // compound with the dosage multiplier into >$200 prices.
             if (qtyVal <= 30) {
                 quantityMultiplier = 1.0;
             } else if (qtyVal <= 60) {
-                quantityMultiplier = 1.85;
+                quantityMultiplier = 1.7;
             } else if (qtyVal <= 90) {
-                quantityMultiplier = 2.6;
+                quantityMultiplier = 2.3;
             } else {
-                quantityMultiplier = 4.8;
+                quantityMultiplier = 3.0;
             }
             break;
             
@@ -1035,21 +1182,24 @@ function calculatePrice(basePrice, dosage, quantity, zipCode, medicationName) {
             break;
             
         default:
-            // Fallback to tablet-style pricing
+            // Fallback to tablet-style pricing (flattened curve)
             if (qtyVal <= 30) {
                 quantityMultiplier = 1.0;
             } else if (qtyVal <= 60) {
-                quantityMultiplier = 1.85;
+                quantityMultiplier = 1.7;
             } else if (qtyVal <= 90) {
-                quantityMultiplier = 2.6;
+                quantityMultiplier = 2.3;
             } else {
-                quantityMultiplier = 4.8;
+                quantityMultiplier = 3.0;
             }
     }
-    
-    // Calculate final price with ZIP code multiplier
-    const finalPrice = basePrice * dosageMultiplier * quantityMultiplier * zipMultiplier;
-    return finalPrice;
+
+    // Safety net: cap the combined dosage × quantity multiplier so no drug
+    // can balloon past a reasonable ceiling (OTCs capped more tightly).
+    const cap = isOtc ? MAX_COMBINED_MULTIPLIER_OTC : MAX_COMBINED_MULTIPLIER;
+    const combined = Math.min(dosageMultiplier * quantityMultiplier, cap);
+
+    return basePrice * combined * zipMultiplier;
 }
 
 function calculateSavings(prices) {

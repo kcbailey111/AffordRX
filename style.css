@@ -5,6 +5,10 @@
         box-sizing: border-box;
     }
 
+    html, body {
+        background-color: #1e3c72;
+    }
+
     body {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #3498db 100%);
@@ -738,5 +742,27 @@ h1 {
 #map {
     box-shadow: none;
 }
+}
+
+/* Touch/mobile: avoid hover and transform repaint artifacts */
+@media (hover: none), (pointer: coarse) {
+    .pharmacy-card,
+    .resource-card,
+    .stat-card {
+        transform: none !important;
+    }
+
+    .pharmacy-card::before,
+    .resource-card::before,
+    .stat-card::before {
+        display: none !important;
+    }
+
+    .pharmacy-card:hover,
+    .resource-card:hover,
+    .stat-card:hover {
+        transform: none !important;
+        box-shadow: none !important;
+    }
 }
 

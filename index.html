@@ -46,6 +46,21 @@
                     <div class="stat-label">Price Searches</div>
                 </div>
             </div>
+
+            <div class="trust-card" id="trustCard" aria-live="polite">
+                <div class="trust-top">
+                    <div class="trust-title">Data freshness</div>
+                    <div class="trust-badge trust-badge--unknown" id="freshnessBadge">Checking…</div>
+                </div>
+                <div class="trust-details">
+                    <div class="trust-row"><span class="trust-k">Source</span><span class="trust-v" id="dataSource">GoodRx (scraped)</span></div>
+                    <div class="trust-row"><span class="trust-k">Last updated</span><span class="trust-v" id="dataLastUpdated">—</span></div>
+                    <div class="trust-row"><span class="trust-k">Records</span><span class="trust-v" id="dataRecords">—</span></div>
+                </div>
+                <div class="trust-footnote" id="trustFootnote" hidden>
+                    Last-updated date may be unavailable depending on hosting/CDN headers.
+                </div>
+            </div>
         </header>
 
 <!-- Search Form Section -->

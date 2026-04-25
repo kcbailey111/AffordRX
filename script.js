@@ -13,6 +13,17 @@ let greenvilleCsvLoaded = false;    // NEW: Track Greenville CSV load status
 let map;
 let currentMarkers = [];
 
+// --- Trust & data freshness widget ---
+const DATA_SOURCES = {
+    all: { url: 'all_data.csv', label: 'GoodRx (scraped)' },
+    greenville: { url: 'greenville_data.csv', label: 'GoodRx (scraped)' }
+};
+
+const FRESHNESS_THRESHOLDS_DAYS = {
+    fresh: 14,
+    aging: 45
+};
+
 // Store the original dosage dropdown options so we can restore them
 let defaultDosageOptions = null;
 let defaultQuantityOptions = null;
@@ -538,6 +549,87 @@ function getDosageInfo(medicationName) {
     return DOSAGE_GUIDANCE[canonicalKey] || null;
 }
 
+function isMedicationOtc(medicationName) {
+    const info = getDosageInfo(medicationName);
+    return !!(info && info.otc);
+}
+
+function formatDateForDisplay(d) {
+    try {
+        return d.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+    } catch {
+        return String(d);
+    }
+}
+
+function setFreshnessBadge(statusText, variant) {
+    const badge = document.getElementById('freshnessBadge');
+    if (!badge) return;
+    badge.textContent = statusText;
+    badge.classList.remove('trust-badge--fresh', 'trust-badge--aging', 'trust-badge--stale', 'trust-badge--unknown');
+    badge.classList.add(`trust-badge--${variant}`);
+}
+
+async function fetchLastModified(url) {
+    // Prefer HEAD; fall back to GET if HEAD isn't supported by host/CDN.
+    try {
+        const res = await fetch(url, { method: 'HEAD', cache: 'no-cache' });
+        const lm = res.headers.get('Last-Modified');
+        return lm ? new Date(lm) : null;
+    } catch (_) {
+        // ignore
+    }
+    try {
+        const res = await fetch(url, { method: 'GET', cache: 'no-cache' });
+        const lm = res.headers.get('Last-Modified');
+        return lm ? new Date(lm) : null;
+    } catch (_) {
+        return null;
+    }
+}
+
+async function initTrustWidget() {
+    const card = document.getElementById('trustCard');
+    if (!card) return;
+
+    const sourceEl = document.getElementById('dataSource');
+    const updatedEl = document.getElementById('dataLastUpdated');
+    const recordsEl = document.getElementById('dataRecords');
+    const footnoteEl = document.getElementById('trustFootnote');
+
+    if (sourceEl) sourceEl.textContent = DATA_SOURCES.all.label;
+    if (updatedEl) updatedEl.textContent = 'Checking…';
+    if (recordsEl) recordsEl.textContent = '—';
+    setFreshnessBadge('Checking…', 'unknown');
+
+    const lastMod = await fetchLastModified(DATA_SOURCES.all.url);
+    if (!lastMod || Number.isNaN(lastMod.getTime())) {
+        if (updatedEl) updatedEl.textContent = 'Unknown';
+        setFreshnessBadge('Unknown', 'unknown');
+        if (footnoteEl) footnoteEl.hidden = false;
+        return;
+    }
+
+    const ageDays = Math.floor((Date.now() - lastMod.getTime()) / (1000 * 60 * 60 * 24));
+    if (updatedEl) updatedEl.textContent = `${formatDateForDisplay(lastMod)} (${ageDays}d ago)`;
+
+    if (ageDays <= FRESHNESS_THRESHOLDS_DAYS.fresh) {
+        setFreshnessBadge('Fresh', 'fresh');
+    } else if (ageDays <= FRESHNESS_THRESHOLDS_DAYS.aging) {
+        setFreshnessBadge('Aging', 'aging');
+    } else {
+        setFreshnessBadge('Stale', 'stale');
+    }
+}
+
+function updateTrustWidgetRecords(recordsCount) {
+    const recordsEl = document.getElementById('dataRecords');
+    if (!recordsEl) return;
+    if (typeof recordsCount === 'number' && Number.isFinite(recordsCount)) {
+        recordsEl.textContent = recordsCount.toLocaleString();
+    }
+}
+
 function setDosageSelectOptions(dosageSelect, values) {
     const current = dosageSelect.value;
     dosageSelect.innerHTML = '';
@@ -780,6 +872,9 @@ document.addEventListener('DOMContentLoaded', function() {
         medicationInput.addEventListener('change', updateDosageGuidanceUI);
     }
     updateDosageGuidanceUI();
+
+    // Initialize trust / data freshness widget
+    initTrustWidget();
 });
 
 // Function to load and parse CSV data
@@ -794,6 +889,7 @@ function loadCSVData() {
             csvLoaded = true;
             console.log('CSV data loaded successfully:', medicationData.length, 'records');
             populateMedicationDatalist();
+            updateTrustWidgetRecords(medicationData.length);
         },
         error: function(error) {
             console.error('Error loading CSV:', error);
@@ -1377,11 +1473,17 @@ function setupFormHandler() {
         const dosage = document.getElementById('dosage').value;
         const quantity = document.getElementById('quantity').value;
         
-        if (medication && dosage && quantity) {
-            displayResults(medication, dosage, quantity);
-        } else {
+        if (!medication || !dosage || !quantity) {
             alert('Please fill in all fields');
+            return;
         }
+
+        if (!isMedicationOtc(medication)) {
+            alert('Please choose an OTC medication. Prescription-only medications are not supported.');
+            return;
+        }
+
+        displayResults(medication, dosage, quantity);
     });
 }
 

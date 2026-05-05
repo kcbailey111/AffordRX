@@ -2,9 +2,11 @@
 Sync South Carolina pharmacy chain locations from Google Places API.
 
 Usage:
-  1) Set environment variable:
+  Option A) Set environment variable:
        GOOGLE_MAPS_API_KEY=your_key_here
-  2) Run:
+  Option B) Put key in:
+       scripts/google_maps_api_key.txt
+  Then run:
        python scripts/sync_pharmacies_google.py
 
 Output:
@@ -32,6 +34,7 @@ from typing import Dict, List, Optional, Set
 GOOGLE_TEXT_SEARCH_URL = "https://maps.googleapis.com/maps/api/place/textsearch/json"
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 OUTPUT_FILE = PROJECT_ROOT / "pharmacies.json"
+API_KEY_FILE = PROJECT_ROOT / "scripts" / "google_maps_api_key.txt"
 
 # Add/remove chains as needed.
 CHAIN_QUERIES = [
@@ -70,12 +73,18 @@ class Pharmacy:
 
 def get_api_key() -> str:
     key = os.environ.get("GOOGLE_MAPS_API_KEY", "").strip()
-    if not key:
-        raise RuntimeError(
-            "Missing GOOGLE_MAPS_API_KEY environment variable. "
-            "Set it before running this script."
-        )
-    return key
+    if key:
+        return key
+
+    if API_KEY_FILE.exists():
+        file_key = API_KEY_FILE.read_text(encoding="utf-8").strip()
+        if file_key:
+            return file_key
+
+    raise RuntimeError(
+        "Missing Google API key. Set GOOGLE_MAPS_API_KEY or put the key in "
+        f"{API_KEY_FILE}."
+    )
 
 
 def fetch_json(url: str, params: Dict[str, str]) -> Dict[str, object]:

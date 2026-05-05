@@ -12,6 +12,8 @@ let csvLoaded = false;
 let greenvilleCsvLoaded = false;    // NEW: Track Greenville CSV load status
 let map;
 let currentMarkers = [];
+/** Loaded from pharmacies.json at runtime */
+let pharmacies = [];
 
 // --- Trust & data freshness widget ---
 const DATA_SOURCES = {
@@ -794,7 +796,7 @@ function escapeHtml(str) {
 }
 
 // Wait for the page to fully load before initializing
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
     // Initialize map centered on South Carolina (Columbia area) for a state-level view
     // Use a broader zoom so users see the whole state on first load
     map = L.map('map').setView([33.8361, -81.1637], 7);
@@ -848,9 +850,17 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }, 100);
 
+    // Load pharmacy locations (required for map + price search by store)
+    try {
+        await loadPharmacies();
+    } catch (err) {
+        console.error('Failed to load pharmacies.json:', err);
+        alert('Could not load pharmacy locations. Ensure pharmacies.json is available and try again.');
+    }
+
     // Load CSV data
     loadCSVData();
-    
+
     // Add initial markers
     addInitialMarkers();
     
@@ -915,51 +925,36 @@ function loadCSVData() {
     });
 }
 
-// Locations of Pharmacies in Spartanburg, SC area
-const pharmacies = [
-    { name: "Walgreens", lat: 34.966263, lng: -81.895416, address: "1790 E Main St, Spartanburg, SC 29307", phone: "(864) 555-0131" },
-    { name: "Publix Pharmacy", lat: 34.967105, lng: -81.890509, address: "1701 E Main St, Spartanburg, SC 29307", phone: "(864) 555-0132" },
-    { name: "Publix Pharmacy at the Market at Boiling Springs", lat: 35.06583095100721, lng: -81.99863749814074, address: "4400 SC-9, Boiling Springs, SC 29316", phone: "(864) 274-6225" },
-    { name: "Walgreens", lat: 35.05121984047732, lng: -81.98158116799644, address: "3681 Boiling Springs Rd, Boiling Springs, SC 29316", phone: "(864) 578-2414" },
-    { name: "Boiling Springs Pharmacy", lat: 35.02134010093637, lng: -81.95976493176535, address: "2528 Boiling Springs Rd Suite D, Boiling Springs, SC 29316", phone: "(864) 515-2600" },
-    { name: "CVS", lat: 35.020774675372714, lng: -81.9610189759189, address: "1888 Boiling Springs Rd, Boiling Springs, SC 29316", phone: "(864) 599-0920" },
-    { name: "Spartanburg Regional Pharmacy - Physician Center - Spartanburg", lat: 34.971346250376314, lng: -81.93936656157912, address: "100 E Wood St #101, Spartanburg, SC 29303", phone: "(864) 560-9200" },
-    { name: "Walgreens", lat: 34.9741850537861, lng: -81.93388128330479, address: "1000 N Pine St, Spartanburg, SC 29303", phone: "(864) 585-9136" },
-    { name: "Publix Pharmacy at Hillcrest Shopping Center", lat: 34.97039996027779, lng: -81.88913295765462, address: "1905 E Main St, Spartanburg, SC 29307", phone: "(864) 253-1833" },
-    { name: "Walgreens", lat: 34.926385420512275, lng: -81.8871120656588, address: "2198 Southport Rd, Spartanburg, SC 29306", phone: "(864) 582-5822" },
-    { name: "CVS", lat: 34.92010471452222, lng: -81.99260180058504, address: "2397 Reidville Rd, Spartanburg, SC 29301", phone: "(864) 576-9268" },
-    { name: "Walmart Supercenter", lat: 34.93364371932264, lng: -81.98464891678711, address: "141 Dorman Centre Dr, Spartanburg, SC 29301", phone: "(864) 574-6452" },
-    { name: "Walmart Neighborhood Market", lat: 34.921052480750994, lng: -81.8845498539414, address: "203 Cedar Springs Rd, Spartanburg, SC 29302", phone: "(864) 381-6365" }, 
-    { name: "Walmart Supercenter", lat: 34.97320191086142, lng: -81.87687609863929, address: "2151 E Main St, Spartanburg, SC 29307", phone: "(864) 529-0156" },
-    { name: "Walgreens", lat: 34.9225310478231, lng: -81.99433399372431, address: "2410 Reidville Rd, Spartanburg, SC 29301", phone: "(864) 587-9486" },
-    { name: "CVS", lat: 34.934579497121796, lng: -82.00891013499744, address: "8199 Warren H Abernathy Hwy, Spartanburg, SC 29301", phone: "(864) 576-7591" },
+async function loadPharmacies() {
+    const res = await fetch('pharmacies.json', { cache: 'no-cache' });
+    if (!res.ok) {
+        throw new Error(`pharmacies.json HTTP ${res.status}`);
+    }
+    const data = await res.json();
+    const list = Array.isArray(data.pharmacies) ? data.pharmacies : [];
+    pharmacies = list
+        .map((p) => {
+            const lat = Number(p.lat);
+            const lng = Number(p.lng);
+            return {
+                name: String(p.name || '').trim(),
+                lat,
+                lng,
+                address: String(p.address || '').trim(),
+                phone: String(p.phone || '').trim(),
+                chain: String(p.chain || '').trim(),
+                placeId: String(p.placeId || '').trim()
+            };
+        })
+        .filter((p) => p.name && Number.isFinite(p.lat) && Number.isFinite(p.lng) && p.address);
 
+    const countEl = document.getElementById('pharmacyCount');
+    if (countEl && pharmacies.length > 0) {
+        countEl.textContent = pharmacies.length.toLocaleString();
+    }
 
-    // Additions of Greenville Pharmacies
-    //Need to verify lat/lng values along with the actual addresses and phone numbers
-    { name: "CVS", lat: 34.852617, lng: -82.394012, address: "201 E Butler Rd, Greenville, SC 29607", phone: "(864) 297-1234" },
-    { name: "Walgreens", lat: 34.847123, lng: -82.400456, address: "1500 Woodruff Rd, Greenville, SC 29607", phone: "(864) 297-5678" },
-    { name: "Publix Pharmacy", lat: 34.849876, lng: -82.391234, address: "1200 E North St, Greenville, SC 29607", phone: "(864) 297-9101" },
-    {name: "Walmart", lat: 34.911906169106146, lng: -82.43086384247985, address: "5009 Old Buncombe Rd, Greenville, SC 29617", phone: "(864) 605-6370"},
-    {name: "Walmart Pharmacy", lat: 34.86168092564008, lng: -82.26315161189558, address: "3925 Pelham Rd, Greenville, SC 29615", phone: "(864) 288-8171"},
-
-    {name: "CVS",  lat: 34.849905999942756, lng: -82.39907721361867, address: "35 S Main St, Greenville, SC 29601", phone: "(864) 370-4848"},
-    {name: "CVS",  lat: 34.83496584081104, lng: -82.35269326944147, address: "2210 Laurens Rd, Greenville, SC 29607", phone: "(864) 288-8280"},
-    {name: "CVS",  lat: 34.89456999763415, lng: -82.43125552156793, address:"4102 Old Buncombe Rd, Greenville, SC 29617", phone: "(864) 371-3651"},
-    {name: "CVS", lat: 34.8221701027552, lng: -82.41569138293511, address: "718 Mills Ave, Greenville, SC 29605", phone: "(864) 421-1586"},
-    {name: "CVS", lat: 34.83680665742059, lng: -82.2788953350616, address: "1509 Roper Mountain Rd, Greenville, SC 29615", phone: "(864) 213-1082"},
-    {name: "CVS", lat: 34.9048783820055, lng: -82.38764627128955, address: "1141 State Park Rd, Greenville, SC 29609", phone: "(864) 240-7421"},
-    {name: "CVS", lat: 34.86944913958712, lng: -82.35777330012502, address: "2401 E North St, Greenville, SC 29615", phone: "(864) 244-1851"},
-    {name: "CVS", lat: 34.81487069649635, lng: -82.2732805424541, address: "1200 E Butler Rd, Greenville, SC 29607", phone: "(864) 297-2501"},
-    {name: "CVS", lat: 34.86053347901237, lng: -82.2651722136187, address: "3901 Pelham Rd, Greenville, SC 29615", phone: "(864) 288-3672"},
-    {name: "CVS", lat: 34.824319340578526, lng: -82.3940478197198, address: "2100 Augusta St, Greenville, SC 29605", phone: "(864) 255-3878"},
-    
-    {name: "Walgreens", lat: 34.89758379288567, lng: -82.33893648108698, address: "2700 Wade Hampton Blvd, Greenville, SC 29615", phone: "(864) 268-7123"},
-    {name: "Walgreens", lat: 34.86912415051832, lng: -82.35866010622615, address: "2323 E North St, Greenville, SC 29607", phone: "(864) 233-9401"},
-    {name: "Walgreens", lat: 34.851497238012925, lng: -82.4517113019731, address: "6057 White Horse Rd, Greenville, SC 29611", phone: "(864) 295-0243"},
-    {name: "Walgreens", lat: 34.85477357220053, lng: -82.32014825835267, address: "902 Pelham Rd, Greenville, SC 29615", phone: "(864) 234-6462"},
-    {name: "Walgreens", lat: 34.78837370768248, lng: -82.4832648099224, address: "3501 SC-153, Greenville, SC 29611", phone: "(864) 295-2029"}
-];
+    console.log('Pharmacies loaded from pharmacies.json:', pharmacies.length);
+}
 
 // Custom colored marker icons for highlighting top results
 const greenIcon = new L.Icon({
@@ -1322,6 +1317,16 @@ function displayResults(medication, dosage, quantity) {
     resultsDiv.appendChild(searching);
     
     setTimeout(() => {
+        if (!pharmacies.length) {
+            resultsDiv.innerHTML = `
+                <div class="no-results">
+                    <strong>Pharmacy locations unavailable.</strong><br>
+                    The site could not load <code>pharmacies.json</code>. Refresh the page or check that the file is deployed with the site.
+                </div>
+            `;
+            return;
+        }
+
         // Check if the medication exists in either dataset
         const normalizedMedication = medication.trim().toLowerCase();
         const existsInMain = medicationData.some(row => ((row.Name || '').trim().toLowerCase()).includes(normalizedMedication));
@@ -1489,7 +1494,8 @@ function setupFormHandler() {
 
 // Add some initial sample markers
 function addInitialMarkers() {
-     pharmacies.slice(0, 4).forEach(pharmacy => {
+    if (!pharmacies.length) return;
+    pharmacies.slice(0, 4).forEach(pharmacy => {
          const marker = L.marker([pharmacy.lat, pharmacy.lng])
             .bindPopup(`
                <div class="popup-content">

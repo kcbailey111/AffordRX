@@ -1,260 +1,2717 @@
 {
-  "generatedAt": "manual-seed-from-scriptjs",
-  "source": "script.js hardcoded pharmacies",
+  "generatedAt": "2026-05-05T22:23:21Z",
+  "source": "Google Places Text Search API",
   "region": "South Carolina",
-  "count": 36,
+  "count": 301,
   "pharmacies": [
     {
-      "name": "Walgreens",
-      "lat": 34.966263,
-      "lng": -81.895416,
-      "address": "1790 E Main St, Spartanburg, SC 29307",
-      "phone": "(864) 555-0131"
+      "name": "Costco Pharmacy",
+      "lat": 33.705222,
+      "lng": -78.91595319999999,
+      "address": "1021 Oak Forest Ln #338b, Myrtle Beach, SC 29577, USA",
+      "phone": "",
+      "chain": "Costco",
+      "placeId": "ChIJwwCp83BpAIkRDD7fnUZbO48"
     },
     {
-      "name": "Publix Pharmacy",
-      "lat": 34.967105,
-      "lng": -81.890509,
-      "address": "1701 E Main St, Spartanburg, SC 29307",
-      "phone": "(864) 555-0132"
+      "name": "Costco Pharmacy",
+      "lat": 34.8362351,
+      "lng": -82.31035210000002,
+      "address": "1021 Woodruff Rd, Greenville, SC 29607, USA",
+      "phone": "",
+      "chain": "Costco",
+      "placeId": "ChIJNQoL7CgvWIgR6j3k37w99HM"
     },
     {
-      "name": "Publix Pharmacy at the Market at Boiling Springs",
-      "lat": 35.06583095100721,
-      "lng": -81.99863749814074,
-      "address": "4400 SC-9, Boiling Springs, SC 29316",
-      "phone": "(864) 274-6225"
+      "name": "Costco Pharmacy",
+      "lat": 34.9400631,
+      "lng": -81.99831879999999,
+      "address": "211 W Blackstock Rd #1008b, Spartanburg, SC 29301, USA",
+      "phone": "",
+      "chain": "Costco",
+      "placeId": "ChIJBWfgnZudV4gRxGCZckUNWH0"
     },
     {
-      "name": "Walgreens",
-      "lat": 35.05121984047732,
-      "lng": -81.98158116799644,
-      "address": "3681 Boiling Springs Rd, Boiling Springs, SC 29316",
-      "phone": "(864) 578-2414"
+      "name": "Costco Pharmacy",
+      "lat": 32.7952795,
+      "lng": -80.03618469999999,
+      "address": "3050 Ashley Town Center Dr, Charleston, SC 29414, USA",
+      "phone": "",
+      "chain": "Costco",
+      "placeId": "ChIJqeFDNEd8_ogRj3pRxddAisY"
     },
     {
-      "name": "Boiling Springs Pharmacy",
-      "lat": 35.02134010093637,
-      "lng": -81.95976493176535,
-      "address": "2528 Boiling Springs Rd Suite D, Boiling Springs, SC 29316",
-      "phone": "(864) 515-2600"
+      "name": "Costco Pharmacy",
+      "lat": 32.8816282,
+      "lng": -79.7708353,
+      "address": "3525 Park Ave Blvd, Mt Pleasant, SC 29466, USA",
+      "phone": "",
+      "chain": "Costco",
+      "placeId": "ChIJzdr1Bx1t_ogRefM3VKiHy4U"
+    },
+    {
+      "name": "Costco Pharmacy",
+      "lat": 34.0705435,
+      "lng": -81.1391549,
+      "address": "507 Piney Grove Rd, Columbia, SC 29210, USA",
+      "phone": "",
+      "chain": "Costco",
+      "placeId": "ChIJvzSxykOi-IgRtScApZeC7tw"
     },
     {
       "name": "CVS",
-      "lat": 35.020774675372714,
-      "lng": -81.9610189759189,
-      "address": "1888 Boiling Springs Rd, Boiling Springs, SC 29316",
-      "phone": "(864) 599-0920"
+      "lat": 34.1407285,
+      "lng": -80.9384104,
+      "address": "1002 Sams Crossing Dr, Columbia, SC 29229, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJEU7j_62p-IgRa_j_p8kJvag"
     },
     {
-      "name": "Spartanburg Regional Pharmacy - Physician Center - Spartanburg",
-      "lat": 34.971346250376314,
-      "lng": -81.93936656157912,
-      "address": "100 E Wood St #101, Spartanburg, SC 29303",
-      "phone": "(864) 560-9200"
+      "name": "CVS",
+      "lat": 34.0899519,
+      "lng": -81.1746459,
+      "address": "1008 Lake Murray Blvd, Irmo, SC 29063, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJk15KNaWY-IgRsl-77mvc7xA"
+    },
+    {
+      "name": "CVS",
+      "lat": 33.5216864,
+      "lng": -81.9537852,
+      "address": "101 Edgefield Rd, North Augusta, SC 29841, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJ3wYQhqfM-YgRGZ73BV6-ebw"
+    },
+    {
+      "name": "CVS",
+      "lat": 33.9533404,
+      "lng": -81.2326675,
+      "address": "1071 S Lake Dr, Lexington, SC 29073, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJ_-Sj8cCW-IgR2XHbt78DVHk"
+    },
+    {
+      "name": "CVS",
+      "lat": 35.1424666,
+      "lng": -81.86100689999999,
+      "address": "109 W Manning St, Chesnee, SC 29323, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJiSHj3ssSV4gRVB4EHQIAC2o"
+    },
+    {
+      "name": "CVS",
+      "lat": 35.0378851,
+      "lng": -82.0787378,
+      "address": "11211 Asheville Hwy, Inman, SC 29349, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJwQOXqoZ5V4gRvu4tn9uNbDA"
+    },
+    {
+      "name": "CVS",
+      "lat": 34.0998147,
+      "lng": -80.8557581,
+      "address": "121 Clemson Rd, Columbia, SC 29229, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJH_pQwZ-r-IgRXtA1qaBgEzE"
+    },
+    {
+      "name": "CVS",
+      "lat": 34.2829954,
+      "lng": -81.5954979,
+      "address": "1210 Wilson Rd, Newberry, SC 29108, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJxVpouyPUV4gRJZDOx92YUMc"
+    },
+    {
+      "name": "CVS",
+      "lat": 34.6890368,
+      "lng": -82.82615109999999,
+      "address": "1300 Tiger Blvd, Clemson, SC 29631, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJLd0le2NeWIgRbVPlFxNmIV0"
+    },
+    {
+      "name": "CVS",
+      "lat": 34.2087023,
+      "lng": -82.145397,
+      "address": "1302 HWY 72-221 EAST, Greenwood, SC 29649, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJebY-PiEB-IgRErfYMIi4OXM"
+    },
+    {
+      "name": "CVS",
+      "lat": 34.9302442,
+      "lng": -81.89564930000002,
+      "address": "1400 Union St, Spartanburg, SC 29302, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJidZ498SfV4gRy0qbU-Bo6Q4"
+    },
+    {
+      "name": "CVS",
+      "lat": 35.0339291,
+      "lng": -80.9701406,
+      "address": "1740 SC-160, Fort Mill, SC 29708, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJ766SjkGFVogR4wvwzO_3lPI"
+    },
+    {
+      "name": "CVS",
+      "lat": 34.965163,
+      "lng": -81.89631779999999,
+      "address": "1751 E Main St, Spartanburg, SC 29307, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJmV4TIG11V4gR_OlMSKisU4o"
+    },
+    {
+      "name": "CVS",
+      "lat": 35.0165933,
+      "lng": -81.96026189999999,
+      "address": "1888 Boiling Springs Rd, Boiling Springs, SC 29316, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJMQ20N6J2V4gRKW-9d5vYMUE"
+    },
+    {
+      "name": "CVS",
+      "lat": 34.4570466,
+      "lng": -81.87791639999999,
+      "address": "194 Jacobs Hwy, Clinton, SC 29325, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJh0fe_C3oV4gRuAt_nhhsL_s"
+    },
+    {
+      "name": "CVS",
+      "lat": 34.8346268,
+      "lng": -82.35277909999999,
+      "address": "2210 Laurens Rd, Greenville, SC 29607, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJ9wNt-64vWIgRGEwsGss7rNo"
+    },
+    {
+      "name": "CVS",
+      "lat": 35.0729485,
+      "lng": -81.652391,
+      "address": "229 W Buford St, Gaffney, SC 29341, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJFzuyZRwFV4gRvEAnRSLVOLs"
+    },
+    {
+      "name": "CVS",
+      "lat": 33.9792488,
+      "lng": -81.3023943,
+      "address": "2373 Augusta Hwy, Lexington, SC 29072, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJFcZnQ1OQ-IgR00ZDn2Vct4k"
+    },
+    {
+      "name": "CVS",
+      "lat": 34.9195412,
+      "lng": -81.9926349,
+      "address": "2397 Reidville Rd, Spartanburg, SC 29301, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJA9NjOKadV4gRizecLHH5jCA"
+    },
+    {
+      "name": "CVS",
+      "lat": 34.002124,
+      "lng": -81.1061789,
+      "address": "2401 Sunset Blvd, West Columbia, SC 29169, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJQ-MuZ868-IgRR_lmZp8yjd4"
+    },
+    {
+      "name": "CVS",
+      "lat": 33.9477959,
+      "lng": -81.0791557,
+      "address": "2410 Charleston Hwy, Cayce, SC 29033, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJ_3zL7Xa8-IgRgBem7OSXyuw"
+    },
+    {
+      "name": "CVS",
+      "lat": 34.3708938,
+      "lng": -81.098882,
+      "address": "27 US-321, Winnsboro, SC 29180, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJfR8PXGAXVogRybNYbeqa7MI"
+    },
+    {
+      "name": "CVS",
+      "lat": 34.9791286,
+      "lng": -80.9796446,
+      "address": "2870 Cherry Rd, Rock Hill, SC 29730, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJDeOcsFWFVogR3LCwun06DWI"
+    },
+    {
+      "name": "CVS",
+      "lat": 33.9455665,
+      "lng": -81.1689507,
+      "address": "2908 Emanuel Church Rd, West Columbia, SC 29170, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJPWkhMx-W-IgRxRyphylFVCg"
+    },
+    {
+      "name": "CVS",
+      "lat": 35.1760443,
+      "lng": -82.1866244,
+      "address": "303 E Rutherford St, Landrum, SC 29356, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJsZrISPFiV4gR-L8Om4cfCMs"
+    },
+    {
+      "name": "CVS",
+      "lat": 34.0061902,
+      "lng": -81.773319,
+      "address": "321 N Main St, Saluda, SC 29138, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJw5nGEoRu-IgRCn9xYZ4fTCA"
+    },
+    {
+      "name": "CVS",
+      "lat": 34.8497167,
+      "lng": -82.3991094,
+      "address": "35 S Main St, Greenville, SC 29601, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJSfGTCdIxWIgRcacrm0bGSYs"
+    },
+    {
+      "name": "CVS",
+      "lat": 34.0412762,
+      "lng": -80.9945625,
+      "address": "3700 Two Notch Rd, Columbia, SC 29204, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJFTNc73ml-IgR4A_7DUfiO_M"
+    },
+    {
+      "name": "CVS",
+      "lat": 34.0462431,
+      "lng": -81.0340993,
+      "address": "4627 N Main St, Columbia, SC 29203, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJ8Rbvpf-k-IgRi9X8TeSRbbA"
+    },
+    {
+      "name": "CVS",
+      "lat": 34.0209225,
+      "lng": -80.96854929999999,
+      "address": "4711-5 Forest Dr, Columbia, SC 29206, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJKfLR0pSv-IgRXsOqsRBJAf4"
+    },
+    {
+      "name": "CVS",
+      "lat": 33.9855181,
+      "lng": -81.056846,
+      "address": "500 Knox Abbott Dr, Cayce, SC 29033, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJgbE13T67-IgRH7P-8mWHr30"
+    },
+    {
+      "name": "CVS",
+      "lat": 33.9943757,
+      "lng": -81.22760439999999,
+      "address": "5608 Sunset Blvd, Lexington, SC 29072, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJefE6_D-X-IgRk01VLTwIBfg"
+    },
+    {
+      "name": "CVS",
+      "lat": 33.1921966,
+      "lng": -80.5862413,
+      "address": "5742 County Rd S-18-200, St George, SC 29477, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJTx-pcjXE_ogR4r4rWl-YIQ0"
+    },
+    {
+      "name": "CVS",
+      "lat": 34.886436,
+      "lng": -82.0661253,
+      "address": "5895 Reidville Rd, Moore, SC 29369, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJVVVVVWWbV4gRbhmXJ-IfeeA"
+    },
+    {
+      "name": "CVS",
+      "lat": 34.7186343,
+      "lng": -81.63896559999999,
+      "address": "599 Rice Ave, Union, SC 29379, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJj_s20bGxV4gRbh6uOPWaV0w"
+    },
+    {
+      "name": "CVS",
+      "lat": 34.944219,
+      "lng": -81.0292364,
+      "address": "609 Cherry Rd, Rock Hill, SC 29732, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJGbVSsg6JVogRk5pzKiNVVlA"
+    },
+    {
+      "name": "CVS",
+      "lat": 34.9362307,
+      "lng": -82.27318149999999,
+      "address": "6160 Wade Hampton Blvd, Taylors, SC 29687, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJC3NWaBArWIgRtYP6lPhSAAA"
+    },
+    {
+      "name": "CVS",
+      "lat": 35.1082393,
+      "lng": -81.2152625,
+      "address": "690 Bethel St, Clover, SC 29710, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJGTwh6q7tVogRhr6EevAccBk"
+    },
+    {
+      "name": "CVS",
+      "lat": 34.1842666,
+      "lng": -79.3994539,
+      "address": "700 N Main St, Marion, SC 29571, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJCczYB99SVYgRBhgtso81kVg"
+    },
+    {
+      "name": "CVS",
+      "lat": 34.9488566,
+      "lng": -82.2243065,
+      "address": "702 N Main St, Greer, SC 29651, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJxXFEOQqAV4gRhnOlkOxHrVo"
+    },
+    {
+      "name": "CVS",
+      "lat": 33.9560216,
+      "lng": -80.9310082,
+      "address": "7749 Garners Ferry Rd, Columbia, SC 29209, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJk_JVIaax-IgRxoIb6eKLQB8"
+    },
+    {
+      "name": "CVS",
+      "lat": 34.9663454,
+      "lng": -81.93079759999999,
+      "address": "87 Garner Rd, Spartanburg, SC 29303, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJ3eJWFJV1V4gRUeqbQRGKKGQ"
+    },
+    {
+      "name": "CVS",
+      "lat": 33.4871998,
+      "lng": -80.4760177,
+      "address": "8910 Old Number Six Hwy, Santee, SC 29142, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJlz_5j88h_4gRB4t2KTpBZzs"
+    },
+    {
+      "name": "CVS",
+      "lat": 33.9970084,
+      "lng": -81.0331281,
+      "address": "900 Assembly St, Columbia, SC 29201, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJDbtHvSm7-IgRMdLy4Aqog4Q"
+    },
+    {
+      "name": "CVS",
+      "lat": 33.245276,
+      "lng": -81.36696630000002,
+      "address": "9912 Dunbarton Blvd, Barnwell, SC 29812, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJHU_QxmUO-YgRT5HpHHTZl28"
+    },
+    {
+      "name": "CVS Pharmacy",
+      "lat": 35.1424666,
+      "lng": -81.86100689999999,
+      "address": "109 W Manning St, Chesnee, SC 29323, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJ18P02csSV4gRp9oZ7vVk9bM"
+    },
+    {
+      "name": "CVS Pharmacy",
+      "lat": 35.0377845,
+      "lng": -82.0788019,
+      "address": "11211 Asheville Hwy, Inman, SC 29349, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJeaAuCIR5V4gR_mwnWDThAZI"
+    },
+    {
+      "name": "CVS Pharmacy",
+      "lat": 34.9302442,
+      "lng": -81.89564930000002,
+      "address": "1400 Union St, Spartanburg, SC 29302, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJw2oeUcSfV4gRHDPgAHsNhGA"
+    },
+    {
+      "name": "CVS Pharmacy",
+      "lat": 34.9651294,
+      "lng": -81.89652439999999,
+      "address": "1751 E Main St, Spartanburg, SC 29307, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJuRzi1JJ1V4gR7uTYb4pW06A"
+    },
+    {
+      "name": "CVS Pharmacy",
+      "lat": 35.0165437,
+      "lng": -81.9601725,
+      "address": "1888 Boiling Springs Rd, Boiling Springs, SC 29316, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJMxK5N6J2V4gRp1sTMtokC2w"
+    },
+    {
+      "name": "CVS Pharmacy",
+      "lat": 34.4570466,
+      "lng": -81.87791639999999,
+      "address": "194 Jacobs Hwy, Clinton, SC 29325, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJo8j3YjLoV4gRVpljeGj50L4"
+    },
+    {
+      "name": "CVS Pharmacy",
+      "lat": 35.0729485,
+      "lng": -81.652391,
+      "address": "229 W Buford St, Gaffney, SC 29341, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJQ6q6fRwFV4gRpWt1D6PZcu8"
+    },
+    {
+      "name": "CVS Pharmacy",
+      "lat": 34.9195412,
+      "lng": -81.9926349,
+      "address": "2397 Reidville Rd, Spartanburg, SC 29301, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJcURzbKadV4gRxoo-_SB0DX0"
+    },
+    {
+      "name": "CVS Pharmacy",
+      "lat": 35.044736,
+      "lng": -81.98363859999999,
+      "address": "3659 Boiling Springs Rd, Boiling Springs, SC 29316, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJWc8u_cpxV4gRH1bGqSbUWJ0"
+    },
+    {
+      "name": "CVS Pharmacy",
+      "lat": 34.886436,
+      "lng": -82.0661253,
+      "address": "5895 Reidville Rd, Moore, SC 29369, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJS3kVu2uDV4gRZcrsiYYrf0w"
+    },
+    {
+      "name": "CVS Pharmacy",
+      "lat": 34.7187192,
+      "lng": -81.63906209999999,
+      "address": "599 Rice Ave, Union, SC 29379, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJwSh8KrCxV4gRch3zp-fru4w"
+    },
+    {
+      "name": "CVS Pharmacy",
+      "lat": 34.9663375,
+      "lng": -81.9308071,
+      "address": "87 Garner Rd, Spartanburg, SC 29303, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJ72U_JZV1V4gRQmzY7FLXhKo"
     },
     {
       "name": "Walgreens",
-      "lat": 34.9741850537861,
-      "lng": -81.93388128330479,
-      "address": "1000 N Pine St, Spartanburg, SC 29303",
-      "phone": "(864) 585-9136"
+      "lat": 35.080422,
+      "lng": -81.656618,
+      "address": "837 W Floyd Baker Blvd, Gaffney, SC 29341, USA",
+      "phone": "",
+      "chain": "Cvs",
+      "placeId": "ChIJBZyBXHEFV4gRiwj5Pk0p_tY"
+    },
+    {
+      "name": "Kroger Pharmacy",
+      "lat": 34.1148644,
+      "lng": -80.88251679999999,
+      "address": "10136 Two Notch Rd, Columbia, SC 29229, USA",
+      "phone": "",
+      "chain": "Kroger",
+      "placeId": "ChIJfU-rMMmr-IgRQg3m2N7c3hE"
+    },
+    {
+      "name": "Kroger Pharmacy",
+      "lat": 34.1429313,
+      "lng": -80.95171669999999,
+      "address": "1028 Roberts Branch Pkwy, Columbia, SC 29203, USA",
+      "phone": "",
+      "chain": "Kroger",
+      "placeId": "ChIJdTNQuE-o-IgRKu5f_5qs_Gs"
+    },
+    {
+      "name": "Kroger Pharmacy",
+      "lat": 32.268202,
+      "lng": -80.8582887,
+      "address": "125 Towne Dr, Bluffton, SC 29910, USA",
+      "phone": "",
+      "chain": "Kroger",
+      "placeId": "ChIJIwCi5QuJ-4gRlRQqEC1BOkE"
+    },
+    {
+      "name": "Kroger Pharmacy",
+      "lat": 33.506296,
+      "lng": -81.9603482,
+      "address": "1284 Knox Ave, North Augusta, SC 29841, USA",
+      "phone": "",
+      "chain": "Kroger",
+      "placeId": "ChIJ0WRE6pvM-YgRsnX7r4yAHxo"
+    },
+    {
+      "name": "Kroger Pharmacy",
+      "lat": 33.5235797,
+      "lng": -81.7220324,
+      "address": "1795 Whiskey Rd, Aiken, SC 29803, USA",
+      "phone": "",
+      "chain": "Kroger",
+      "placeId": "ChIJdY1iNzJN-IgRXebvGb-N1fs"
+    },
+    {
+      "name": "Kroger Pharmacy",
+      "lat": 32.2741013,
+      "lng": -80.9171982,
+      "address": "27 Discovery Dr, Bluffton, SC 29910, USA",
+      "phone": "",
+      "chain": "Kroger",
+      "placeId": "ChIJE_NgOl-P-4gRbanmPLQCI9c"
+    },
+    {
+      "name": "Kroger Pharmacy",
+      "lat": 33.5837682,
+      "lng": -79.0125891,
+      "address": "2939 Hwy 17 S, Murrells Inlet, SC 29576, USA",
+      "phone": "",
+      "chain": "Kroger",
+      "placeId": "ChIJWyOzR69AAIkRPIOj-4-0EXI"
+    },
+    {
+      "name": "Kroger Pharmacy",
+      "lat": 34.0199657,
+      "lng": -80.9912083,
+      "address": "3403 Forest Dr, Columbia, SC 29204, USA",
+      "phone": "",
+      "chain": "Kroger",
+      "placeId": "ChIJyxA29l6l-IgRuyz4x1IOK0c"
+    },
+    {
+      "name": "Kroger Pharmacy",
+      "lat": 33.7609852,
+      "lng": -78.9664495,
+      "address": "3735 Renee Dr, Myrtle Beach, SC 29579, USA",
+      "phone": "",
+      "chain": "Kroger",
+      "placeId": "ChIJlR6z7mRsAIkRBBhGbyPIS3U"
+    },
+    {
+      "name": "Kroger Pharmacy",
+      "lat": 32.1857111,
+      "lng": -80.7204752,
+      "address": "42 Shelter Cove Ln, Hilton Head Island, SC 29928, USA",
+      "phone": "",
+      "chain": "Kroger",
+      "placeId": "ChIJiwE_xwJ6_IgRYmUWX31eO7o"
+    },
+    {
+      "name": "Kroger Pharmacy",
+      "lat": 34.0857813,
+      "lng": -81.1863253,
+      "address": "7467 St Andrews Rd #6, Irmo, SC 29063, USA",
+      "phone": "",
+      "chain": "Kroger",
+      "placeId": "ChIJP_ybVb-Y-IgRNqFiawZwbhs"
+    },
+    {
+      "name": "Kroger Pharmacy",
+      "lat": 33.8264714,
+      "lng": -78.6799535,
+      "address": "781 Main St, North Myrtle Beach, SC 29582, USA",
+      "phone": "",
+      "chain": "Kroger",
+      "placeId": "ChIJiWYRhEB9AIkRuubNOe72Umc"
+    },
+    {
+      "name": "Kroger Pharmacy",
+      "lat": 33.7770119,
+      "lng": -78.79307899999999,
+      "address": "9610 N Kings Hwy, Myrtle Beach, SC 29572, USA",
+      "phone": "",
+      "chain": "Kroger",
+      "placeId": "ChIJPSGm1QFlAIkRA3TtDSJGCOA"
+    },
+    {
+      "name": "Publix Pharmacy at Anderson Pavilion Shopping Center",
+      "lat": 34.5309383,
+      "lng": -82.6364432,
+      "address": "1611 E Greenville St, Anderson, SC 29621, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJuVQ9GdNuWIgRjmICpTiuXac"
+    },
+    {
+      "name": "Publix Pharmacy at Beaufort Plaza",
+      "lat": 32.4277727,
+      "lng": -80.72864760000002,
+      "address": "33 Robert Smalls Pkwy, Beaufort, SC 29906, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJHRpRBl8L_IgRV8AOLJmGq40"
+    },
+    {
+      "name": "Publix Pharmacy at Boulevard Market Fair",
+      "lat": 34.5536535,
+      "lng": -82.6853069,
+      "address": "3801 Clemson Blvd, Anderson, SC 29621, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJT2Drt9JuWIgRU1YFloHL0Gw"
+    },
+    {
+      "name": "Publix Pharmacy at Center Point",
+      "lat": 34.8200015,
+      "lng": -82.58476879999999,
+      "address": "6525 Calhoun Memorial Hwy, Easley, SC 29640, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJH35pFnNIWIgRiir_WMVhYD0"
+    },
+    {
+      "name": "Publix Pharmacy at Chapin Crossing",
+      "lat": 34.1643277,
+      "lng": -81.35178220000002,
+      "address": "1235 Chapin Rd, Chapin, SC 29036, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJ6aXpa9qC-IgRW5Q3gQRMbWw"
+    },
+    {
+      "name": "Publix Pharmacy at Cherry Road Crossing",
+      "lat": 34.9647475,
+      "lng": -80.9969155,
+      "address": "2186 Cherry Rd Ste 101, Rock Hill, SC 29732, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJNVztlq2IVogR87KVoNsJ2EA"
+    },
+    {
+      "name": "Publix Pharmacy at Columbiana Station",
+      "lat": 34.0677973,
+      "lng": -81.1621533,
+      "address": "150 Harbison Blvd, Columbia, SC 29212, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJ_xavzoKY-IgRoBAEZ0imfBg"
+    },
+    {
+      "name": "Publix Pharmacy at Coventry Marketplace",
+      "lat": 33.6637093,
+      "lng": -78.9690425,
+      "address": "955 Wood Duck Dr, Myrtle Beach, SC 29577, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJhy26qH5qAIkRzOhlAYBOfac"
+    },
+    {
+      "name": "Publix Pharmacy at Cross Creek",
+      "lat": 34.95618109999999,
+      "lng": -80.8497551,
+      "address": "8360 Charlotte Hwy, Indian Land, SC 29707, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJbykCU4CBVogRtY4a7qN2v_U"
+    },
+    {
+      "name": "Publix Pharmacy at Eastgate Shopping Center",
+      "lat": 33.5112945,
+      "lng": -81.71639239999999,
+      "address": "250 E Gate Dr, Aiken, SC 29803, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJ38gJ0cmy-YgRAt_MMKwzp3M"
+    },
+    {
+      "name": "Publix Pharmacy at Five Forks Place",
+      "lat": 34.8042232,
+      "lng": -82.22720799999999,
+      "address": "2700 Woodruff Rd, Simpsonville, SC 29681, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJNbNK7xAoWIgRvoGLL738zKk"
+    },
+    {
+      "name": "Publix Pharmacy at Forest Square",
+      "lat": 33.7584744,
+      "lng": -78.9587137,
+      "address": "2170 Oakheart Rd, Myrtle Beach, SC 29579, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJm4CBsG9sAIkRpp-Hxat9gXU"
+    },
+    {
+      "name": "Publix Pharmacy at Gateway Village",
+      "lat": 34.6857613,
+      "lng": -82.8175371,
+      "address": "1390 Tiger Blvd, Clemson, SC 29631, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJnYWp5dZdWIgRCyO42htyKm0"
+    },
+    {
+      "name": "Publix Pharmacy at Gervais Place",
+      "lat": 33.9984018,
+      "lng": -81.0444162,
+      "address": "501 Gervais St, Columbia, SC 29201, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJ4XUVmzG7-IgRaHMFbBS4raY"
+    },
+    {
+      "name": "Publix Pharmacy at Hampton Village",
+      "lat": 34.9021661,
+      "lng": -82.3371398,
+      "address": "2801 Wade Hampton Blvd Suite 120, Taylors, SC 29687, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJwxToGzEsWIgRbXhlwDgKvvE"
+    },
+    {
+      "name": "Publix Pharmacy at Hendrix Crossing",
+      "lat": 33.991143,
+      "lng": -81.3063217,
+      "address": "847 US-378, Lexington, SC 29072, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJaYUOOi2X-IgRM0dYuXXUVHY"
     },
     {
       "name": "Publix Pharmacy at Hillcrest Shopping Center",
-      "lat": 34.97039996027779,
-      "lng": -81.88913295765462,
-      "address": "1905 E Main St, Spartanburg, SC 29307",
-      "phone": "(864) 253-1833"
+      "lat": 34.9671657,
+      "lng": -81.8906415,
+      "address": "1905 E Main St, Spartanburg, SC 29307, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJNSWY4RR1V4gRNUfMpwpx5gg"
     },
     {
-      "name": "Walgreens",
-      "lat": 34.926385420512275,
-      "lng": -81.8871120656588,
-      "address": "2198 Southport Rd, Spartanburg, SC 29306",
-      "phone": "(864) 582-5822"
+      "name": "Publix Pharmacy at Kennerly Crossing",
+      "lat": 34.096841,
+      "lng": -81.1575423,
+      "address": "7320 Broad River Rd, Irmo, SC 29063, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJC2J_qwai-IgRcZOIki3bhHY"
+    },
+    {
+      "name": "Publix Pharmacy at Lady's Island",
+      "lat": 32.4121133,
+      "lng": -80.6510567,
+      "address": "61 Ladys Island Dr, Beaufort, SC 29907, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJn_vQcnYN_IgR7LPxR2j64Oc"
+    },
+    {
+      "name": "Publix Pharmacy at Lake Crossing",
+      "lat": 33.9064448,
+      "lng": -81.22086519999999,
+      "address": "5441 Platt Springs Rd, Lexington, SC 29073, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJCx8ppeiV-IgRdeHMpBmzLlU"
+    },
+    {
+      "name": "Publix Pharmacy at Landing Station",
+      "lat": 35.1202692,
+      "lng": -81.0810778,
+      "address": "158 SC-274, Lake Wylie, SC 29710, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJt_04cdmTVogRKrr4DcPQiMk"
+    },
+    {
+      "name": "Publix Pharmacy at Lexington Place",
+      "lat": 33.9999365,
+      "lng": -81.21984230000001,
+      "address": "100 Old Cherokee Rd, Lexington, SC 29072, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJUYSzvG2X-IgRp8jxcBb-wGw"
+    },
+    {
+      "name": "Publix Pharmacy at Market at Standing Springs",
+      "lat": 34.7245494,
+      "lng": -82.2954642,
+      "address": "1400 W Georgia Rd, Simpsonville, SC 29680, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJHYsoaK4nWIgRpKQsOOCezQE"
+    },
+    {
+      "name": "Publix Pharmacy at Marketplace at the Mill",
+      "lat": 33.753403,
+      "lng": -78.87092419999999,
+      "address": "136 Sapwood Dr, Myrtle Beach, SC 29579, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJ0aiDn3VvAIkRXtONKbZWtpY"
+    },
+    {
+      "name": "Publix Pharmacy at Martin Farms Shopping Center",
+      "lat": 34.7027922,
+      "lng": -82.2598088,
+      "address": "704 Fairview Rd, Simpsonville, SC 29680, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJsy76qSohWIgR2ky935X0Vw4"
+    },
+    {
+      "name": "Publix Pharmacy at Mauldin Square",
+      "lat": 34.7769463,
+      "lng": -82.3101433,
+      "address": "111 W Butler Rd, Mauldin, SC 29662, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJd1hy4NMlWIgRdo6EUQlWtto"
+    },
+    {
+      "name": "Publix Pharmacy at May River Crossing",
+      "lat": 32.2424546,
+      "lng": -80.9781361,
+      "address": "2501 May River Xing, Bluffton, SC 29910, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJrTxMj1iP-4gRPZjQPJFjV_k"
+    },
+    {
+      "name": "Publix Pharmacy at McAlister Square",
+      "lat": 34.8361778,
+      "lng": -82.36451629999999,
+      "address": "235 S Pleasantburg Dr, Greenville, SC 29607, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJCycdDLYvWIgRPkQtZO3oDvU"
+    },
+    {
+      "name": "Publix Pharmacy at McBee Station",
+      "lat": 34.8478676,
+      "lng": -82.3951885,
+      "address": "400 E McBee Ave. Ste 100 Ste 100, Greenville, SC 29601, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJbXwFo9MxWIgR5RBCgL39fvU"
+    },
+    {
+      "name": "Publix Pharmacy at Moncks Corner Marketplace",
+      "lat": 33.0900559,
+      "lng": -80.030093,
+      "address": "2830 US-52, Moncks Corner, SC 29461, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJyU46PK1f_ogRqUZVhfXoiGA"
+    },
+    {
+      "name": "Publix Pharmacy at Murray Landing",
+      "lat": 34.0979296,
+      "lng": -81.2208082,
+      "address": "2732 N Lake Dr, Columbia, SC 29212, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJVQakrzGZ-IgRFakt1HiqVn4"
+    },
+    {
+      "name": "Publix Pharmacy at New River Crossing",
+      "lat": 32.3082916,
+      "lng": -80.9733322,
+      "address": "112 Nickle Plate Rd, Hardeeville, SC 29927, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJlaSDBeON-4gRcsSW27EAHaY"
+    },
+    {
+      "name": "Publix Pharmacy at North Augusta Plaza",
+      "lat": 33.4958239,
+      "lng": -81.9623462,
+      "address": "334 E Martintown Rd, North Augusta, SC 29841, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJa7-DOITM-YgRImaTCQloCgE"
+    },
+    {
+      "name": "Publix Pharmacy at North Point",
+      "lat": 32.7916056,
+      "lng": -79.85434390000002,
+      "address": "1435 Ben Sawyer Blvd, Mt Pleasant, SC 29464, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJX9UGEA1x_ogR8FJD9VDd3Oc"
+    },
+    {
+      "name": "Publix Pharmacy at North Pointe Shopping Center",
+      "lat": 34.1145063,
+      "lng": -80.8845996,
+      "address": "10128 Two Notch Rd, Columbia, SC 29223, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJ2_t5u8-r-IgRF-JyfFc4mUY"
+    },
+    {
+      "name": "Publix Pharmacy at Oakbrook Shopping Center",
+      "lat": 32.9667973,
+      "lng": -80.165993,
+      "address": "1575 Old Trolley Rd, Summerville, SC 29485, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJf5sRMOeL_ogRcZw5AQdvIaQ"
+    },
+    {
+      "name": "Publix Pharmacy at One Nexton",
+      "lat": 33.0601777,
+      "lng": -80.15444029999999,
+      "address": "1274 Nexton Pkwy, Summerville, SC 29483, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJAZNE_Gf1_ogRkXB9W9vyyxg"
+    },
+    {
+      "name": "Publix Pharmacy at Paradise Shoppes of Summerville",
+      "lat": 33.0116128,
+      "lng": -80.23487999999999,
+      "address": "1585 Central Ave Unit A Unit A, Summerville, SC 29483, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJiVvJ5gCN_ogRFrpFgG6VP3g"
+    },
+    {
+      "name": "Publix Pharmacy at Pawleys Island Plaza",
+      "lat": 33.4385415,
+      "lng": -79.1319283,
+      "address": "10225 Ocean Hwy #17, Pawleys Island, SC 29585, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJVZYH8z0xAIkRMkIdFuT9SHs"
+    },
+    {
+      "name": "Publix Pharmacy at Pelham Commons",
+      "lat": 34.86790149999999,
+      "lng": -82.3470954,
+      "address": "215 Pelham Rd, Greenville, SC 29615, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJuyS8RWAuWIgRANh0nJBMmWo"
+    },
+    {
+      "name": "Publix Pharmacy at Poplar Springs Plaza",
+      "lat": 34.8884767,
+      "lng": -82.06728629999999,
+      "address": "2153 E Main St Ste B9, Duncan, SC 29334, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJgzibQmuDV4gRgcEeiK_jEfc"
+    },
+    {
+      "name": "Publix Pharmacy at Prince Creek Village Center",
+      "lat": 33.5858024,
+      "lng": -79.0547423,
+      "address": "11920 SC-707 Ste A, Murrells Inlet, SC 29576, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJpRazOzQ_AIkRe3hNiqqv3D8"
+    },
+    {
+      "name": "Publix Pharmacy at Rice Creek Village",
+      "lat": 34.1532945,
+      "lng": -80.9131974,
+      "address": "4611 Hard Scrabble Rd, Columbia, SC 29229, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJd5E7x-2p-IgRD0GT_XbveL0"
+    },
+    {
+      "name": "Publix Pharmacy at Rosewood Shopping Center",
+      "lat": 33.9872709,
+      "lng": -81.0032564,
+      "address": "2800 Rosewood Dr, Columbia, SC 29205, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJoenhebm6-IgR1-NWJN9ob5g"
+    },
+    {
+      "name": "Publix Pharmacy at Seneca 130 Plaza",
+      "lat": 34.7026872,
+      "lng": -82.9389752,
+      "address": "115 Rochester Hwy, Seneca, SC 29672, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJ5Vc6Jfv1WIgRWQ-QZ4hJMHQ"
+    },
+    {
+      "name": "Publix Pharmacy at the Market at Boiling Springs",
+      "lat": 35.0622662,
+      "lng": -81.9975748,
+      "address": "4400 SC-9, Boiling Springs, SC 29316, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJ1a825x9xV4gRDj6ISRwF6z8"
+    },
+    {
+      "name": "Publix Pharmacy at the Market at Spears Creek",
+      "lat": 34.1122111,
+      "lng": -80.8445046,
+      "address": "185 Earth Rd, Columbia, SC 29229, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJQ82o51ur-IgRixe4hkB5wxk"
+    },
+    {
+      "name": "Publix Pharmacy at The Market Place at Carnes Crossroads",
+      "lat": 33.0616512,
+      "lng": -80.0962393,
+      "address": "2700 N Main St a, Summerville, SC 29486, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJzci0r2Zf_ogRtRyL4jdIgRo"
+    },
+    {
+      "name": "Publix Pharmacy at The Shops at Arden Woods",
+      "lat": 34.7456549,
+      "lng": -82.35371169999999,
+      "address": "1311 Fork Shoals Rd, Greenville, SC 29605, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJsad-pJolWIgRguHEWMpJCn4"
+    },
+    {
+      "name": "Publix Pharmacy at the Shops at Publix Pavilion",
+      "lat": 34.2061515,
+      "lng": -82.1859195,
+      "address": "479 By-pass 72 NW Ste 100, Greenwood, SC 29649, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJg_-PL7EB-IgRkoSpln9xx4E"
+    },
+    {
+      "name": "Publix Pharmacy at The Village at Woodside",
+      "lat": 33.495956,
+      "lng": -81.7478602,
+      "address": "1535 Silver Bluff Rd, Aiken, SC 29803, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJ_8AgjGyz-YgRAkUw_4J4GPc"
+    },
+    {
+      "name": "Publix Pharmacy at Thornblade",
+      "lat": 34.8714221,
+      "lng": -82.25602359999999,
+      "address": "411 The Parkway, Greer, SC 29650, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJaV_zeSaHV4gRZdnONdbrxC4"
+    },
+    {
+      "name": "Publix Pharmacy at Trenholm Plaza",
+      "lat": 34.0166231,
+      "lng": -80.9647929,
+      "address": "4840 Forest Dr Ste 10, Columbia, SC 29206, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJv0cKheqv-IgR7mkZzxA1YJ4"
+    },
+    {
+      "name": "Publix Pharmacy at University Square Shopping Center",
+      "lat": 34.9110043,
+      "lng": -82.4285428,
+      "address": "5000 Old Buncombe Rd Unit 15, Greenville, SC 29617, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJuehjzzUyWIgRG6tOfcXDqKA"
+    },
+    {
+      "name": "Publix Pharmacy at Wedgewood Square Shopping Center",
+      "lat": 34.9505998,
+      "lng": -81.0638176,
+      "address": "1735 Heckle Blvd, Rock Hill, SC 29732, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJCXADD2iJVogRyQlRiIyuOj8"
+    },
+    {
+      "name": "Publix Pharmacy at Woodruff",
+      "lat": 34.8182303,
+      "lng": -82.2717505,
+      "address": "1750 Woodruff Rd, Greenville, SC 29607, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJj6387O0oWIgRfJ9OaPOxIC4"
+    },
+    {
+      "name": "Publix Pharmacy On Gold Hill",
+      "lat": 35.0627253,
+      "lng": -80.9644484,
+      "address": "928 Gold Hill Rd, Fort Mill, SC 29708, USA",
+      "phone": "",
+      "chain": "Publix",
+      "placeId": "ChIJ2RCoDDebVogRMLWNdQqup58"
+    },
+    {
+      "name": "Sam's Club Pharmacy",
+      "lat": 34.8253878,
+      "lng": -82.28953480000001,
+      "address": "1211 Woodruff Rd, Greenville, SC 29607, USA",
+      "phone": "",
+      "chain": "Sam'S Club",
+      "placeId": "ChIJpUfDD88oWIgRasu3DjzFzKU"
+    },
+    {
+      "name": "Sam's Club Pharmacy",
+      "lat": 32.2582344,
+      "lng": -80.85594069999999,
+      "address": "14 Bluffton Rd, Bluffton, SC 29910, USA",
+      "phone": "",
+      "chain": "Sam'S Club",
+      "placeId": "ChIJH9WJFAeJ-4gRBq2x_IA23tA"
+    },
+    {
+      "name": "Sam's Club Pharmacy",
+      "lat": 33.7134344,
+      "lng": -78.8969632,
+      "address": "1946 10th Ave N, Myrtle Beach, SC 29577, USA",
+      "phone": "",
+      "chain": "Sam'S Club",
+      "placeId": "ChIJjX0RsRZpAIkRvNU-3M-2ynU"
+    },
+    {
+      "name": "Sam's Club Pharmacy",
+      "lat": 34.1917321,
+      "lng": -79.822997,
+      "address": "200 N Beltline Dr, Florence, SC 29501, USA",
+      "phone": "",
+      "chain": "Sam'S Club",
+      "placeId": "ChIJfWb47KNmVYgRlOkSdRaVtt4"
+    },
+    {
+      "name": "Sam's Club Pharmacy",
+      "lat": 34.93422,
+      "lng": -81.9972083,
+      "address": "200 Peachwood Center Dr, Spartanburg, SC 29301, USA",
+      "phone": "",
+      "chain": "Sam'S Club",
+      "placeId": "ChIJrf_393WdV4gR1_6NY97rg8M"
+    },
+    {
+      "name": "Sam's Club Pharmacy",
+      "lat": 33.5634604,
+      "lng": -81.78249290000001,
+      "address": "220 Jefferson Davis Hwy, Aiken, SC 29801, USA",
+      "phone": "",
+      "chain": "Sam'S Club",
+      "placeId": "ChIJJRuzbnxL-IgRl6VF7xyziYQ"
+    },
+    {
+      "name": "Sam's Club Pharmacy",
+      "lat": 34.9385151,
+      "lng": -80.9582999,
+      "address": "2474 Cross Pointe Dr, Rock Hill, SC 29730, USA",
+      "phone": "",
+      "chain": "Sam'S Club",
+      "placeId": "ChIJb6EIdEGGVogRKAmrDolseUo"
+    },
+    {
+      "name": "Sam's Club Pharmacy",
+      "lat": 34.8291651,
+      "lng": -82.54200829999999,
+      "address": "309 Rolling Hills Cir, Easley, SC 29640, USA",
+      "phone": "",
+      "chain": "Sam'S Club",
+      "placeId": "ChIJM696Qus3WIgRkFsRg__OZgI"
+    },
+    {
+      "name": "Sam's Club Pharmacy",
+      "lat": 34.0713182,
+      "lng": -81.1510472,
+      "address": "350 Harbison Blvd, Columbia, SC 29212, USA",
+      "phone": "",
+      "chain": "Sam'S Club",
+      "placeId": "ChIJC1DAWnKi-IgR1b7r4qluSHc"
+    },
+    {
+      "name": "Sam's Club Pharmacy",
+      "lat": 34.5568141,
+      "lng": -82.6775092,
+      "address": "3812 Liberty Hwy, Anderson, SC 29621, USA",
+      "phone": "",
+      "chain": "Sam'S Club",
+      "placeId": "ChIJKaXoM81uWIgR_MddHbwPGEg"
+    },
+    {
+      "name": "Sam's Club Pharmacy",
+      "lat": 32.8793371,
+      "lng": -80.0185904,
+      "address": "4900 Centre Pointe Dr, North Charleston, SC 29418, USA",
+      "phone": "",
+      "chain": "Sam'S Club",
+      "placeId": "ChIJ9UT3zCdvK4cRg9KVxb9m524"
+    },
+    {
+      "name": "Sam's Club Pharmacy",
+      "lat": 34.0179838,
+      "lng": -80.9504249,
+      "address": "5426 Forest Dr, Columbia, SC 29206, USA",
+      "phone": "",
+      "chain": "Sam'S Club",
+      "placeId": "ChIJlcWSb7ev-IgRrIbn7RnOwn4"
+    },
+    {
+      "name": "Sam's Club Pharmacy",
+      "lat": 34.1228187,
+      "lng": -80.8792465,
+      "address": "733 Fashion Dr, Columbia, SC 29229, USA",
+      "phone": "",
+      "chain": "Sam'S Club",
+      "placeId": "ChIJt7oCPDWq-IgR-fe-dghQ8FA"
     },
     {
       "name": "CVS",
-      "lat": 34.92010471452222,
-      "lng": -81.99260180058504,
-      "address": "2397 Reidville Rd, Spartanburg, SC 29301",
-      "phone": "(864) 576-9268"
-    },
-    {
-      "name": "Walmart Supercenter",
-      "lat": 34.93364371932264,
-      "lng": -81.98464891678711,
-      "address": "141 Dorman Centre Dr, Spartanburg, SC 29301",
-      "phone": "(864) 574-6452"
-    },
-    {
-      "name": "Walmart Neighborhood Market",
-      "lat": 34.921052480750994,
-      "lng": -81.8845498539414,
-      "address": "203 Cedar Springs Rd, Spartanburg, SC 29302",
-      "phone": "(864) 381-6365"
-    },
-    {
-      "name": "Walmart Supercenter",
-      "lat": 34.97320191086142,
-      "lng": -81.87687609863929,
-      "address": "2151 E Main St, Spartanburg, SC 29307",
-      "phone": "(864) 529-0156"
-    },
-    {
-      "name": "Walgreens",
-      "lat": 34.9225310478231,
-      "lng": -81.99433399372431,
-      "address": "2410 Reidville Rd, Spartanburg, SC 29301",
-      "phone": "(864) 587-9486"
+      "lat": 34.8302631,
+      "lng": -82.30872939999999,
+      "address": "1112 Woodruff Rd Target, Greenville, SC 29607, USA",
+      "phone": "",
+      "chain": "Target",
+      "placeId": "ChIJq6qqQS4vWIgRVyzS2mbi7pw"
     },
     {
       "name": "CVS",
-      "lat": 34.934579497121796,
-      "lng": -82.00891013499744,
-      "address": "8199 Warren H Abernathy Hwy, Spartanburg, SC 29301",
-      "phone": "(864) 576-7591"
+      "lat": 34.066234,
+      "lng": -81.16510199999999,
+      "address": "134 Harbison Blvd, Columbia, SC 29212, USA",
+      "phone": "",
+      "chain": "Target",
+      "placeId": "ChIJocvUjIKY-IgRh4FEilzuHjA"
     },
     {
       "name": "CVS",
-      "lat": 34.852617,
-      "lng": -82.394012,
-      "address": "201 E Butler Rd, Greenville, SC 29607",
-      "phone": "(864) 297-1234"
+      "lat": 34.939081,
+      "lng": -80.9777877,
+      "address": "1900 Springsteen Rd, Rock Hill, SC 29730, USA",
+      "phone": "",
+      "chain": "Target",
+      "placeId": "ChIJG8EnmiSGVogRQGBIFlcED6U"
+    },
+    {
+      "name": "CVS",
+      "lat": 33.5038248,
+      "lng": -81.71185489999999,
+      "address": "2545 Whiskey Rd, Aiken, SC 29803, USA",
+      "phone": "",
+      "chain": "Target",
+      "placeId": "ChIJ____lLiy-YgRm1zJ5YgPxuo"
+    },
+    {
+      "name": "CVS",
+      "lat": 34.938031,
+      "lng": -82.27902790000002,
+      "address": "6025 Wade Hampton Blvd, Taylors, SC 29687, USA",
+      "phone": "",
+      "chain": "Target",
+      "placeId": "ChIJf3F4xxIrWIgRw2tGYhpu38c"
+    },
+    {
+      "name": "CVS Pharmacy",
+      "lat": 34.1178991,
+      "lng": -80.87665059999999,
+      "address": "10204 Two Notch Rd, Columbia, SC 29229, USA",
+      "phone": "",
+      "chain": "Target",
+      "placeId": "ChIJHfVsE8qr-IgRmitYxEwQeaY"
+    },
+    {
+      "name": "CVS Pharmacy",
+      "lat": 34.8302631,
+      "lng": -82.30872939999999,
+      "address": "1112 Woodruff Rd, Greenville, SC 29607, USA",
+      "phone": "",
+      "chain": "Target",
+      "placeId": "ChIJ_bItgi4vWIgRp8whfWIuZOw"
+    },
+    {
+      "name": "CVS Pharmacy",
+      "lat": 32.8240812,
+      "lng": -79.8186757,
+      "address": "1300 Long Grove Dr, Mt Pleasant, SC 29464, USA",
+      "phone": "",
+      "chain": "Target",
+      "placeId": "ChIJH1UC1xly_ogRm7WmqtCKvvA"
+    },
+    {
+      "name": "CVS Pharmacy",
+      "lat": 34.5271294,
+      "lng": -82.63817329999999,
+      "address": "1405 E Greenville St, Anderson, SC 29621, USA",
+      "phone": "",
+      "chain": "Target",
+      "placeId": "ChIJQ2exKCNsWIgRhz97aEqWce0"
+    },
+    {
+      "name": "CVS Pharmacy",
+      "lat": 34.9391142,
+      "lng": -80.9777888,
+      "address": "1900 Springsteen Rd, Rock Hill, SC 29730, USA",
+      "phone": "",
+      "chain": "Target",
+      "placeId": "ChIJ0Tx1bSSGVogRkQglDHoRMJg"
+    },
+    {
+      "name": "CVS Pharmacy",
+      "lat": 32.8013718,
+      "lng": -80.0308514,
+      "address": "2070 Sam Rittenberg Blvd, Charleston, SC 29407, USA",
+      "phone": "",
+      "chain": "Target",
+      "placeId": "ChIJOeYsWhV8_ogRUQwKLHtlArQ"
+    },
+    {
+      "name": "CVS Pharmacy",
+      "lat": 34.8346268,
+      "lng": -82.35277909999999,
+      "address": "2210 Laurens Rd, Greenville, SC 29607, USA",
+      "phone": "",
+      "chain": "Target",
+      "placeId": "ChIJ9wNt-64vWIgR0zVrCbNIQ-4"
+    },
+    {
+      "name": "CVS Pharmacy",
+      "lat": 34.176887,
+      "lng": -79.8107319,
+      "address": "2501 2nd Loop Rd, Florence, SC 29501, USA",
+      "phone": "",
+      "chain": "Target",
+      "placeId": "ChIJg1qIN7RmVYgRdzwSe6brIVY"
+    },
+    {
+      "name": "CVS Pharmacy",
+      "lat": 33.5038248,
+      "lng": -81.71185489999999,
+      "address": "2545 Whiskey Rd, Aiken, SC 29803, USA",
+      "phone": "",
+      "chain": "Target",
+      "placeId": "ChIJyR5F7riy-YgRXP7d_KvbQ70"
+    },
+    {
+      "name": "CVS Pharmacy",
+      "lat": 34.5323398,
+      "lng": -82.6632328,
+      "address": "2814 N Main St, Anderson, SC 29621, USA",
+      "phone": "",
+      "chain": "Target",
+      "placeId": "ChIJmUCx8r1uWIgRdR13DjZMaR4"
+    },
+    {
+      "name": "CVS Pharmacy",
+      "lat": 34.9165309,
+      "lng": -82.31645759999999,
+      "address": "3300 Wade Hampton Blvd, Taylors, SC 29687, USA",
+      "phone": "",
+      "chain": "Target",
+      "placeId": "ChIJb_vDZW8sWIgRisz0O5aKpBY"
+    },
+    {
+      "name": "CVS Pharmacy",
+      "lat": 34.5490705,
+      "lng": -82.6802397,
+      "address": "3519 Clemson Blvd, Anderson, SC 29621, USA",
+      "phone": "",
+      "chain": "Target",
+      "placeId": "ChIJx5169stuWIgR5GsMdoKeeRo"
+    },
+    {
+      "name": "CVS Pharmacy",
+      "lat": 33.0407974,
+      "lng": -80.1571623,
+      "address": "450 Azalea Square Blvd, Summerville, SC 29483, USA",
+      "phone": "",
+      "chain": "Target",
+      "placeId": "ChIJgyl1_DCL_ogR8_BeRL_EEME"
+    },
+    {
+      "name": "CVS Pharmacy",
+      "lat": 34.0061479,
+      "lng": -81.1938682,
+      "address": "5119 Sunset Blvd, Lexington, SC 29072, USA",
+      "phone": "",
+      "chain": "Target",
+      "placeId": "ChIJobJBro-X-IgRaGhnqpComdo"
+    },
+    {
+      "name": "CVS Pharmacy",
+      "lat": 34.9379347,
+      "lng": -82.2792042,
+      "address": "6025 Wade Hampton Blvd, Taylors, SC 29687, USA",
+      "phone": "",
+      "chain": "Target",
+      "placeId": "ChIJV6gpgw0rWIgRE_BDGmBxN2U"
+    },
+    {
+      "name": "CVS Pharmacy",
+      "lat": 33.9815169,
+      "lng": -80.9691622,
+      "address": "6090A Garners Ferry Rd, Columbia, SC 29209, USA",
+      "phone": "",
+      "chain": "Target",
+      "placeId": "ChIJJdy3ihaw-IgRBKFD4AnJP38"
+    },
+    {
+      "name": "CVS Pharmacy",
+      "lat": 34.9362307,
+      "lng": -82.27318149999999,
+      "address": "6160 Wade Hampton Blvd, Taylors, SC 29687, USA",
+      "phone": "",
+      "chain": "Target",
+      "placeId": "ChIJ2dqX3xErWIgRA3bxyg7Ufug"
+    },
+    {
+      "name": "CVS Pharmacy",
+      "lat": 34.7053625,
+      "lng": -82.25856809999999,
+      "address": "694 Fairview Rd, Simpsonville, SC 29680, USA",
+      "phone": "",
+      "chain": "Target",
+      "placeId": "ChIJv4wMrConWIgRssbWjk-8m3k"
+    },
+    {
+      "name": "CVS Pharmacy",
+      "lat": 34.9336164,
+      "lng": -82.008454,
+      "address": "8199 Warren H Abernathy Hwy, Spartanburg, SC 29301, USA",
+      "phone": "",
+      "chain": "Target",
+      "placeId": "ChIJrRSx8m2dV4gR662eU0E4hQA"
+    },
+    {
+      "name": "Target",
+      "lat": 34.1178991,
+      "lng": -80.87665059999999,
+      "address": "10204 Two Notch Rd, Columbia, SC 29229, USA",
+      "phone": "",
+      "chain": "Target",
+      "placeId": "ChIJXQl5-smr-IgRZG28WxAYfOE"
+    },
+    {
+      "name": "Target",
+      "lat": 32.2550754,
+      "lng": -80.8502913,
+      "address": "1050 Fording Island Rd, Bluffton, SC 29910, USA",
+      "phone": "",
+      "chain": "Target",
+      "placeId": "ChIJPRM5Q6mJ-4gRw17eDuCXEKA"
+    },
+    {
+      "name": "Target",
+      "lat": 34.8302631,
+      "lng": -82.30872939999999,
+      "address": "1112 Woodruff Rd, Greenville, SC 29607, USA",
+      "phone": "",
+      "chain": "Target",
+      "placeId": "ChIJlyJhQS4vWIgRQx0BKqJJB3E"
+    },
+    {
+      "name": "Target",
+      "lat": 32.8240812,
+      "lng": -79.8186757,
+      "address": "1300 Long Grove Dr, Mt Pleasant, SC 29464, USA",
+      "phone": "",
+      "chain": "Target",
+      "placeId": "ChIJ8_cYTRhy_ogRVbLEeVihtCU"
+    },
+    {
+      "name": "Target",
+      "lat": 34.066234,
+      "lng": -81.16510199999999,
+      "address": "134 Harbison Blvd, Columbia, SC 29212, USA",
+      "phone": "",
+      "chain": "Target",
+      "placeId": "ChIJfZIt2oKY-IgRs3qd0JoZ_3Y"
+    },
+    {
+      "name": "Target",
+      "lat": 34.93889850000001,
+      "lng": -80.978044,
+      "address": "1900 Springsteen Rd, Rock Hill, SC 29730, USA",
+      "phone": "",
+      "chain": "Target",
+      "placeId": "ChIJj2ydgiSGVogRkBwOzTF8NVE"
+    },
+    {
+      "name": "Target",
+      "lat": 32.8000355,
+      "lng": -80.03076519999999,
+      "address": "2070 Sam Rittenberg Blvd, Charleston, SC 29407, USA",
+      "phone": "",
+      "chain": "Target",
+      "placeId": "ChIJOeYsWhV8_ogR1_8BCEVW7CM"
+    },
+    {
+      "name": "Target",
+      "lat": 32.7804743,
+      "lng": -79.93333059999999,
+      "address": "211 King St #001, Charleston, SC 29401, USA",
+      "phone": "",
+      "chain": "Target",
+      "placeId": "ChIJq0w-zEB7_ogRnZ91uKdqn7w"
+    },
+    {
+      "name": "Target",
+      "lat": 33.5041943,
+      "lng": -81.7112241,
+      "address": "2545 Whiskey Rd, Aiken, SC 29803, USA",
+      "phone": "",
+      "chain": "Target",
+      "placeId": "ChIJyR5F7riy-YgR45Zw3uQ3CLU"
+    },
+    {
+      "name": "Target",
+      "lat": 34.1933708,
+      "lng": -79.8377227,
+      "address": "2791 David H Mcleod Blvd Florence, 2791 David H McLeod Blvd, Florence, SC 29501, USA",
+      "phone": "",
+      "chain": "Target",
+      "placeId": "ChIJMSfdSxxkVYgRAmd2iiJhecc"
+    },
+    {
+      "name": "Target",
+      "lat": 34.5493888,
+      "lng": -82.6798706,
+      "address": "3519 Clemson Blvd, Anderson, SC 29621, USA",
+      "phone": "",
+      "chain": "Target",
+      "placeId": "ChIJx5169stuWIgRvbkyAtuh_G0"
+    },
+    {
+      "name": "Target",
+      "lat": 35.0444517,
+      "lng": -81.98344620000002,
+      "address": "3659 Boiling Springs Rd, Boiling Springs, SC 29316, USA",
+      "phone": "",
+      "chain": "Target",
+      "placeId": "ChIJFX3cBgBxV4gRJDeah1Em8MQ"
+    },
+    {
+      "name": "Target",
+      "lat": 33.0402803,
+      "lng": -80.157637,
+      "address": "450 Azalea Square Blvd, Summerville, SC 29483, USA",
+      "phone": "",
+      "chain": "Target",
+      "placeId": "ChIJbd16BDGL_ogRM14PWoUYkG0"
+    },
+    {
+      "name": "Target",
+      "lat": 34.0061479,
+      "lng": -81.1938682,
+      "address": "5119 Sunset Blvd, Lexington, SC 29072, USA",
+      "phone": "",
+      "chain": "Target",
+      "placeId": "ChIJobJBro-X-IgR1ML3Y7u-OrI"
+    },
+    {
+      "name": "Target",
+      "lat": 34.9379347,
+      "lng": -82.2792042,
+      "address": "6025 Wade Hampton Blvd, Taylors, SC 29687, USA",
+      "phone": "",
+      "chain": "Target",
+      "placeId": "ChIJV6gpgw0rWIgRK06Jz3WkUd0"
+    },
+    {
+      "name": "Target",
+      "lat": 33.9815169,
+      "lng": -80.9691622,
+      "address": "6090A Garners Ferry Rd, Columbia, SC 29209, USA",
+      "phone": "",
+      "chain": "Target",
+      "placeId": "ChIJJdy3ihaw-IgR5wGtpiQ02UU"
+    },
+    {
+      "name": "Target",
+      "lat": 34.7058563,
+      "lng": -82.2600272,
+      "address": "694 Fairview Rd, Simpsonville, SC 29680, USA",
+      "phone": "",
+      "chain": "Target",
+      "placeId": "ChIJv4wMrConWIgR9oCJlagDnyg"
+    },
+    {
+      "name": "Target",
+      "lat": 32.9354172,
+      "lng": -80.03604709999999,
+      "address": "7250 Rivers Ave, North Charleston, SC 29406, USA",
+      "phone": "",
+      "chain": "Target",
+      "placeId": "ChIJX9bcwMNj_ogRwEu2BM0xX8c"
+    },
+    {
+      "name": "Target",
+      "lat": 34.9336164,
+      "lng": -82.008454,
+      "address": "8199 Warren H Abernathy Hwy, Spartanburg, SC 29301, USA",
+      "phone": "",
+      "chain": "Target",
+      "placeId": "ChIJrRSx8m2dV4gRqJA5JH93cVg"
+    },
+    {
+      "name": "Target Grocery",
+      "lat": 34.9388578,
+      "lng": -80.9783006,
+      "address": "1900 Springsteen Rd, Rock Hill, SC 29730, USA",
+      "phone": "",
+      "chain": "Target",
+      "placeId": "ChIJKVLHvrGHVogRYAcdZDWj73k"
+    },
+    {
+      "name": "Target Grocery",
+      "lat": 34.5495965,
+      "lng": -82.6799474,
+      "address": "3519 Clemson Blvd, Anderson, SC 29621, USA",
+      "phone": "",
+      "chain": "Target",
+      "placeId": "ChIJk15tFcVvWIgRXnRsNW2sJ7U"
+    },
+    {
+      "name": "Target Grocery",
+      "lat": 33.9815169,
+      "lng": -80.9691622,
+      "address": "6090A Garners Ferry Rd, Columbia, SC 29209, USA",
+      "phone": "",
+      "chain": "Target",
+      "placeId": "ChIJI9wOwlOx-IgR6ReDUk18dbg"
+    },
+    {
+      "name": "Target Grocery",
+      "lat": 34.9336164,
+      "lng": -82.008454,
+      "address": "8199 Warren H Abernathy Hwy, Spartanburg, SC 29301, USA",
+      "phone": "",
+      "chain": "Target",
+      "placeId": "ChIJy9u0T5mdV4gR3k00pMz53D4"
     },
     {
       "name": "Walgreens",
-      "lat": 34.847123,
-      "lng": -82.400456,
-      "address": "1500 Woodruff Rd, Greenville, SC 29607",
-      "phone": "(864) 297-5678"
+      "lat": 34.8604179,
+      "lng": -82.26233649999999,
+      "address": "1 The Parkway Walgreens, Greenville, SC 29615, USA",
+      "phone": "",
+      "chain": "Walgreens",
+      "placeId": "ChIJdy7E-3QpWIgRBE6YYmYHIec"
     },
     {
-      "name": "Publix Pharmacy",
-      "lat": 34.849876,
-      "lng": -82.391234,
-      "address": "1200 E North St, Greenville, SC 29607",
-      "phone": "(864) 297-9101"
+      "name": "Walgreens",
+      "lat": 34.9438571,
+      "lng": -81.0309479,
+      "address": "1008 Oakland Ave #120, Rock Hill, SC 29732, USA",
+      "phone": "",
+      "chain": "Walgreens",
+      "placeId": "ChIJi0gJAOKIVogR-JrZBQLuzJg"
     },
     {
-      "name": "Walmart",
-      "lat": 34.911906169106146,
-      "lng": -82.43086384247985,
-      "address": "5009 Old Buncombe Rd, Greenville, SC 29617",
-      "phone": "(864) 605-6370"
+      "name": "Walgreens",
+      "lat": 34.9476632,
+      "lng": -82.2252524,
+      "address": "101 W Wade Hampton Blvd, Greer, SC 29650, USA",
+      "phone": "",
+      "chain": "Walgreens",
+      "placeId": "ChIJh99pOKMqWIgRrNVPPnbwpwA"
+    },
+    {
+      "name": "Walgreens",
+      "lat": 34.2113009,
+      "lng": -82.176801,
+      "address": "1014 Montague Ave, Greenwood, SC 29649, USA",
+      "phone": "",
+      "chain": "Walgreens",
+      "placeId": "ChIJb5pUauEB-IgREdU3u7nAfSs"
+    },
+    {
+      "name": "Walgreens",
+      "lat": 34.7789055,
+      "lng": -82.3107076,
+      "address": "104 W Butler Rd, Mauldin, SC 29662, USA",
+      "phone": "",
+      "chain": "Walgreens",
+      "placeId": "ChIJ5yMDZeYlWIgRDi6kaZ0Dpnw"
+    },
+    {
+      "name": "Walgreens",
+      "lat": 34.6903833,
+      "lng": -82.8335908,
+      "address": "1100 Tiger Blvd Walgreens, Clemson, SC 29631, USA",
+      "phone": "",
+      "chain": "Walgreens",
+      "placeId": "ChIJWR7NY2NeWIgRrl6sAXBchoI"
+    },
+    {
+      "name": "Walgreens",
+      "lat": 34.7340846,
+      "lng": -80.789765,
+      "address": "1101 Hwy 9 Bypass W, Lancaster, SC 29720, USA",
+      "phone": "",
+      "chain": "Walgreens",
+      "placeId": "ChIJOTo0QH94VogRmeq9ZF7ZJXY"
+    },
+    {
+      "name": "Walgreens",
+      "lat": 35.0389317,
+      "lng": -82.0777653,
+      "address": "11156 Asheville Hwy, Inman, SC 29349, USA",
+      "phone": "",
+      "chain": "Walgreens",
+      "placeId": "ChIJR5FQp4Z5V4gR9pD__tO88eg"
+    },
+    {
+      "name": "Walgreens",
+      "lat": 34.050157,
+      "lng": -81.1066484,
+      "address": "1223 St Andrews Rd, Columbia, SC 29210, USA",
+      "phone": "",
+      "chain": "Walgreens",
+      "placeId": "ChIJf3f38Aij-IgRAJhn_LLnZ6s"
+    },
+    {
+      "name": "Walgreens",
+      "lat": 34.9429864,
+      "lng": -82.25886849999999,
+      "address": "1232 W Wade Hampton Blvd, Greer, SC 29650, USA",
+      "phone": "",
+      "chain": "Walgreens",
+      "placeId": "ChIJ8-d0Lx4rWIgROHJNlVp2jEw"
+    },
+    {
+      "name": "Walgreens",
+      "lat": 35.0079598,
+      "lng": -80.91847829999999,
+      "address": "1250 Tom Hall St, Fort Mill, SC 29715, USA",
+      "phone": "",
+      "chain": "Walgreens",
+      "placeId": "ChIJOUF4xYqEVogRGBgOfnKUjII"
+    },
+    {
+      "name": "Walgreens",
+      "lat": 34.1247304,
+      "lng": -81.2326594,
+      "address": "1251 Dutch Fork Rd, Irmo, SC 29063, USA",
+      "phone": "",
+      "chain": "Walgreens",
+      "placeId": "ChIJV6fP6L6e-IgR5pBswc0MVdY"
+    },
+    {
+      "name": "Walgreens",
+      "lat": 34.1763786,
+      "lng": -82.150764,
+      "address": "1376 Main St S, Greenwood, SC 29646, USA",
+      "phone": "",
+      "chain": "Walgreens",
+      "placeId": "ChIJk3VMDWcB-IgRqF6U1NodRP8"
+    },
+    {
+      "name": "Walgreens",
+      "lat": 34.1667253,
+      "lng": -81.35643879999999,
+      "address": "1401 Chapin Rd, Chapin, SC 29036, USA",
+      "phone": "",
+      "chain": "Walgreens",
+      "placeId": "ChIJ___viduC-IgRNVZ932L37jI"
+    },
+    {
+      "name": "Walgreens",
+      "lat": 34.9498701,
+      "lng": -81.060876,
+      "address": "1645 Cranium Drive Walgreens, Rock Hill, SC 29732, USA",
+      "phone": "",
+      "chain": "Walgreens",
+      "placeId": "ChIJTfMWgUKJVogRPqXXdxd7jks"
+    },
+    {
+      "name": "Walgreens",
+      "lat": 35.0331327,
+      "lng": -80.9689325,
+      "address": "1716 Pleasant Rd, Fort Mill, SC 29708, USA",
+      "phone": "",
+      "chain": "Walgreens",
+      "placeId": "ChIJE5oOlEGFVogRxoYdnJ15hv0"
+    },
+    {
+      "name": "Walgreens",
+      "lat": 34.1319239,
+      "lng": -80.87689739999999,
+      "address": "175 Forum Dr, Columbia, SC 29229, USA",
+      "phone": "",
+      "chain": "Walgreens",
+      "placeId": "ChIJk9qm9kmq-IgR59G-jISwbXs"
+    },
+    {
+      "name": "Walgreens",
+      "lat": 34.9663834,
+      "lng": -81.8961187,
+      "address": "1790 E Main St, Spartanburg, SC 29307, USA",
+      "phone": "",
+      "chain": "Walgreens",
+      "placeId": "ChIJBzgRihgLV4gRDCz5ZFBcyx8"
+    },
+    {
+      "name": "Walgreens",
+      "lat": 33.9076496,
+      "lng": -81.2228425,
+      "address": "1903 S Lake Dr, Lexington, SC 29073, USA",
+      "phone": "",
+      "chain": "Walgreens",
+      "placeId": "ChIJTWpSuDiU-IgRmpC7GdL7-GQ"
+    },
+    {
+      "name": "Walgreens",
+      "lat": 33.9980895,
+      "lng": -81.0170352,
+      "address": "1941 Blossom St Walgreens, Columbia, SC 29205, USA",
+      "phone": "",
+      "chain": "Walgreens",
+      "placeId": "ChIJNyqSNMy6-IgRW-vOHocEN-0"
+    },
+    {
+      "name": "Walgreens",
+      "lat": 34.9771123,
+      "lng": -81.00505919999999,
+      "address": "2000 Celanese Rd Walgreens, Rock Hill, SC 29732, USA",
+      "phone": "",
+      "chain": "Walgreens",
+      "placeId": "ChIJEV8qEEmPVogR_12Wz2Y8oAE"
+    },
+    {
+      "name": "Walgreens",
+      "lat": 34.8243949,
+      "lng": -82.39528829999999,
+      "address": "2018 Augusta St, Greenville, SC 29605, USA",
+      "phone": "",
+      "chain": "Walgreens",
+      "placeId": "ChIJ_8BvFSIwWIgRDJgJzEJSNtk"
+    },
+    {
+      "name": "Walgreens",
+      "lat": 34.8864193,
+      "lng": -82.0683279,
+      "address": "2196 E Main St, Duncan, SC 29334, USA",
+      "phone": "",
+      "chain": "Walgreens",
+      "placeId": "ChIJh97qcLWDV4gRckCyU9v4ULc"
+    },
+    {
+      "name": "Walgreens",
+      "lat": 34.9207961,
+      "lng": -81.8873351,
+      "address": "2198 Southport Rd, Spartanburg, SC 29306, USA",
+      "phone": "",
+      "chain": "Walgreens",
+      "placeId": "ChIJnVg0XJWfV4gROZI-9IvJvn0"
+    },
+    {
+      "name": "Walgreens",
+      "lat": 34.8689525,
+      "lng": -82.3589927,
+      "address": "2323 E North St, Greenville, SC 29607, USA",
+      "phone": "",
+      "chain": "Walgreens",
+      "placeId": "ChIJJQdjH2kuWIgRdqaD5vJLveo"
+    },
+    {
+      "name": "Walgreens",
+      "lat": 34.2714654,
+      "lng": -80.6100798,
+      "address": "2407 Broad St, Camden, SC 29020, USA",
+      "phone": "",
+      "chain": "Walgreens",
+      "placeId": "ChIJkwd9C6bxVYgRt1bAZHRp2EU"
+    },
+    {
+      "name": "Walgreens",
+      "lat": 34.9210878,
+      "lng": -81.994052,
+      "address": "2410 Reidville Rd, Spartanburg, SC 29301, USA",
+      "phone": "",
+      "chain": "Walgreens",
+      "placeId": "ChIJdSU5-aadV4gRz61zH_lgyR4"
+    },
+    {
+      "name": "Walgreens",
+      "lat": 34.805285,
+      "lng": -82.2312071,
+      "address": "2586 Woodruff Rd, Simpsonville, SC 29681, USA",
+      "phone": "",
+      "chain": "Walgreens",
+      "placeId": "ChIJv4BVtRMoWIgRDcSOZ0mgGSI"
+    },
+    {
+      "name": "Walgreens",
+      "lat": 34.1403158,
+      "lng": -80.93712,
+      "address": "2725 Clemson Rd, Columbia, SC 29229, USA",
+      "phone": "",
+      "chain": "Walgreens",
+      "placeId": "ChIJca1W3K-p-IgRIDjx2uCUYik"
+    },
+    {
+      "name": "Walgreens",
+      "lat": 34.5318933,
+      "lng": -82.66422890000001,
+      "address": "2811 N Main St, Anderson, SC 29621, USA",
+      "phone": "",
+      "chain": "Walgreens",
+      "placeId": "ChIJhQ81IrhuWIgRIluv1KSWmK8"
+    },
+    {
+      "name": "Walgreens",
+      "lat": 35.0617288,
+      "lng": -80.992201,
+      "address": "2907 SC-160, Fort Mill, SC 29708, USA",
+      "phone": "",
+      "chain": "Walgreens",
+      "placeId": "ChIJGZqQaXmRVogRCFjQIptXSHM"
+    },
+    {
+      "name": "Walgreens",
+      "lat": 34.0196789,
+      "lng": -80.9892797,
+      "address": "3501 Forest Dr, Columbia, SC 29204, USA",
+      "phone": "",
+      "chain": "Walgreens",
+      "placeId": "ChIJ0XrrBl-l-IgRVqb5mZHTTOY"
+    },
+    {
+      "name": "Walgreens",
+      "lat": 34.7882107,
+      "lng": -82.4834472,
+      "address": "3501 SC-153, Greenville, SC 29611, USA",
+      "phone": "",
+      "chain": "Walgreens",
+      "placeId": "ChIJUc-NUvI5WIgR2NtwBYtKnZE"
+    },
+    {
+      "name": "Walgreens",
+      "lat": 35.0460192,
+      "lng": -81.9831106,
+      "address": "3681 Boiling Springs Rd, Boiling Springs, SC 29316, USA",
+      "phone": "",
+      "chain": "Walgreens",
+      "placeId": "ChIJWTf7_TBxV4gRK3do5LbEz54"
+    },
+    {
+      "name": "Walgreens",
+      "lat": 33.9861801,
+      "lng": -81.2455093,
+      "address": "423 W Main St, Lexington, SC 29072, USA",
+      "phone": "",
+      "chain": "Walgreens",
+      "placeId": "ChIJ4xRo4TGX-IgReLtZYYtNvkU"
+    },
+    {
+      "name": "Walgreens",
+      "lat": 33.9923522,
+      "lng": -80.9773158,
+      "address": "4467 Devine St, Columbia, SC 29205, USA",
+      "phone": "",
+      "chain": "Walgreens",
+      "placeId": "ChIJfXl2xASw-IgRhFoHmekYcI4"
+    },
+    {
+      "name": "Walgreens",
+      "lat": 35.1194748,
+      "lng": -81.083827,
+      "address": "5220 Hwy 557, Lake Wylie, SC 29710, USA",
+      "phone": "",
+      "chain": "Walgreens",
+      "placeId": "ChIJTZpx0rmTVogRvqqilV1TmgM"
+    },
+    {
+      "name": "Walgreens",
+      "lat": 34.5067415,
+      "lng": -82.0090201,
+      "address": "571 N Harper St, Laurens, SC 29360, USA",
+      "phone": "",
+      "chain": "Walgreens",
+      "placeId": "ChIJ0ZNNsXDuV4gRJCeQXpUegM0"
+    },
+    {
+      "name": "Walgreens",
+      "lat": 34.716822,
+      "lng": -82.2570286,
+      "address": "618 Fairview Rd Walgreens, Simpsonville, SC 29680, USA",
+      "phone": "",
+      "chain": "Walgreens",
+      "placeId": "ChIJIaGgyScnWIgRA7L3KT7xRfI"
+    },
+    {
+      "name": "Walgreens",
+      "lat": 34.0973486,
+      "lng": -81.16101139999999,
+      "address": "7412 Broad River Rd, Irmo, SC 29063, USA",
+      "phone": "",
+      "chain": "Walgreens",
+      "placeId": "ChIJBZdl4wCi-IgRj_gExTEc91U"
+    },
+    {
+      "name": "Walgreens",
+      "lat": 34.9358518,
+      "lng": -80.835318,
+      "address": "7686 Charlotte Hwy, Fort Mill, SC 29707, USA",
+      "phone": "",
+      "chain": "Walgreens",
+      "placeId": "ChIJnSZ4osqDVogRECJAr9V0EdQ"
+    },
+    {
+      "name": "Walgreens",
+      "lat": 34.4932554,
+      "lng": -81.985877,
+      "address": "814 E Main St, Laurens, SC 29360, USA",
+      "phone": "",
+      "chain": "Walgreens",
+      "placeId": "ChIJR_2FDJLuV4gR0c7S3Edk5B8"
+    },
+    {
+      "name": "Walgreens",
+      "lat": 34.0907494,
+      "lng": -80.9272405,
+      "address": "9001 Two Notch Rd, Columbia, SC 29223, USA",
+      "phone": "",
+      "chain": "Walgreens",
+      "placeId": "ChIJrS-aRDGp-IgRG8JsBSXtSfM"
+    },
+    {
+      "name": "Walgreens",
+      "lat": 34.8546195,
+      "lng": -82.3206847,
+      "address": "902 Pelham Rd, Greenville, SC 29615, USA",
+      "phone": "",
+      "chain": "Walgreens",
+      "placeId": "ChIJaYVhrMMuWIgRs-IkYMDZ_To"
+    },
+    {
+      "name": "Walgreens",
+      "lat": 34.9856964,
+      "lng": -81.2110987,
+      "address": "997 E Liberty St, York, SC 29745, USA",
+      "phone": "",
+      "chain": "Walgreens",
+      "placeId": "ChIJKbyjt4DzVogRS8W36EqltiI"
+    },
+    {
+      "name": "Walgreens Pharmacy",
+      "lat": 34.9663921,
+      "lng": -81.89612819999999,
+      "address": "1790 E Main St, Spartanburg, SC 29307, USA",
+      "phone": "",
+      "chain": "Walgreens",
+      "placeId": "ChIJC4-YKhN1V4gRqF3DUhGAKMM"
+    },
+    {
+      "name": "Walgreens Pharmacy",
+      "lat": 34.9206471,
+      "lng": -81.887478,
+      "address": "2198 Southport Rd, Spartanburg, SC 29306, USA",
+      "phone": "",
+      "chain": "Walgreens",
+      "placeId": "ChIJq28KXZWfV4gR32Xe3UROlbc"
+    },
+    {
+      "name": "Walgreens Pharmacy",
+      "lat": 34.9210847,
+      "lng": -81.9940379,
+      "address": "2410 Reidville Rd, Spartanburg, SC 29301, USA",
+      "phone": "",
+      "chain": "Walgreens",
+      "placeId": "ChIJN52r_qadV4gRd8u6SUvIUNc"
+    },
+    {
+      "name": "Walgreens Pharmacy",
+      "lat": 35.0803998,
+      "lng": -81.6565973,
+      "address": "837 W Floyd Baker Blvd, Gaffney, SC 29341, USA",
+      "phone": "",
+      "chain": "Walgreens",
+      "placeId": "ChIJFfp7wHcFV4gRIcgcB8Sql9A"
+    },
+    {
+      "name": "Walgreens Photo",
+      "lat": 35.0804737,
+      "lng": -81.6564216,
+      "address": "837 W Floyd Baker Blvd, Gaffney, SC 29341, USA",
+      "phone": "",
+      "chain": "Walgreens",
+      "placeId": "ChIJY-QfbBgFV4gRhPiyeRhchMU"
     },
     {
       "name": "Walmart Pharmacy",
-      "lat": 34.86168092564008,
-      "lng": -82.26315161189558,
-      "address": "3925 Pelham Rd, Greenville, SC 29615",
-      "phone": "(864) 288-8171"
+      "lat": 35.0108084,
+      "lng": -80.8493687,
+      "address": "10048 Charlotte Hwy, Indian Land, SC 29707, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJaZfiUvyCVogRo46SwC4v1d8"
     },
     {
-      "name": "CVS",
-      "lat": 34.849905999942756,
-      "lng": -82.39907721361867,
-      "address": "35 S Main St, Greenville, SC 29601",
-      "phone": "(864) 370-4848"
+      "name": "Walmart Pharmacy",
+      "lat": 34.1103281,
+      "lng": -80.8865775,
+      "address": "10060 Two Notch Rd, Columbia, SC 29223, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJ6_-mndqr-IgRYCT-Ds_FzWc"
     },
     {
-      "name": "CVS",
-      "lat": 34.83496584081104,
-      "lng": -82.35269326944147,
-      "address": "2210 Laurens Rd, Greenville, SC 29607",
-      "phone": "(864) 288-8280"
+      "name": "Walmart Pharmacy",
+      "lat": 33.238349,
+      "lng": -81.39200629999999,
+      "address": "11391 Dunbarton Blvd, Barnwell, SC 29812, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJETo0hYUO-YgRsffb3yi_Uzs"
     },
     {
-      "name": "CVS",
-      "lat": 34.89456999763415,
-      "lng": -82.43125552156793,
-      "address": "4102 Old Buncombe Rd, Greenville, SC 29617",
-      "phone": "(864) 371-3651"
+      "name": "Walmart Pharmacy",
+      "lat": 34.788695,
+      "lng": -82.4778204,
+      "address": "11410 Anderson Rd, Greenville, SC 29611, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJ0cooBvQ5WIgRiSwSreFoyFE"
     },
     {
-      "name": "CVS",
-      "lat": 34.8221701027552,
-      "lng": -82.41569138293511,
-      "address": "718 Mills Ave, Greenville, SC 29605",
-      "phone": "(864) 421-1586"
+      "name": "Walmart Pharmacy",
+      "lat": 33.917539,
+      "lng": -81.5291287,
+      "address": "115 E Church St, Leesville, SC 29070, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJAd1JP9Bh-IgRayVMt0GmEvY"
     },
     {
-      "name": "CVS",
-      "lat": 34.83680665742059,
-      "lng": -82.2788953350616,
-      "address": "1509 Roper Mountain Rd, Greenville, SC 29615",
-      "phone": "(864) 213-1082"
+      "name": "Walmart Pharmacy",
+      "lat": 34.7573241,
+      "lng": -82.26756139999999,
+      "address": "115 SC-14, Simpsonville, SC 29681, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJh6Py-FAmWIgR1GuqTA6Jp6U"
     },
     {
-      "name": "CVS",
-      "lat": 34.9048783820055,
-      "lng": -82.38764627128955,
-      "address": "1141 State Park Rd, Greenville, SC 29609",
-      "phone": "(864) 240-7421"
+      "name": "Walmart Pharmacy",
+      "lat": 35.0462363,
+      "lng": -80.99383999999999,
+      "address": "1151 Stonecrest Blvd, Tega Cay, SC 29708, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJzxnRY_mPVogRD5V3Pn3k5ao"
     },
     {
-      "name": "CVS",
-      "lat": 34.86944913958712,
-      "lng": -82.35777330012502,
-      "address": "2401 E North St, Greenville, SC 29615",
-      "phone": "(864) 244-1851"
+      "name": "Walmart Pharmacy",
+      "lat": 34.9529109,
+      "lng": -81.0181248,
+      "address": "1225 Cherry Rd, Rock Hill, SC 29730, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJa6S38sOIVogRsvVP4p7lX5I"
     },
     {
-      "name": "CVS",
-      "lat": 34.81487069649635,
-      "lng": -82.2732805424541,
-      "address": "1200 E Butler Rd, Greenville, SC 29607",
-      "phone": "(864) 297-2501"
+      "name": "Walmart Pharmacy",
+      "lat": 33.9600599,
+      "lng": -80.38947739999999,
+      "address": "1283 Broad St, Sumter, SC 29150, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJ08X8LyBm_4gRUTDpb7KzIX4"
     },
     {
-      "name": "CVS",
-      "lat": 34.86053347901237,
-      "lng": -82.2651722136187,
-      "address": "3901 Pelham Rd, Greenville, SC 29615",
-      "phone": "(864) 288-3672"
+      "name": "Walmart Pharmacy",
+      "lat": 34.7056617,
+      "lng": -82.76218779999999,
+      "address": "1286 18 Mile Rd, Central, SC 29630, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJVT6wLOlcWIgRZ5e9j89Q5lI"
     },
     {
-      "name": "CVS",
-      "lat": 34.824319340578526,
-      "lng": -82.3940478197198,
-      "address": "2100 Augusta St, Greenville, SC 29605",
-      "phone": "(864) 255-3878"
+      "name": "Walmart Pharmacy",
+      "lat": 33.393637,
+      "lng": -79.2863385,
+      "address": "1310 N Fraser St, Georgetown, SC 29440, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJg_FrKXQsAIkR-g-QtyW8xM4"
     },
     {
-      "name": "Walgreens",
-      "lat": 34.89758379288567,
-      "lng": -82.33893648108698,
-      "address": "2700 Wade Hampton Blvd, Greenville, SC 29615",
-      "phone": "(864) 268-7123"
+      "name": "Walmart Pharmacy",
+      "lat": 33.03480010000001,
+      "lng": -80.1534178,
+      "address": "1317 N Main St a1, Summerville, SC 29483, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJl5hTOyWL_ogRbU1DrsAcWdA"
     },
     {
-      "name": "Walgreens",
-      "lat": 34.86912415051832,
-      "lng": -82.35866010622615,
-      "address": "2323 E North St, Greenville, SC 29607",
-      "phone": "(864) 233-9401"
+      "name": "Walmart Pharmacy",
+      "lat": 34.9447555,
+      "lng": -82.20654119999999,
+      "address": "14055 E Wade Hampton Blvd, Greer, SC 29651, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJGcCcIg2AV4gREkJuLhoHYM4"
     },
     {
-      "name": "Walgreens",
-      "lat": 34.851497238012925,
-      "lng": -82.4517113019731,
-      "address": "6057 White Horse Rd, Greenville, SC 29611",
-      "phone": "(864) 295-0243"
+      "name": "Walmart Pharmacy",
+      "lat": 34.9333443,
+      "lng": -81.9846723,
+      "address": "141 Dorman Centre Dr, Spartanburg, SC 29301, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJrf9nRJedV4gRb6sirxE9y7k"
     },
     {
-      "name": "Walgreens",
-      "lat": 34.85477357220053,
-      "lng": -82.32014825835267,
-      "address": "902 Pelham Rd, Greenville, SC 29615",
-      "phone": "(864) 234-6462"
+      "name": "Walmart Pharmacy",
+      "lat": 34.8222646,
+      "lng": -82.2819371,
+      "address": "1451 Woodruff Rd, Greenville, SC 29607, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJVzyNPfIoWIgR__S-3-cl724"
     },
     {
-      "name": "Walgreens",
-      "lat": 34.78837370768248,
-      "lng": -82.4832648099224,
-      "address": "3501 SC-153, Greenville, SC 29611",
-      "phone": "(864) 295-2029"
+      "name": "Walmart Pharmacy",
+      "lat": 32.8144167,
+      "lng": -79.8456382,
+      "address": "1481 US-17, Mt Pleasant, SC 29464, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJ7Xnw3JBx_ogRaotHq6PRHP4"
+    },
+    {
+      "name": "Walmart Pharmacy",
+      "lat": 33.7774591,
+      "lng": -78.9890917,
+      "address": "151 Myrtle Ridge Dr, Conway, SC 29526, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJ3xjsJfJsAIkRjQA4al0FdJU"
+    },
+    {
+      "name": "Walmart Pharmacy",
+      "lat": 35.0877415,
+      "lng": -81.665488,
+      "address": "165 Walton Drive, Gaffney, SC 29341, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJAYEDKzkFV4gRQM_EmGCbzao"
+    },
+    {
+      "name": "Walmart Pharmacy",
+      "lat": 34.6999359,
+      "lng": -81.1924904,
+      "address": "1691 J A Cochran Bypass, Chester, SC 29706, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJv54e1sVCVogRHYH693kgLXs"
+    },
+    {
+      "name": "Walmart Pharmacy",
+      "lat": 35.1215766,
+      "lng": -81.0849514,
+      "address": "175 SC-274, Lake Wylie, SC 29710, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJv4BvANuTVogR5v-HBDcBd1Q"
+    },
+    {
+      "name": "Walmart Pharmacy",
+      "lat": 33.9103939,
+      "lng": -81.2302157,
+      "address": "1780 S Lake Dr, Lexington, SC 29073, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJZ_H9STyU-IgR2lx2xIC4sx8"
+    },
+    {
+      "name": "Walmart Pharmacy",
+      "lat": 34.5448488,
+      "lng": -82.6329818,
+      "address": "2003 E Greenville St, Anderson, SC 29621, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJfSMhMQxsWIgREkTKti_LTes"
+    },
+    {
+      "name": "Walmart Pharmacy",
+      "lat": 33.6999204,
+      "lng": -80.22657749999999,
+      "address": "2010 Paxville Hwy, Manning, SC 29102, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJ0y2cbbYN_4gRMyos4m68tgQ"
+    },
+    {
+      "name": "Walmart Pharmacy",
+      "lat": 34.8826761,
+      "lng": -82.3552954,
+      "address": "2014 Wade Hampton Blvd, Greenville, SC 29615, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJ9xOlFnEuWIgRELTCmNH80U4"
+    },
+    {
+      "name": "Walmart Pharmacy",
+      "lat": 34.92071749999999,
+      "lng": -81.8849169,
+      "address": "203 Cedar Springs Rd, Spartanburg, SC 29302, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJq8v5yZWfV4gRWJbbTlqVvy0"
+    },
+    {
+      "name": "Walmart Pharmacy",
+      "lat": 34.9729227,
+      "lng": -81.8774084,
+      "address": "2151 E Main St, Spartanburg, SC 29307, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJRxrCfzp1V4gR5ffR-LFIV84"
+    },
+    {
+      "name": "Walmart Pharmacy",
+      "lat": 34.2506835,
+      "lng": -80.6499137,
+      "address": "2240 W Dekalb St, Camden, SC 29020, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJy2F1ARr6VYgRLAer0XSpNqs"
+    },
+    {
+      "name": "Walmart Pharmacy",
+      "lat": 34.94377180000001,
+      "lng": -80.9631872,
+      "address": "2377 Dave Lyle Blvd, Rock Hill, SC 29730, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJZ6l1ITyGVogRTi0qVZNEs0k"
+    },
+    {
+      "name": "Walmart Pharmacy",
+      "lat": 33.9796012,
+      "lng": -81.1007727,
+      "address": "2401 Augusta Rd, West Columbia, SC 29169, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJq2qDmeu8-IgRnKg4QyAaXEM"
+    },
+    {
+      "name": "Walmart Pharmacy",
+      "lat": 34.2856993,
+      "lng": -79.8564305,
+      "address": "251 Andover Pl, Darlington, SC 29532, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJn3nVORVvVYgRtM845hOX5hI"
+    },
+    {
+      "name": "Walmart Pharmacy",
+      "lat": 33.8579562,
+      "lng": -79.09116,
+      "address": "2709 Church St Ste A, Conway, SC 29526, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJWfaQlu0NAIkR8MlWzbZDpaQ"
+    },
+    {
+      "name": "Walmart Pharmacy",
+      "lat": 33.5244168,
+      "lng": -80.89061769999999,
+      "address": "2795 North Rd, Orangeburg, SC 29118, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJmW-qsa3W-IgRQiUvLUyYxYo"
+    },
+    {
+      "name": "Walmart Pharmacy",
+      "lat": 34.2814955,
+      "lng": -81.593274,
+      "address": "2812 Main St, Newberry, SC 29108, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJfWPwPiPUV4gRJWmh3mRvZlk"
+    },
+    {
+      "name": "Walmart Pharmacy",
+      "lat": 33.4187601,
+      "lng": -82.02258139999999,
+      "address": "300 Bypass 25 NE, Greenwood, SC 29646, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJb01-ZDEB-IgR_tVv8R5ijxs"
+    },
+    {
+      "name": "Walmart Pharmacy",
+      "lat": 34.9081018,
+      "lng": -82.3316823,
+      "address": "3027 Wade Hampton Blvd, Taylors, SC 29687, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJ7cxtt0AsWIgRxtlfyUzzq58"
+    },
+    {
+      "name": "Walmart Pharmacy",
+      "lat": 33.4823084,
+      "lng": -80.8702027,
+      "address": "332 Stonewall Jackson Blvd, Orangeburg, SC 29115, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJua7SU4PV-IgReU3SK6wlmsk"
+    },
+    {
+      "name": "Walmart Pharmacy",
+      "lat": 34.5548268,
+      "lng": -82.6790285,
+      "address": "3812 Liberty Hwy, Anderson, SC 29621, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJkYAPQDNpWIgRe4S2mKx9qMQ"
+    },
+    {
+      "name": "Walmart Pharmacy",
+      "lat": 34.8616867,
+      "lng": -82.263595,
+      "address": "3925 Pelham Rd, Greenville, SC 29615, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJ3cFo0usuWIgR9EpegJGxoSQ"
+    },
+    {
+      "name": "Walmart Pharmacy",
+      "lat": 34.7123754,
+      "lng": -82.25221450000001,
+      "address": "3950 Grandview Dr, Simpsonville, SC 29680, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJea6OizEnWIgRRzH-2l9vrEY"
+    },
+    {
+      "name": "Walmart Pharmacy",
+      "lat": 35.0526563,
+      "lng": -81.98586519999999,
+      "address": "4000 SC-9, Boiling Springs, SC 29316, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJCei6LjtxV4gRBoEXKHUBiaQ"
+    },
+    {
+      "name": "Walmart Pharmacy",
+      "lat": 34.9799185,
+      "lng": -81.0900489,
+      "address": "4875 Old York Rd, Rock Hill, SC 29732, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJRZ5I2Q6MVogRNALNC2Yoqf0"
+    },
+    {
+      "name": "Walmart Pharmacy",
+      "lat": 35.006006,
+      "lng": -80.9308353,
+      "address": "500 N Dobys Bridge Rd, Fort Mill, SC 29715, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJyeWdbFiEVogRIoarYgLU3Jw"
+    },
+    {
+      "name": "Walmart Pharmacy",
+      "lat": 34.9118015,
+      "lng": -82.4311093,
+      "address": "5009 Old Buncombe Rd, Greenville, SC 29617, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJ1Xa1ZkoyWIgRHFRVo9IeSQk"
+    },
+    {
+      "name": "Walmart Pharmacy",
+      "lat": 34.207814,
+      "lng": -82.1920148,
+      "address": "508 Nw Bypass 72, Greenwood, SC 29649, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJg48uJ7cB-IgRKh7wR79jBkk"
+    },
+    {
+      "name": "Walmart Pharmacy",
+      "lat": 34.7268489,
+      "lng": -81.641352,
+      "address": "513 N Duncan Bypass, Union, SC 29379, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJZ4CYqrexV4gRY_RQuVPvLbc"
+    },
+    {
+      "name": "Walmart Pharmacy",
+      "lat": 33.7028184,
+      "lng": -78.91218889999999,
+      "address": "541 Seaboard St, Myrtle Beach, SC 29577, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJS227_3NpAIkRXn2TOgZEhCU"
+    },
+    {
+      "name": "Walmart Pharmacy",
+      "lat": 33.99793890000001,
+      "lng": -81.2237354,
+      "address": "5556 Sunset Blvd, Lexington, SC 29072, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJ6QmFemuX-IgRfF33IQ8p2AI"
+    },
+    {
+      "name": "Walmart Pharmacy",
+      "lat": 33.0340382,
+      "lng": -80.0636255,
+      "address": "605 St James Ave, Goose Creek, SC 29445, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJAyr-Znpg_ogREPoroLFBzGo"
+    },
+    {
+      "name": "Walmart Pharmacy",
+      "lat": 34.8563731,
+      "lng": -82.4542886,
+      "address": "6134 White Horse Rd, Greenville, SC 29611, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJBVdJZR8xWIgRjM36JO0ZUd4"
+    },
+    {
+      "name": "Walmart Pharmacy",
+      "lat": 34.6979084,
+      "lng": -82.8012186,
+      "address": "680 Old Greenville Hwy, Clemson, SC 29631, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJbV1MkTRcWIgRdDWdArYFXOs"
+    },
+    {
+      "name": "Walmart Pharmacy",
+      "lat": 34.1746039,
+      "lng": -79.810683,
+      "address": "804 S Cashua Dr, Florence, SC 29501, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJhQMaX7RmVYgR7mD6nM-jkfQ"
+    },
+    {
+      "name": "Walmart Pharmacy",
+      "lat": 34.4359669,
+      "lng": -79.3759852,
+      "address": "805 Enterprise Rd, Dillon, SC 29536, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJ8dAkadHKqokR0bYYpf5FOks"
+    },
+    {
+      "name": "Walmart Pharmacy",
+      "lat": 34.7341003,
+      "lng": -80.7847762,
+      "address": "805 Hwy 9 Bypass W, Lancaster, SC 29720, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJK1Cd0jTWVYgRei7joQTstuQ"
+    },
+    {
+      "name": "Walmart Pharmacy",
+      "lat": 34.9440002,
+      "lng": -82.24789419999999,
+      "address": "805 W Wade Hampton Blvd Ste B, Greer, SC 29650, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJn9eM3-cqWIgRHiYryOGLECI"
+    },
+    {
+      "name": "Walmart Pharmacy",
+      "lat": 34.9601337,
+      "lng": -82.4309245,
+      "address": "9 Benton Rd, Travelers Rest, SC 29690, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJnTkosCAzWIgR3H08_ryxgN0"
+    },
+    {
+      "name": "Walmart Pharmacy",
+      "lat": 34.489884,
+      "lng": -81.9835069,
+      "address": "922 E Main St, Laurens, SC 29360, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJsSYtIZPuV4gRNagk2bwEClE"
+    },
+    {
+      "name": "Walmart Pharmacy",
+      "lat": 34.9834764,
+      "lng": -81.213154,
+      "address": "970 E Liberty St, York, SC 29745, USA",
+      "phone": "",
+      "chain": "Walmart",
+      "placeId": "ChIJtYDRsIDzVogReKTJ3O0hvik"
     }
   ]
 }

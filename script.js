@@ -12,8 +12,22 @@ let csvLoaded = false;
 let greenvilleCsvLoaded = false;    // NEW: Track Greenville CSV load status
 let map;
 let currentMarkers = [];
+/** Additional markers when user enables “show all on map” (beyond top 10). */
+let mapExtraMarkers = [];
 /** Loaded from pharmacies.json at runtime */
 let pharmacies = [];
+
+/** Max pharmacy rows to show after sorting by price (best first). */
+const RESULTS_TOP_N = 10;
+
+/** Approximate centers for “search near” (South Carolina). */
+const SEARCH_CENTERS = {
+    greenville: { lat: 34.8526, lng: -82.3940, label: 'Greenville area' },
+    spartanburg: { lat: 34.9496, lng: -81.9310, label: 'Spartanburg area' },
+    columbia: { lat: 34.0007, lng: -81.0348, label: 'Columbia area' },
+    charleston: { lat: 32.7765, lng: -79.9311, label: 'Charleston area' },
+    myrtlebeach: { lat: 33.6891, lng: -78.8867, label: 'Myrtle Beach area' }
+};
 
 // --- Trust & data freshness widget ---
 const DATA_SOURCES = {
@@ -866,6 +880,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     
     // Setup form submission
     setupFormHandler();
+    setupSearchNearControls();
 
     // Initialize dynamic dosage guidance UI
     const dosageSelect = document.getElementById('dosage');
@@ -1007,10 +1022,24 @@ function getZipMultiplier(zip) {
     return zipMultipliers[zip] || 1.0;
 }
 
-// Extract ZIP code from pharmacy address
 function extractZipCode(address) {
-    const zipMatch = address.match(/\b\d{5}\b/);
-    return zipMatch ? zipMatch[0] : null;
+    const match = address.match(/\b[A-Z]{2}\s+(\d{5})\b/);
+    if (match) return match[1];
+    const allFive = address.match(/\b\d{5}\b/g);
+    return allFive ? allFive[allFive.length - 1] : null;
+}
+
+/** Great-circle distance in miles (WGS84 sphere approximation). */
+function milesBetween(lat1, lng1, lat2, lng2) {
+    const R = 3958.8;
+    const toRad = (d) => (d * Math.PI) / 180;
+    const dLat = toRad(lat2 - lat1);
+    const dLng = toRad(lng2 - lng1);
+    const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLng / 2) * Math.sin(dLng / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(Math.max(0, 1 - a)));
+    return R * c;
 }
 
 // Check if pharmacy is in Greenville based on ZIP code
@@ -1021,6 +1050,82 @@ function isGreenvillePharmacy(zipCode) {
 function clearMarkers() {
     currentMarkers.forEach(marker => map.removeLayer(marker));
     currentMarkers = [];
+    mapExtraMarkers.forEach(marker => map.removeLayer(marker));
+    mapExtraMarkers = [];
+}
+
+function fitMapToMarkerList(markers) {
+    if (!markers || !markers.length) return;
+    const group = new L.featureGroup(markers);
+    map.fitBounds(group.getBounds().pad(0.1));
+}
+
+function pharmacyPopupHtml(pharmacy, options) {
+    const rankLabel = options.rankLabel || '';
+    const showBest = !!options.showBest;
+    const zipInfo =
+        pharmacy.zipMultiplier !== 1.0
+            ? `<div class="zip-info">ZIP ${pharmacy.zipCode} multiplier: ${pharmacy.zipMultiplier}x</div>`
+            : '';
+    const rankLine = rankLabel ? `<div class="popup-rank">${escapeHtml(rankLabel)}</div>` : '';
+    return `
+                <div class="popup-content">
+                    ${rankLine}
+                    <div class="popup-pharmacy">${escapeHtml(pharmacy.name)}</div>
+                    <div>${escapeHtml(pharmacy.address)}</div>
+                    <div class="popup-price">$${escapeHtml(pharmacy.price)}</div>
+                    ${showBest ? '<div class="popup-best">BEST PRICE</div>' : ''}
+                    ${zipInfo}
+                </div>
+            `;
+}
+
+function pharmacyCardHtml(pharmacy, rankIndex, bestPriceNum) {
+    const priceNum = parseFloat(pharmacy.price);
+    const savingsAmount =
+        rankIndex === 0 ? 0 : ((priceNum - bestPriceNum) / bestPriceNum * 100).toFixed(0);
+    const extraCost = rankIndex === 0 ? '' : (priceNum - bestPriceNum).toFixed(2);
+    return `
+                <div class="pharmacy-card" data-lat="${pharmacy.lat}" data-lng="${pharmacy.lng}">
+                    <div class="pharmacy-name">${escapeHtml(pharmacy.name)}</div>
+                    <div class="pharmacy-address">${escapeHtml(pharmacy.address)}</div>
+                    <div class="price-info">
+                        <div class="price">$${escapeHtml(pharmacy.price)}</div>
+                        ${
+                            rankIndex === 0
+                                ? '<div class="savings">BEST PRICE</div>'
+                                : Number(savingsAmount) > 0
+                                  ? `<div class="price-more">+$${escapeHtml(extraCost)} more</div>`
+                                  : ''
+                        }
+                    </div>
+                </div>
+            `;
+}
+
+function attachPharmacyCardClicks(container) {
+    if (!container) return;
+    container.querySelectorAll('.pharmacy-card').forEach(card => {
+        const lat = parseFloat(card.getAttribute('data-lat'));
+        const lng = parseFloat(card.getAttribute('data-lng'));
+        if (!Number.isNaN(lat) && !Number.isNaN(lng)) {
+            card.addEventListener('click', () => focusPharmacy(lat, lng));
+        }
+    });
+}
+
+function addMarkerForRankedResult(pharmacy, indexInTopList, popupHtml) {
+    let marker;
+    if (indexInTopList === 0) {
+        marker = L.marker([pharmacy.lat, pharmacy.lng], { icon: greenIcon }).bindPopup(popupHtml).addTo(map);
+    } else if (indexInTopList === 1) {
+        marker = L.marker([pharmacy.lat, pharmacy.lng], { icon: orangeIcon }).bindPopup(popupHtml).addTo(map);
+    } else if (indexInTopList === 2) {
+        marker = L.marker([pharmacy.lat, pharmacy.lng], { icon: violetIcon }).bindPopup(popupHtml).addTo(map);
+    } else {
+        marker = L.marker([pharmacy.lat, pharmacy.lng]).bindPopup(popupHtml).addTo(map);
+    }
+    currentMarkers.push(marker);
 }
 
 // Function to get base price from CSV data
@@ -1299,7 +1404,7 @@ function calculateSavings(prices) {
     return Math.round(((maxPrice - minPrice) / maxPrice) * 100);
 }
 
-function displayResults(medication, dosage, quantity) {
+function displayResults(medication, dosage, quantity, center, radiusMiles, locationLabel) {
     const resultsDiv = document.getElementById('results');
     
     if (!csvLoaded && !greenvilleCsvLoaded) {
@@ -1345,10 +1450,37 @@ function displayResults(medication, dosage, quantity) {
             return;
         }
 
-        // Get prices for each pharmacy
+        let pharmacyPool = pharmacies;
+        let areaSummary = '';
+
+        if (
+            center != null &&
+            typeof center.lat === 'number' &&
+            typeof center.lng === 'number' &&
+            Number.isFinite(radiusMiles) &&
+            radiusMiles > 0
+        ) {
+            const label = (locationLabel || 'selected location').trim();
+            pharmacyPool = pharmacies.filter(
+                (p) => milesBetween(center.lat, center.lng, p.lat, p.lng) <= radiusMiles
+            );
+            areaSummary = `Within ${radiusMiles} mi of ${label}. `;
+            if (!pharmacyPool.length) {
+                resultsDiv.innerHTML = `
+                <div class="no-results">
+                    <strong>No pharmacies in this area.</strong><br>
+                    No locations in our directory fall within ${escapeHtml(String(radiusMiles))} miles of ${escapeHtml(label)}.
+                    Try a larger radius or choose <strong>Entire South Carolina</strong>.
+                </div>
+            `;
+                return;
+            }
+        }
+
+        // Get prices for each pharmacy in the pool
         const results = [];
-        
-        pharmacies.forEach(pharmacy => {
+
+        pharmacyPool.forEach(pharmacy => {
             // Extract ZIP code from pharmacy address
             const pharmacyZip = extractZipCode(pharmacy.address);
             
@@ -1384,79 +1516,91 @@ function displayResults(medication, dosage, quantity) {
         
         // Sort by price (lowest first)
         results.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
-        
-        const prices = results.map(r => parseFloat(r.price));
+
+        const totalWithPrice = results.length;
+        const topResults = results.slice(0, RESULTS_TOP_N);
+        const restResults = results.slice(RESULTS_TOP_N);
+        const bestPriceNum = parseFloat(results[0].price);
+
+        const prices = topResults.map(r => parseFloat(r.price));
         const savings = calculateSavings(prices);
 
         clearMarkers();
 
+        const showingLine =
+            totalWithPrice > RESULTS_TOP_N
+                ? `Top ${RESULTS_TOP_N} matches are listed first (by price). ${totalWithPrice - RESULTS_TOP_N} more below. Map shows these top ${RESULTS_TOP_N} only unless you opt in. `
+                : `Showing ${totalWithPrice} match${totalWithPrice === 1 ? '' : 'es'} (by price). `;
+
         let resultsHTML = `<div class="results-banner">
-            <strong class="banner-title">Searching for:</strong> ${escapeHtml(medication)} ${escapeHtml(dosage)} (${escapeHtml(quantity)} tablets)<br>
-            <strong class="banner-best">Best Price:</strong> $${escapeHtml(results[0].price)} at ${escapeHtml(results[0].name)}<br>
-            <strong class="banner-savings">You could save up to ${escapeHtml(savings)}%</strong> by choosing the best price!
+            <strong class="banner-title">Searching for:</strong> ${escapeHtml(medication)} ${escapeHtml(dosage)} (qty: ${escapeHtml(quantity)})<br>
+            <span class="banner-area">${escapeHtml(areaSummary)}${escapeHtml(showingLine)}</span><br>
+            <strong class="banner-best">Best Price:</strong> $${escapeHtml(topResults[0].price)} at ${escapeHtml(topResults[0].name)}<br>
+            <strong class="banner-savings">You could save up to ${escapeHtml(savings)}%</strong> among the top results by choosing the best price!
         </div>`;
 
-        results.forEach((pharmacy, index) => {
-            const savingsAmount = index === 0 ? 0 : ((parseFloat(pharmacy.price) - parseFloat(results[0].price)) / parseFloat(results[0].price) * 100).toFixed(0);
-            
-            resultsHTML += `
-                <div class="pharmacy-card" data-lat="${pharmacy.lat}" data-lng="${pharmacy.lng}">
-                    <div class="pharmacy-name">${escapeHtml(pharmacy.name)}</div>
-                    <div class="pharmacy-address">${escapeHtml(pharmacy.address)}</div>
-                    <div class="price-info">
-                        <div class="price">$${escapeHtml(pharmacy.price)}</div>
-                        ${index === 0 ? '<div class="savings">BEST PRICE</div>' : savingsAmount > 0 ? `<div class="price-more">+$${escapeHtml((parseFloat(pharmacy.price) - parseFloat(results[0].price)).toFixed(2))} more</div>` : ''}
-                    </div>
-                </div>
-            `;
+        if (totalWithPrice > RESULTS_TOP_N) {
+            resultsHTML += `<div class="map-match-controls">
+                <label class="map-show-all-label">
+                    <input type="checkbox" id="mapShowAllCheckbox" />
+                    <span>Show all ${totalWithPrice} matches on the map <span class="map-match-hint">(adds ${restResults.length} beyond the top ${RESULTS_TOP_N})</span></span>
+                </label>
+            </div>`;
+        }
 
-            // Add marker to map and visually highlight the cheapest results
-            let marker;
-            const zipInfo = pharmacy.zipMultiplier !== 1.0 ? `<div class="zip-info">ZIP ${pharmacy.zipCode} multiplier: ${pharmacy.zipMultiplier}x</div>` : '';
-            const popupHtml = `
-                <div class="popup-content">
-                    <div class="popup-pharmacy">${escapeHtml(pharmacy.name)}</div>
-                    <div>${escapeHtml(pharmacy.address)}</div>
-                    <div class="popup-price">$${escapeHtml(pharmacy.price)}</div>
-                    ${index === 0 ? '<div class="popup-best">BEST PRICE</div>' : ''}
-                    ${zipInfo}
-                </div>
-            `;
+        resultsHTML += `<div class="results-section-label">Top ${Math.min(RESULTS_TOP_N, totalWithPrice)} by price</div>`;
+        resultsHTML += `<div class="results-list results-list--top" id="resultsTopList">`;
 
-            if (index === 0) {
-                // Best price: green marker icon
-                marker = L.marker([pharmacy.lat, pharmacy.lng], { icon: greenIcon }).bindPopup(popupHtml).addTo(map);
-            } else if (index === 1) {
-                // 2nd best: orange marker icon
-                marker = L.marker([pharmacy.lat, pharmacy.lng], { icon: orangeIcon }).bindPopup(popupHtml).addTo(map);
-            } else if (index === 2) {
-                // 3rd best: violet marker icon
-                marker = L.marker([pharmacy.lat, pharmacy.lng], { icon: violetIcon }).bindPopup(popupHtml).addTo(map);
-            } else {
-                // Default marker for others
-                marker = L.marker([pharmacy.lat, pharmacy.lng]).bindPopup(popupHtml).addTo(map);
-            }
-
-            currentMarkers.push(marker);
+        topResults.forEach((pharmacy, index) => {
+            resultsHTML += pharmacyCardHtml(pharmacy, index, bestPriceNum);
+            const popupHtml = pharmacyPopupHtml(pharmacy, {
+                showBest: index === 0,
+                rankLabel: `#${index + 1} of ${totalWithPrice}`
+            });
+            addMarkerForRankedResult(pharmacy, index, popupHtml);
         });
+
+        resultsHTML += `</div>`;
+
+        if (restResults.length > 0) {
+            const moreCount = restResults.length;
+            resultsHTML += `<details class="results-details" id="resultsDetailsAll">
+                <summary class="results-details-summary">Show all ${totalWithPrice} matches <span class="results-details-badge">(${moreCount} more)</span></summary>
+                <div class="results-list results-list--rest" id="resultsRestList">`;
+            restResults.forEach((pharmacy, i) => {
+                const rankIndex = RESULTS_TOP_N + i;
+                resultsHTML += pharmacyCardHtml(pharmacy, rankIndex, bestPriceNum);
+            });
+            resultsHTML += `</div></details>`;
+        }
 
         resultsDiv.innerHTML = resultsHTML;
 
-        // Attach click handlers to pharmacy cards (avoid inline event handlers which CSP blocks)
-        const cards = resultsDiv.querySelectorAll('.pharmacy-card');
-        cards.forEach(card => {
-            const lat = parseFloat(card.getAttribute('data-lat'));
-            const lng = parseFloat(card.getAttribute('data-lng'));
-            if (!Number.isNaN(lat) && !Number.isNaN(lng)) {
-                card.addEventListener('click', () => focusPharmacy(lat, lng));
-            }
-        });
+        attachPharmacyCardClicks(resultsDiv);
 
-        // Fit map to show all markers
-        if (currentMarkers.length > 0) {
-            const group = new L.featureGroup(currentMarkers);
-            map.fitBounds(group.getBounds().pad(0.1));
+        const mapShowAllCheckbox = document.getElementById('mapShowAllCheckbox');
+        if (mapShowAllCheckbox && restResults.length > 0) {
+            mapShowAllCheckbox.addEventListener('change', () => {
+                if (mapShowAllCheckbox.checked) {
+                    restResults.forEach((pharmacy, i) => {
+                        const rankIndex = RESULTS_TOP_N + i;
+                        const popupHtml = pharmacyPopupHtml(pharmacy, {
+                            showBest: false,
+                            rankLabel: `#${rankIndex + 1} of ${totalWithPrice}`
+                        });
+                        const marker = L.marker([pharmacy.lat, pharmacy.lng]).bindPopup(popupHtml).addTo(map);
+                        mapExtraMarkers.push(marker);
+                    });
+                    fitMapToMarkerList([...currentMarkers, ...mapExtraMarkers]);
+                } else {
+                    mapExtraMarkers.forEach(m => map.removeLayer(m));
+                    mapExtraMarkers = [];
+                    fitMapToMarkerList(currentMarkers);
+                }
+            });
         }
+
+        fitMapToMarkerList(currentMarkers);
         
         // Update stats with animation
         setTimeout(() => {
@@ -1469,6 +1613,22 @@ function focusPharmacy(lat, lng) {
     map.setView([lat, lng], 15);
 }
 
+function setupSearchNearControls() {
+    const searchNear = document.getElementById('searchNear');
+    const radiusSelect = document.getElementById('radiusMiles');
+    const radiusGroup = document.getElementById('radiusGroup');
+    if (!searchNear || !radiusSelect) return;
+
+    function sync() {
+        const entire = searchNear.value === 'state';
+        radiusSelect.disabled = entire;
+        if (radiusGroup) radiusGroup.classList.toggle('is-disabled', entire);
+    }
+
+    searchNear.addEventListener('change', sync);
+    sync();
+}
+
 // Handle form submission
 function setupFormHandler() {
     document.getElementById('searchForm').addEventListener('submit', function(e) {
@@ -1477,6 +1637,8 @@ function setupFormHandler() {
         const medication = document.getElementById('medication').value.trim();
         const dosage = document.getElementById('dosage').value;
         const quantity = document.getElementById('quantity').value;
+        const mode = document.getElementById('searchNear').value;
+        const radiusMiles = parseFloat(document.getElementById('radiusMiles').value);
         
         if (!medication || !dosage || !quantity) {
             alert('Please fill in all fields');
@@ -1488,22 +1650,51 @@ function setupFormHandler() {
             return;
         }
 
-        displayResults(medication, dosage, quantity);
+        const run = (center, label) =>
+            displayResults(medication, dosage, quantity, center, radiusMiles, label);
+
+        if (mode === 'state') {
+            displayResults(medication, dosage, quantity, null, null, null);
+        } else if (mode === 'geolocation') {
+            if (!navigator.geolocation) {
+                alert('This browser does not support location. Choose a city or Entire South Carolina.');
+                return;
+            }
+            navigator.geolocation.getCurrentPosition(
+                (pos) =>
+                    run(
+                        { lat: pos.coords.latitude, lng: pos.coords.longitude },
+                        'your location'
+                    ),
+                () =>
+                    alert(
+                        'Could not read your location. Allow location access for this site, or pick a city instead.'
+                    ),
+                { enableHighAccuracy: false, timeout: 12000, maximumAge: 300000 }
+            );
+        } else {
+            const c = SEARCH_CENTERS[mode];
+            if (!c) {
+                displayResults(medication, dosage, quantity, null, null, null);
+                return;
+            }
+            run({ lat: c.lat, lng: c.lng }, c.label);
+        }
     });
 }
 
-// Add some initial sample markers
 function addInitialMarkers() {
     if (!pharmacies.length) return;
     pharmacies.slice(0, 4).forEach(pharmacy => {
-         const marker = L.marker([pharmacy.lat, pharmacy.lng])
+        const marker = L.marker([pharmacy.lat, pharmacy.lng])
             .bindPopup(`
                <div class="popup-content">
                    <div class="popup-pharmacy">${escapeHtml(pharmacy.name)}</div>
                    <div>${escapeHtml(pharmacy.address)}</div>
-                    <div class="popup-note">Search for a medication to see prices</div>
+                   <div class="popup-note">Search for a medication to see prices</div>
                </div>
            `)
             .addTo(map);
+        currentMarkers.push(marker);
     });
 }

@@ -121,6 +121,13 @@
         display: none;
     }
 
+    .field-hint {
+        margin: 6px 0 0;
+        font-size: 0.8rem;
+        line-height: 1.35;
+        color: #5a6c7d;
+    }
+
     .search-btn {
         background: linear-gradient(135deg, #2980b9 0%, #3498db 50%, #5dade2 100%);
         color: white;
@@ -368,8 +375,97 @@
     box-shadow: 0 4px 15px rgba(52, 152, 219, 0.1);
 }
 .banner-title { color: #1e3c72; }
+.banner-area {
+    display: inline-block;
+    margin: 6px 0 4px;
+    font-size: 0.95rem;
+    color: #34495e;
+    line-height: 1.4;
+}
 .banner-best { color: #27ae60; }
 .banner-savings { color: #e74c3c; }
+
+.form-group.is-disabled {
+    opacity: 0.65;
+}
+
+.map-match-controls {
+    margin: 0 0 16px;
+    padding: 12px 14px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+}
+.map-show-all-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    color: #2c3e50;
+    line-height: 1.45;
+}
+.map-show-all-label input {
+    margin-top: 3px;
+    flex-shrink: 0;
+}
+.map-match-hint {
+    display: block;
+    font-size: 0.82rem;
+    color: #6c7a89;
+    font-weight: 400;
+    margin-top: 2px;
+}
+
+.results-section-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #1e3c72;
+    margin: 8px 0 10px;
+}
+
+.results-details {
+    margin-top: 20px;
+    border: 1px solid #dce6f0;
+    border-radius: 10px;
+    background: #fbfdff;
+    overflow: hidden;
+}
+.results-details-summary {
+    padding: 14px 16px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #1e3c72;
+    list-style: none;
+}
+.results-details-summary::-webkit-details-marker {
+    display: none;
+}
+.results-details-summary::before {
+    content: '▸ ';
+    display: inline-block;
+    transition: transform 0.15s ease;
+}
+.results-details[open] .results-details-summary::before {
+    transform: rotate(90deg);
+}
+.results-details-badge {
+    font-weight: 500;
+    color: #5a6c7d;
+    font-size: 0.9em;
+}
+.results-list--rest {
+    padding: 0 12px 14px;
+    border-top: 1px solid #edf2f7;
+}
+
+.popup-rank {
+    font-size: 0.8rem;
+    color: #5a6c7d;
+    margin-bottom: 6px;
+}
 
 /* Price delta for non-best prices */
 .price-more {

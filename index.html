@@ -15,14 +15,14 @@
     <!-- Security headers (meta-based; prefer setting these as HTTP response headers on the server/CDN) -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com https://cdnjs.cloudflare.com; style-src 'self' https://unpkg.com; img-src 'self' data: https:; font-src 'self' https://unpkg.com https://cdnjs.cloudflare.com; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none';">
     <meta name="referrer" content="strict-origin-when-cross-origin">
-    <meta name="permissions-policy" content="geolocation=(), microphone=(), camera=()">
+    <meta name="permissions-policy" content="geolocation=(self), microphone=(), camera=()">
     <title>AffordRX - Find Affordable OTC Prescriptions in South Carolina</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <link rel="stylesheet" href="style.css?v=20260425b">
+    <link rel="stylesheet" href="style.css?v=20260505e">
     <!-- Load Leaflet first, then PapaParse, then our script which depends on them -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-    <script src="script.js?v=20260505c" defer></script>
+    <script src="script.js?v=20260505e" defer></script>
 </head>
 <body>
     <div class="container">
@@ -101,6 +101,29 @@
                         <option value="60">60 tablets</option>
                         <option value="90">90 tablets</option>
                         <option value="180">180 tablets</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="searchNear">Search near</label>
+                    <select id="searchNear" aria-describedby="searchNearHint">
+                        <option value="state">Entire South Carolina</option>
+                        <option value="greenville">Greenville area</option>
+                        <option value="spartanburg">Spartanburg area</option>
+                        <option value="columbia">Columbia area</option>
+                        <option value="charleston">Charleston area</option>
+                        <option value="myrtlebeach">Myrtle Beach area</option>
+                        <option value="geolocation">My current location</option>
+                    </select>
+                    <p id="searchNearHint" class="field-hint">Pick a region or use your location, then set a mile radius (ignored for entire state).</p>
+                </div>
+                <div class="form-group" id="radiusGroup">
+                    <label for="radiusMiles">Within (miles)</label>
+                    <select id="radiusMiles">
+                        <option value="5">5 mi</option>
+                        <option value="10" selected>10 mi</option>
+                        <option value="15">15 mi</option>
+                        <option value="25">25 mi</option>
+                        <option value="50">50 mi</option>
                     </select>
                 </div>
                 <button type="submit" class="search-btn">Search Prices</button>

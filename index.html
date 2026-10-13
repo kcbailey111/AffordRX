@@ -13,16 +13,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Security headers (meta-based; prefer setting these as HTTP response headers on the server/CDN) -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com https://cdnjs.cloudflare.com; style-src 'self' https://unpkg.com; img-src 'self' data: https:; font-src 'self' https://unpkg.com https://cdnjs.cloudflare.com; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com https://cdnjs.cloudflare.com; style-src 'self' https://unpkg.com; img-src 'self' data: blob: https:; font-src 'self' https://unpkg.com https://cdnjs.cloudflare.com https://tiles.openfreemap.org; connect-src 'self' https://tiles.openfreemap.org; worker-src 'self' blob: https://unpkg.com; object-src 'none'; base-uri 'self'; frame-ancestors 'none';">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta name="permissions-policy" content="geolocation=(self), microphone=(), camera=()">
     <title>AffordRX - Find Affordable OTC Prescriptions in South Carolina</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <link rel="stylesheet" href="style.css?v=20260505g">
-    <!-- Load Leaflet first, then PapaParse, then our script which depends on them -->
+    <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.css" />
+    <link rel="stylesheet" href="style.css?v=20261013b">
+    <!-- Leaflet markers stay in script.js. MapLibre draws the current OpenFreeMap basemap. -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.js"></script>
+    <script src="https://unpkg.com/@maplibre/maplibre-gl-leaflet@0.1.4/leaflet-maplibre-gl.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-    <script src="script.js?v=20260505f" defer></script>
+    <script src="script.js?v=20261013c" defer></script>
 </head>
 <body>
     <div class="container">

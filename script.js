@@ -14,6 +14,8 @@ let map;
 let currentMarkers = [];
 /** Additional markers when user enables “show all on map” (beyond top 10). */
 let mapExtraMarkers = [];
+/** Pin shown when a result card is clicked and that pharmacy is not already on the map. */
+let focusMarker = null;
 /** Loaded from pharmacies.json at runtime */
 let pharmacies = [];
 
@@ -1016,16 +1018,23 @@ function escapeHtml(str) {
 
 // Wait for the page to fully load before initializing
 document.addEventListener('DOMContentLoaded', async function() {
+    // CARTO raster tiles stopped loading without an API key (Sept 2026).
+    // OpenFreeMap vector tiles stay current and do not need a key.
     // Initialize map centered on South Carolina (Columbia area) for a state-level view
     // Use a broader zoom so users see the whole state on first load
-    map = L.map('map').setView([33.8361, -81.1637], 7);
-    
-    // Add CartoDB Voyager tiles for a colorful map
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-        attribution: '© OpenStreetMap contributors © CARTO',
-        subdomains: 'abcd',
-        maxZoom: 20
-    }).addTo(map);
+    map = L.map('map', { maxZoom: 19 }).setView([33.8361, -81.1637], 7);
+
+    try {
+        if (typeof L.maplibreGL !== 'function') {
+            throw new Error('L.maplibreGL missing');
+        }
+        L.maplibreGL({
+            style: 'https://tiles.openfreemap.org/styles/liberty',
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://openfreemap.org">OpenFreeMap</a>'
+        }).addTo(map);
+    } catch (err) {
+        console.error('Map basemap failed to load:', err);
+    }
     
     // Force the map to refresh its size after a brief delay and re-center it
     setTimeout(function() {
@@ -1058,7 +1067,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 addItem('https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png', 'green', 'Best price');
                 addItem('https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png', 'orange', '2nd best');
                 addItem('https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-violet.png', 'violet', '3rd best');
-                addItem('https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png', 'default', 'Other pharmacies');
+                addItem('https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png', 'blue', 'Other pharmacies');
 
                 return div;
             };
@@ -1176,33 +1185,21 @@ async function loadPharmacies() {
 }
 
 // Custom colored marker icons for highlighting top results
-const greenIcon = new L.Icon({
-    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
-    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowSize: [41, 41]
-});
+function markerIcon(color) {
+    return new L.Icon({
+        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-' + color + '.png',
+        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+    });
+}
 
-const orangeIcon = new L.Icon({
-    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png',
-    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowSize: [41, 41]
-});
-
-// 3rd-best marker (violet)
-const violetIcon = new L.Icon({
-    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-violet.png',
-    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowSize: [41, 41]
-});
+const greenIcon = markerIcon('green');
+const orangeIcon = markerIcon('orange');
+const violetIcon = markerIcon('violet');
+const blueIcon = markerIcon('blue');
 
 // Narrow ZIP multipliers for OTCs (small neighborhood effect)
 // OTC drugs have minimal price variation by location due to:
@@ -1251,11 +1248,19 @@ function isGreenvillePharmacy(zipCode) {
     return greenvilleZips.includes(zipCode);
 }
 
+function clearFocusMarker() {
+    if (focusMarker && map) {
+        map.removeLayer(focusMarker);
+    }
+    focusMarker = null;
+}
+
 function clearMarkers() {
     currentMarkers.forEach(marker => map.removeLayer(marker));
     currentMarkers = [];
     mapExtraMarkers.forEach(marker => map.removeLayer(marker));
     mapExtraMarkers = [];
+    clearFocusMarker();
 }
 
 function fitMapToMarkerList(markers) {
@@ -1313,7 +1318,7 @@ function attachPharmacyCardClicks(container) {
         const lat = parseFloat(card.getAttribute('data-lat'));
         const lng = parseFloat(card.getAttribute('data-lng'));
         if (!Number.isNaN(lat) && !Number.isNaN(lng)) {
-            card.addEventListener('click', () => focusPharmacy(lat, lng));
+            card.addEventListener('click', () => focusPharmacy(lat, lng, card));
         }
     });
 }
@@ -1327,7 +1332,7 @@ function addMarkerForRankedResult(pharmacy, indexInTopList, popupHtml) {
     } else if (indexInTopList === 2) {
         marker = L.marker([pharmacy.lat, pharmacy.lng], { icon: violetIcon }).bindPopup(popupHtml).addTo(map);
     } else {
-        marker = L.marker([pharmacy.lat, pharmacy.lng]).bindPopup(popupHtml).addTo(map);
+        marker = L.marker([pharmacy.lat, pharmacy.lng], { icon: blueIcon }).bindPopup(popupHtml).addTo(map);
     }
     currentMarkers.push(marker);
 }
@@ -1790,7 +1795,7 @@ function displayResults(medication, dosage, quantity, center, radiusMiles, locat
                             showBest: false,
                             rankLabel: `#${rankIndex + 1} of ${totalWithPrice}`
                         });
-                        const marker = L.marker([pharmacy.lat, pharmacy.lng]).bindPopup(popupHtml).addTo(map);
+                        const marker = L.marker([pharmacy.lat, pharmacy.lng], { icon: blueIcon }).bindPopup(popupHtml).addTo(map);
                         mapExtraMarkers.push(marker);
                     });
                     fitMapToMarkerList([...currentMarkers, ...mapExtraMarkers]);
@@ -1811,8 +1816,41 @@ function displayResults(medication, dosage, quantity, center, radiusMiles, locat
     }, 1000);
 }
 
-function focusPharmacy(lat, lng) {
-    map.setView([lat, lng], 15);
+function markerMatches(marker, lat, lng) {
+    const pos = marker.getLatLng();
+    return Math.abs(pos.lat - lat) < 0.00005 && Math.abs(pos.lng - lng) < 0.00005;
+}
+
+function focusPharmacy(lat, lng, card) {
+    if (!map) return;
+    const match = currentMarkers.concat(mapExtraMarkers).find((marker) => markerMatches(marker, lat, lng));
+    clearFocusMarker();
+    map.setView([lat, lng], 16);
+    if (match) {
+        match.openPopup();
+    } else {
+        const name = card?.querySelector('.pharmacy-name')?.textContent || 'Pharmacy';
+        const address = card?.querySelector('.pharmacy-address')?.textContent || '';
+        focusMarker = L.marker([lat, lng], { icon: blueIcon, zIndexOffset: 1000 })
+            .bindPopup(`
+                <div class="popup-content">
+                    <div class="popup-pharmacy">${escapeHtml(name)}</div>
+                    <div>${escapeHtml(address)}</div>
+                </div>
+            `)
+            .addTo(map)
+            .openPopup();
+    }
+
+    const mapEl = document.getElementById('map');
+    if (mapEl) {
+        const rect = mapEl.getBoundingClientRect();
+        const onScreen = rect.bottom > 80 && rect.top < window.innerHeight - 40;
+        if (!onScreen) {
+            mapEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }
+    setTimeout(() => map.invalidateSize(), 300);
 }
 
 function setupSearchNearControls() {
@@ -1888,7 +1926,7 @@ function setupFormHandler() {
 function addInitialMarkers() {
     if (!pharmacies.length) return;
     pharmacies.slice(0, 4).forEach(pharmacy => {
-        const marker = L.marker([pharmacy.lat, pharmacy.lng])
+        const marker = L.marker([pharmacy.lat, pharmacy.lng], { icon: blueIcon })
             .bindPopup(`
                <div class="popup-content">
                    <div class="popup-pharmacy">${escapeHtml(pharmacy.name)}</div>

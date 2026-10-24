@@ -19,13 +19,13 @@
     <title>AffordRX - Find Affordable OTC Prescriptions in South Carolina</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.css" />
-    <link rel="stylesheet" href="style.css?v=20261013b">
+    <link rel="stylesheet" href="style.css?v=20261023a">
     <!-- Leaflet markers stay in script.js. MapLibre draws the current OpenFreeMap basemap. -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.js"></script>
     <script src="https://unpkg.com/@maplibre/maplibre-gl-leaflet@0.1.4/leaflet-maplibre-gl.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-    <script src="script.js?v=20261013c" defer></script>
+    <script src="script.js?v=20261023a" defer></script>
 </head>
 <body>
     <div class="container">
@@ -87,6 +87,17 @@
                             <span class="combo-arrow" aria-hidden="true">▾</span>
                             <ul id="medicationSuggestions" class="medication-suggestions" role="listbox" hidden></ul>
                         </div>
+                    </div>
+                    <div class="symptom-picker">
+                        <p class="symptom-picker__label" id="symptomPickerLabel">Or start with a symptom</p>
+                        <p class="symptom-picker__hint">Pick pain, allergies, heartburn, or diarrhea to see matching medicines, including brand names.</p>
+                        <div class="symptom-picker__chips" role="group" aria-labelledby="symptomPickerLabel">
+                            <button type="button" class="symptom-chip" data-symptom="pain" aria-pressed="false">Pain</button>
+                            <button type="button" class="symptom-chip" data-symptom="allergies" aria-pressed="false">Allergies</button>
+                            <button type="button" class="symptom-chip" data-symptom="heartburn" aria-pressed="false">Heartburn</button>
+                            <button type="button" class="symptom-chip" data-symptom="diarrhea" aria-pressed="false">Diarrhea</button>
+                        </div>
+                        <div id="symptomDrugs" class="symptom-drugs" hidden></div>
                     </div>
                 </div>
 

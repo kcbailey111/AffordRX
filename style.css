@@ -272,6 +272,124 @@
         display: none;
     }
 
+    .symptom-picker {
+        margin-top: 18px;
+    }
+
+    .symptom-picker__label {
+        font-size: 0.72rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: #1e3c72;
+        margin: 0 0 6px;
+    }
+
+    .symptom-picker__hint {
+        font-size: 0.85rem;
+        line-height: 1.45;
+        color: #5a6c7d;
+        margin: 0 0 12px;
+        max-width: 62ch;
+    }
+
+    .symptom-picker__chips,
+    .symptom-drugs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .symptom-chip,
+    .symptom-drug {
+        font-family: inherit;
+        cursor: pointer;
+        transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+    }
+
+    .symptom-chip {
+        border: 2px solid #d0e4f7;
+        background: #f4f9ff;
+        color: #1e3c72;
+        font-weight: 700;
+        font-size: 0.95rem;
+        padding: 8px 16px;
+        border-radius: 999px;
+    }
+
+    .symptom-chip:hover,
+    .symptom-chip--active {
+        border-color: #1e3c72;
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        color: #fff;
+    }
+
+    .symptom-chip:focus-visible,
+    .symptom-drug:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.25);
+    }
+
+    .symptom-drugs {
+        margin-top: 12px;
+    }
+
+    .symptom-drugs[hidden] {
+        display: none;
+    }
+
+    .symptom-drug {
+        text-align: left;
+        border: 2px solid #d0e4f7;
+        background: #fff;
+        color: #1e3c72;
+        border-radius: 12px;
+        padding: 8px 12px;
+        font-size: 0.95rem;
+        font-weight: 700;
+        line-height: 1.25;
+    }
+
+    .symptom-drug:hover,
+    .symptom-drug--selected {
+        border-color: #3498db;
+        background: #eef6ff;
+    }
+
+    .symptom-drug__generic {
+        display: block;
+        margin-top: 2px;
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: #6b7c93;
+    }
+
+    .symptom-drugs__empty {
+        margin: 0;
+        font-size: 0.9rem;
+        color: #5a6c7d;
+    }
+
+    .membership-note {
+        margin-top: 10px;
+        font-size: 0.82rem;
+        font-weight: 700;
+        color: #8a5a00;
+        background: #fff6e5;
+        border: 1px solid #f0d7a2;
+        border-radius: 8px;
+        padding: 6px 10px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .popup-membership {
+        margin-top: 6px;
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: #8a5a00;
+    }
+
     .field-hint {
         margin: 6px 0 0;
         font-size: 0.8rem;

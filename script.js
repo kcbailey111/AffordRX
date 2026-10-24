@@ -530,10 +530,24 @@ const DOSAGE_GUIDANCE = {
     }
 };
 
-// Common aliases/brand names -> canonical keys used above
+// Common aliases/brand names -> canonical keys used above.
+// Brand names people type (Advil, Zyrtec) resolve to the priced generic.
 const DOSAGE_ALIASES = {
     tylenol: 'acetaminophen',
+    advil: 'ibuprofen',
+    motrin: 'ibuprofen',
+    aleve: 'naproxen',
+    bayer: 'aspirin',
+    zyrtec: 'cetirizine',
+    claritin: 'loratadine',
+    allegra: 'fexofenadine',
+    chlortrimeton: 'chlorpheniramine',
     benadryl: 'diphenhydramine',
+    pepcid: 'famotidine',
+    prilosec: 'omeprazole',
+    nexium: 'esomeprazole',
+    prevacid: 'lansoprazole',
+    imodium: 'loperamide',
     'polyethylene glycol': 'polyethylene',
     'polyethylene glycol 3350': 'miralax',
     advair: 'fluticasonesalmeterol',
@@ -542,6 +556,33 @@ const DOSAGE_ALIASES = {
     zpak: 'azithromycin',
     zithromax: 'azithromycin'
 };
+
+// Symptom picker: how people search, mapped to priced OTC drugs.
+const SYMPTOMS = [
+    {
+        id: 'pain',
+        label: 'Pain',
+        keys: ['acetaminophen', 'ibuprofen', 'aspirin', 'naproxen']
+    },
+    {
+        id: 'allergies',
+        label: 'Allergies',
+        keys: ['cetirizine', 'loratadine', 'diphenhydramine', 'fexofenadine', 'chlorpheniramine', 'benadryl']
+    },
+    {
+        id: 'heartburn',
+        label: 'Heartburn',
+        keys: ['omeprazole', 'famotidine', 'esomeprazole', 'lansoprazole']
+    },
+    {
+        id: 'diarrhea',
+        label: 'Diarrhea',
+        keys: ['loperamide']
+    }
+];
+
+/** Currently selected symptom chip, or null. */
+let activeSymptomId = null;
 
 function normalizeMedicationName(name) {
     return (name || '')
@@ -788,6 +829,45 @@ function medicationNamesMatch(a, b) {
     return medicationKey(a) === medicationKey(b);
 }
 
+function findCatalogDisplayName(key) {
+    const sources = [medicationData, greenvilleMedicationData];
+    for (let s = 0; s < sources.length; s++) {
+        const rows = sources[s];
+        for (let i = 0; i < rows.length; i++) {
+            const name = (rows[i].Name || '').toString().trim();
+            if (name && medicationKey(name) === key) {
+                return formatMedicationDisplayName(name);
+            }
+        }
+    }
+    return '';
+}
+
+/** Map a typed brand (Advil) to the catalog generic (Ibuprofen) when one exists. */
+function resolveMedicationQuery(name) {
+    const trimmed = (name || '').toString().trim();
+    if (!trimmed) return '';
+    const key = medicationKey(trimmed);
+    const exact = findCatalogDisplayName(key);
+    if (exact) return exact;
+    const normalized = normalizeMedicationName(trimmed);
+    const alias = DOSAGE_ALIASES[normalized] || DOSAGE_ALIASES[key];
+    if (!alias) return trimmed;
+    return findCatalogDisplayName(medicationKey(alias)) || trimmed;
+}
+
+function pharmacyRequiresMembership(pharmacy) {
+    const chain = pharmacy && pharmacy.chain ? pharmacy.chain : '';
+    const name = pharmacy && pharmacy.name ? pharmacy.name : '';
+    const normalized = `${chain} ${name}`.toLowerCase().replace(/[\u2019']/g, '');
+    return normalized.includes('costco') || normalized.includes('sams club');
+}
+
+function membershipNoteHtml(pharmacy) {
+    if (!pharmacyRequiresMembership(pharmacy)) return '';
+    return '<div class="membership-note">Membership usually required</div>';
+}
+
 function rebuildMedicationSuggestions() {
     const names = new Set();
     medicationData.forEach((row) => {
@@ -805,16 +885,20 @@ function rebuildMedicationSuggestions() {
 
     function addSuggestion(value, label, extraTerms) {
         const canonical = value.trim();
-        if (!canonical || seenValues.has(medicationKey(canonical))) return;
+        const displayLabel = (label || '').trim() || formatMedicationDisplayName(canonical);
+        const dedupeKey = medicationKey(displayLabel);
+        if (!canonical || seenValues.has(dedupeKey)) return;
         if (!isMedicationOtc(canonical)) return;
-        seenValues.add(medicationKey(canonical));
-        nameByKey.set(medicationKey(canonical), canonical);
+        seenValues.add(dedupeKey);
+        if (!nameByKey.has(medicationKey(canonical))) {
+            nameByKey.set(medicationKey(canonical), canonical);
+        }
         const terms = [
             normalizeMedicationName(canonical),
-            normalizeMedicationName(label),
+            normalizeMedicationName(displayLabel),
             ...(extraTerms || []).map(normalizeMedicationName)
         ].join(' ');
-        items.push({ value: canonical, label: label.trim(), terms });
+        items.push({ value: canonical, label: displayLabel, terms });
     }
 
     Array.from(names)
@@ -822,13 +906,17 @@ function rebuildMedicationSuggestions() {
         .forEach((name) => addSuggestion(name, formatMedicationDisplayName(name)));
 
     Object.entries(DOSAGE_ALIASES).forEach(([alias, canonicalKey]) => {
+        // Skip brands that are already their own priced catalog row (Benadryl).
+        if (nameByKey.has(medicationKey(alias))) return;
         const canonical = nameByKey.get(canonicalKey) || nameByKey.get(medicationKey(canonicalKey));
         if (!canonical) return;
-        const aliasLabel = alias.replace(/\b\w/g, (c) => c.toUpperCase());
+        const aliasLabels = { chlortrimeton: 'Chlor-Trimeton' };
+        const aliasLabel = aliasLabels[alias] || alias.replace(/\b\w/g, (c) => c.toUpperCase());
         addSuggestion(canonical, aliasLabel, [formatMedicationDisplayName(canonical)]);
     });
 
     medicationSuggestions = items;
+    renderSymptomDrugs();
 }
 
 /** @deprecated kept as alias for CSV load hooks */
@@ -885,6 +973,98 @@ function selectMedicationSuggestion(item) {
     input.value = formatMedicationDisplayName(item.value);
     setMedicationSuggestionsOpen(false);
     updateDosageGuidanceUI();
+    renderSymptomDrugs();
+}
+
+function symptomItemMatches(item, keys) {
+    const valueKey = medicationKey(item.value);
+    const labelKey = medicationKey(item.label);
+    if (keys.has(valueKey) || keys.has(labelKey)) return true;
+    const normalized = normalizeMedicationName(item.label);
+    const alias = DOSAGE_ALIASES[normalized] || DOSAGE_ALIASES[labelKey];
+    return !!(alias && keys.has(medicationKey(alias)));
+}
+
+function renderSymptomDrugs() {
+    const wrap = document.getElementById('symptomDrugs');
+    if (!wrap) return;
+    wrap.innerHTML = '';
+
+    if (!activeSymptomId) {
+        wrap.hidden = true;
+        return;
+    }
+
+    const symptom = SYMPTOMS.find((entry) => entry.id === activeSymptomId);
+    wrap.hidden = false;
+    wrap.setAttribute('aria-label', symptom ? `Medicines for ${symptom.label}` : 'Medicines');
+
+    if (!symptom) return;
+
+    if (!medicationSuggestions.length) {
+        const empty = document.createElement('p');
+        empty.className = 'symptom-drugs__empty';
+        empty.textContent = 'Loading medicines…';
+        wrap.appendChild(empty);
+        return;
+    }
+
+    const keys = new Set(symptom.keys);
+    const matches = medicationSuggestions
+        .filter((item) => symptomItemMatches(item, keys))
+        .sort((a, b) => a.label.localeCompare(b.label));
+
+    if (!matches.length) {
+        const empty = document.createElement('p');
+        empty.className = 'symptom-drugs__empty';
+        empty.textContent = 'No priced medicines for this symptom yet.';
+        wrap.appendChild(empty);
+        return;
+    }
+
+    const input = document.getElementById('medication');
+    const current = medicationKey(input ? input.value : '');
+
+    matches.forEach((item) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'symptom-drug';
+        const labelKey = medicationKey(item.label);
+        const valueKey = medicationKey(item.value);
+        const selected = current === labelKey || (current === valueKey && labelKey === valueKey);
+        if (selected) btn.classList.add('symptom-drug--selected');
+        btn.setAttribute('aria-pressed', selected ? 'true' : 'false');
+
+        const name = document.createElement('span');
+        name.className = 'symptom-drug__name';
+        name.textContent = item.label;
+        btn.appendChild(name);
+
+        if (normalizeMedicationName(item.label) !== normalizeMedicationName(item.value)) {
+            const generic = document.createElement('span');
+            generic.className = 'symptom-drug__generic';
+            generic.textContent = formatMedicationDisplayName(item.value);
+            btn.appendChild(generic);
+        }
+
+        btn.addEventListener('click', () => selectMedicationSuggestion(item));
+        wrap.appendChild(btn);
+    });
+}
+
+function setupSymptomPicker() {
+    document.querySelectorAll('.symptom-chip').forEach((btn) => {
+        btn.addEventListener('click', () => {
+            const id = btn.dataset.symptom;
+            activeSymptomId = activeSymptomId === id ? null : id;
+            document.querySelectorAll('.symptom-chip').forEach((chip) => {
+                const on = chip.dataset.symptom === activeSymptomId;
+                chip.classList.toggle('symptom-chip--active', on);
+                chip.setAttribute('aria-pressed', on ? 'true' : 'false');
+            });
+            renderSymptomDrugs();
+        });
+    });
 }
 
 function renderMedicationSuggestions(query) {
@@ -1109,6 +1289,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     if (medicationInput) {
         setupMedicationAutocomplete();
     }
+    setupSymptomPicker();
     updateDosageGuidanceUI();
 
     // Initialize trust / data freshness widget
@@ -1284,6 +1465,7 @@ function pharmacyPopupHtml(pharmacy, options) {
                     <div>${escapeHtml(pharmacy.address)}</div>
                     <div class="popup-price">$${escapeHtml(pharmacy.price)}</div>
                     ${showBest ? '<div class="popup-best">BEST PRICE</div>' : ''}
+                    ${pharmacyRequiresMembership(pharmacy) ? '<div class="popup-membership">Membership usually required</div>' : ''}
                     ${zipInfo}
                 </div>
             `;
@@ -1308,6 +1490,7 @@ function pharmacyCardHtml(pharmacy, rankIndex, bestPriceNum) {
                                   : ''
                         }
                     </div>
+                    ${membershipNoteHtml(pharmacy)}
                 </div>
             `;
 }
@@ -1357,10 +1540,10 @@ function getBasePriceFromData(drugName, pharmacyName, zipCode) {
     // Find matching entries in the CSV data
     const matches = dataSource.filter(row => {
         const csvDrug = (row.Name || '').trim();
-        const csvPharmacy = (row.Pharmacy || '').trim().toLowerCase();
-        const targetPharmacy = pharmacyName.trim().toLowerCase();
-        
-        return medicationNamesMatch(normalizedDrug, csvDrug) && csvPharmacy.includes(targetPharmacy.split(' ')[0].toLowerCase());
+        const csvPharmacy = (row.Pharmacy || '').trim().toLowerCase().replace(/[\u2019']/g, '');
+        const targetPharmacy = pharmacyName.trim().toLowerCase().replace(/[\u2019']/g, '');
+
+        return medicationNamesMatch(normalizedDrug, csvDrug) && csvPharmacy.includes(targetPharmacy.split(' ')[0]);
     });
     
     if (matches.length > 0) {
@@ -1640,9 +1823,16 @@ function displayResults(medication, dosage, quantity, center, radiusMiles, locat
             return;
         }
 
+        // Brand names (Advil, Zyrtec) price as the catalog generic.
+        const pricedAs = resolveMedicationQuery(medication);
+        const searchLabel =
+            medicationKey(medication) !== medicationKey(pricedAs)
+                ? `${pricedAs} (${medication})`
+                : pricedAs;
+
         // Check if the medication exists in either dataset
-        const existsInMain = medicationData.some((row) => medicationNamesMatch(medication, row.Name));
-        const existsInGreenville = greenvilleMedicationData.some((row) => medicationNamesMatch(medication, row.Name));
+        const existsInMain = medicationData.some((row) => medicationNamesMatch(pricedAs, row.Name));
+        const existsInGreenville = greenvilleMedicationData.some((row) => medicationNamesMatch(pricedAs, row.Name));
         
         if (!existsInMain && !existsInGreenville) {
             resultsDiv.innerHTML = `
@@ -1692,11 +1882,11 @@ function displayResults(medication, dosage, quantity, center, radiusMiles, locat
             const pharmacyZip = extractZipCode(pharmacy.address);
             
             // Get base price using the appropriate dataset
-            const basePrice = getBasePriceFromData(medication, pharmacy.name, pharmacyZip);
+            const basePrice = getBasePriceFromData(pricedAs, pharmacy.name, pharmacyZip);
 
             if (basePrice !== null) {
                 // Calculate price with ZIP code multiplier
-                const calculatedPrice = calculatePrice(basePrice, dosage, quantity, pharmacyZip, medication);
+                const calculatedPrice = calculatePrice(basePrice, dosage, quantity, pharmacyZip, pricedAs);
                 
                 results.push({
                     ...pharmacy,
@@ -1740,7 +1930,7 @@ function displayResults(medication, dosage, quantity, center, radiusMiles, locat
                 : `Showing ${totalWithPrice} match${totalWithPrice === 1 ? '' : 'es'} (by price). `;
 
         let resultsHTML = `<div class="results-banner">
-            <strong class="banner-title">Searching for:</strong> ${escapeHtml(medication)} ${escapeHtml(dosage)} (qty: ${escapeHtml(quantity)})<br>
+            <strong class="banner-title">Searching for:</strong> ${escapeHtml(searchLabel)} ${escapeHtml(dosage)} (qty: ${escapeHtml(quantity)})<br>
             <span class="banner-area">${escapeHtml(areaSummary)}${escapeHtml(showingLine)}</span><br>
             <strong class="banner-best">Best Price:</strong> $${escapeHtml(topResults[0].price)} at ${escapeHtml(topResults[0].name)}<br>
             <strong class="banner-savings">You could save up to ${escapeHtml(savings)}%</strong> among the top results by choosing the best price!

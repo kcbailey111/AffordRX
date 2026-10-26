@@ -383,11 +383,31 @@
         z-index: 1;
     }
 
+    .price-source-note {
+        margin-top: 8px;
+        font-size: 0.82rem;
+        font-weight: 700;
+        color: #1e4b7a;
+        background: #eef6ff;
+        border: 1px solid #c5ddf5;
+        border-radius: 8px;
+        padding: 6px 10px;
+        position: relative;
+        z-index: 1;
+    }
+
     .popup-membership {
         margin-top: 6px;
         font-size: 0.85rem;
         font-weight: 700;
         color: #8a5a00;
+    }
+
+    .popup-modeled {
+        margin-top: 6px;
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: #1e4b7a;
     }
 
     .field-hint {
@@ -596,6 +616,14 @@
         opacity: 0.9;
     }
 
+    .stat-note {
+        margin-top: 8px;
+        font-size: 0.75rem;
+        line-height: 1.35;
+        font-weight: 500;
+        opacity: 0.92;
+    }
+
     @media (max-width: 768px) {
         .search-form__location-grid {
             grid-template-columns: 1fr;
@@ -662,6 +690,29 @@
 }
 .banner-best { color: #27ae60; }
 .banner-savings { color: #e74c3c; }
+
+.banner-disclaimer,
+.banner-modeled {
+    margin: 10px 0 0;
+    font-size: 0.92rem;
+    line-height: 1.45;
+    color: #34495e;
+}
+
+.banner-modeled {
+    padding: 10px 12px;
+    background: #fff;
+    border: 1px solid #c5ddf5;
+    border-radius: 8px;
+    color: #1e4b7a;
+}
+
+.report-price-link {
+    display: inline-block;
+    margin-top: 10px;
+    font-weight: 700;
+    color: #1a5276;
+}
 
 .form-group.is-disabled {
     opacity: 0.65;
@@ -974,6 +1025,20 @@ color: white;
     margin-top: 10px;
     font-size: 0.85rem;
     opacity: 0.85;
+}
+
+.trust-disclaimer {
+    margin-top: 12px;
+    font-size: 0.88rem;
+    line-height: 1.45;
+    opacity: 0.95;
+}
+
+.trust-report {
+    display: inline-block;
+    margin-top: 6px;
+    color: #fff;
+    font-weight: 700;
 }
 
 

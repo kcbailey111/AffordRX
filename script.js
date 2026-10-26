@@ -868,6 +868,119 @@ function membershipNoteHtml(pharmacy) {
     return '<div class="membership-note">Membership usually required</div>';
 }
 
+const PRICE_REPORT_URL = 'https://github.com/kcbailey111/AffordRX.github.io/issues/new';
+
+function isSpartanburgPharmacy(pharmacy) {
+    const address = (pharmacy && pharmacy.address ? pharmacy.address : '').toLowerCase();
+    const zip = pharmacy && pharmacy.zipCode ? String(pharmacy.zipCode) : extractZipCode(address);
+    return address.includes('spartanburg') || (zip && String(zip).startsWith('293'));
+}
+
+function matchesScrapedBaseline(medicationName, dosage, quantity) {
+    const medInfo = getDosageInfo(medicationName);
+    if (!medInfo || !medInfo.baselineDosage || !medInfo.baselineQuantity) return false;
+    const dosageValue = parseInt(dosage, 10);
+    const qtyVal = parseFloat(quantity);
+    return dosageValue === medInfo.baselineDosage && qtyVal === medInfo.baselineQuantity;
+}
+
+/** True when the shown amount is scaled, or the pharmacy is outside a scraped metro. */
+function pharmacyPriceIsModeled(pharmacy, medicationName, dosage, quantity, searchMode) {
+    const scaled = !matchesScrapedBaseline(medicationName, dosage, quantity);
+    const zip = pharmacy && pharmacy.zipCode ? pharmacy.zipCode : extractZipCode((pharmacy && pharmacy.address) || '');
+    const greenvilleScrape = isGreenvillePharmacy(zip);
+    const spartanburgArea = searchMode === 'spartanburg' || isSpartanburgPharmacy(pharmacy);
+    const locationModeled = spartanburgArea && !greenvilleScrape;
+    return scaled || locationModeled;
+}
+
+function searchPriceNote(medicationName, dosage, quantity, searchMode, results) {
+    const medInfo = getDosageInfo(medicationName);
+    const dosageValue = parseInt(dosage, 10);
+    const qtyVal = parseFloat(quantity);
+    const hasBaseline = !!(medInfo && medInfo.baselineDosage && medInfo.baselineQuantity);
+    const matchesBaseline =
+        hasBaseline && dosageValue === medInfo.baselineDosage && qtyVal === medInfo.baselineQuantity;
+    const parts = [];
+    const spartanburgResults = (results || []).filter(isSpartanburgPharmacy);
+    const greenvilleInSpartanburgSearch =
+        searchMode === 'spartanburg' &&
+        (results || []).some((pharmacy) => {
+            const zip = pharmacy.zipCode || extractZipCode(pharmacy.address || '');
+            return isGreenvillePharmacy(zip);
+        });
+
+    if (searchMode === 'spartanburg' && greenvilleInSpartanburgSearch) {
+        parts.push(
+            'Spartanburg does not have its own price scrape yet. Pharmacies there are marked modeled and use statewide GoodRx prices. A Greenville pharmacy in this radius can still show a scraped price when the strength and quantity match the baseline.'
+        );
+    } else if (searchMode === 'spartanburg') {
+        parts.push(
+            'Modeled, not scraped. Spartanburg does not have its own price scrape yet, so these prices use statewide GoodRx prices.'
+        );
+    } else if (spartanburgResults.length && spartanburgResults.length < (results || []).length) {
+        parts.push(
+            'Spartanburg pharmacies are marked modeled. That area does not have its own price scrape yet.'
+        );
+    } else if (spartanburgResults.length) {
+        parts.push(
+            'Modeled, not scraped. These pharmacies are in Spartanburg, which does not have its own price scrape yet.'
+        );
+    }
+
+    if (hasBaseline && !matchesBaseline) {
+        parts.push(
+            `Modeled, not scraped. Scaled from one baseline of ${medInfo.baselineDosage} mg, quantity ${medInfo.baselineQuantity}.`
+        );
+    } else if (!hasBaseline) {
+        parts.push(
+            'Modeled, not scraped. This drug is not tied to one scraped strength and quantity, so the amount is estimated from a base GoodRx price.'
+        );
+    }
+
+    return parts.join(' ');
+}
+
+function priceReportHref(details) {
+    const medication = details && details.medication ? details.medication : '';
+    const dosage = details && details.dosage ? details.dosage : '';
+    const quantity = details && details.quantity ? details.quantity : '';
+    const title = medication
+        ? `Wrong price: ${medication} ${dosage} qty ${quantity}`.replace(/\s+/g, ' ').trim()
+        : 'Wrong price on AffordRX';
+    const lines = [
+        'What looks wrong:',
+        '',
+        `Medication: ${medication}`,
+        `Dosage: ${dosage}`,
+        `Quantity: ${quantity}`,
+        `Area: ${details && details.area ? details.area : ''}`,
+        `Pharmacy: ${details && details.pharmacy ? details.pharmacy : ''}`,
+        `Listed price: ${details && details.price ? '$' + details.price : ''}`,
+        '',
+        'These prices are estimates, not pharmacy quotes.'
+    ];
+    const params = new URLSearchParams({
+        title: title.slice(0, 120),
+        body: lines.join('\n')
+    });
+    return `${PRICE_REPORT_URL}?${params.toString()}`;
+}
+
+function updateAreaEstimateHint() {
+    const hint = document.getElementById('areaEstimateHint');
+    const searchNear = document.getElementById('searchNear');
+    if (!hint || !searchNear) return;
+    if (searchNear.value === 'spartanburg') {
+        hint.hidden = false;
+        hint.textContent =
+            'Spartanburg does not have its own price scrape yet. Results for this area are estimates based on statewide GoodRx prices.';
+    } else {
+        hint.hidden = true;
+        hint.textContent = '';
+    }
+}
+
 function rebuildMedicationSuggestions() {
     const names = new Set();
     medicationData.forEach((row) => {
@@ -1466,6 +1579,7 @@ function pharmacyPopupHtml(pharmacy, options) {
                     <div class="popup-price">$${escapeHtml(pharmacy.price)}</div>
                     ${showBest ? '<div class="popup-best">BEST PRICE</div>' : ''}
                     ${pharmacyRequiresMembership(pharmacy) ? '<div class="popup-membership">Membership usually required</div>' : ''}
+                    ${pharmacy.priceModeled ? '<div class="popup-modeled">Modeled estimate</div>' : ''}
                     ${zipInfo}
                 </div>
             `;
@@ -1491,6 +1605,7 @@ function pharmacyCardHtml(pharmacy, rankIndex, bestPriceNum) {
                         }
                     </div>
                     ${membershipNoteHtml(pharmacy)}
+                    ${pharmacy.priceModeled ? '<div class="price-source-note">Modeled estimate</div>' : ''}
                 </div>
             `;
 }
@@ -1795,7 +1910,7 @@ function calculateSavings(prices) {
     return Math.round(((maxPrice - minPrice) / maxPrice) * 100);
 }
 
-function displayResults(medication, dosage, quantity, center, radiusMiles, locationLabel) {
+function displayResults(medication, dosage, quantity, center, radiusMiles, locationLabel, searchMode) {
     const resultsDiv = document.getElementById('results');
     
     if (!csvLoaded && !greenvilleCsvLoaded) {
@@ -1888,12 +2003,20 @@ function displayResults(medication, dosage, quantity, center, radiusMiles, locat
                 // Calculate price with ZIP code multiplier
                 const calculatedPrice = calculatePrice(basePrice, dosage, quantity, pharmacyZip, pricedAs);
                 
-                results.push({
+                const pricedPharmacy = {
                     ...pharmacy,
                     price: calculatedPrice.toFixed(2),
                     zipCode: pharmacyZip,
                     zipMultiplier: getZipMultiplier(pharmacyZip)
-                });
+                };
+                pricedPharmacy.priceModeled = pharmacyPriceIsModeled(
+                    pricedPharmacy,
+                    pricedAs,
+                    dosage,
+                    quantity,
+                    searchMode
+                );
+                results.push(pricedPharmacy);
             }
         });
         
@@ -1929,11 +2052,26 @@ function displayResults(medication, dosage, quantity, center, radiusMiles, locat
                 ? `Top ${RESULTS_TOP_N} matches are listed first (by price). ${totalWithPrice - RESULTS_TOP_N} more below. Map shows these top ${RESULTS_TOP_N} only unless you opt in. `
                 : `Showing ${totalWithPrice} match${totalWithPrice === 1 ? '' : 'es'} (by price). `;
 
+        const areaLabel =
+            searchMode === 'state' ? 'Entire South Carolina' : (locationLabel || 'selected location').trim();
+        const modeledNote = searchPriceNote(pricedAs, dosage, quantity, searchMode, results);
+        const reportHref = priceReportHref({
+            medication: searchLabel,
+            dosage,
+            quantity,
+            area: areaLabel,
+            pharmacy: topResults[0].name,
+            price: topResults[0].price
+        });
+
         let resultsHTML = `<div class="results-banner">
             <strong class="banner-title">Searching for:</strong> ${escapeHtml(searchLabel)} ${escapeHtml(dosage)} (qty: ${escapeHtml(quantity)})<br>
             <span class="banner-area">${escapeHtml(areaSummary)}${escapeHtml(showingLine)}</span><br>
             <strong class="banner-best">Best Price:</strong> $${escapeHtml(topResults[0].price)} at ${escapeHtml(topResults[0].name)}<br>
             <strong class="banner-savings">You could save up to ${escapeHtml(savings)}%</strong> among the top results by choosing the best price!
+            <p class="banner-disclaimer">Estimate, not a pharmacy quote, and not medical advice. That savings figure is the spread between these listed prices.</p>
+            ${modeledNote ? `<p class="banner-modeled">${escapeHtml(modeledNote)}</p>` : ''}
+            <a class="report-price-link" href="${escapeHtml(reportHref)}" target="_blank" rel="noopener noreferrer">Report a wrong price</a>
         </div>`;
 
         if (totalWithPrice > RESULTS_TOP_N) {
@@ -2000,8 +2138,16 @@ function displayResults(medication, dosage, quantity, center, radiusMiles, locat
         fitMapToMarkerList(currentMarkers);
         
         // Update stats with animation
+        const headerReport = document.getElementById('reportPriceLink');
+        if (headerReport) headerReport.href = reportHref;
+
         setTimeout(() => {
             document.getElementById('avgSavings').textContent = savings + '%';
+            const savingsNote = document.getElementById('avgSavingsNote');
+            if (savingsNote) {
+                savingsNote.textContent =
+                    'Estimate: gap between the highest and lowest prices in these results, not a quote.';
+            }
         }, 500);
     }, 1000);
 }
@@ -2053,6 +2199,7 @@ function setupSearchNearControls() {
         const entire = searchNear.value === 'state';
         radiusSelect.disabled = entire;
         if (radiusGroup) radiusGroup.classList.toggle('is-disabled', entire);
+        updateAreaEstimateHint();
     }
 
     searchNear.addEventListener('change', sync);
@@ -2081,10 +2228,10 @@ function setupFormHandler() {
         }
 
         const run = (center, label) =>
-            displayResults(medication, dosage, quantity, center, radiusMiles, label);
+            displayResults(medication, dosage, quantity, center, radiusMiles, label, mode);
 
         if (mode === 'state') {
-            displayResults(medication, dosage, quantity, null, null, null);
+            displayResults(medication, dosage, quantity, null, null, null, mode);
         } else if (mode === 'geolocation') {
             if (!navigator.geolocation) {
                 alert('This browser does not support location. Choose a city or Entire South Carolina.');
@@ -2105,7 +2252,7 @@ function setupFormHandler() {
         } else {
             const c = SEARCH_CENTERS[mode];
             if (!c) {
-                displayResults(medication, dosage, quantity, null, null, null);
+                displayResults(medication, dosage, quantity, null, null, null, mode);
                 return;
             }
             run({ lat: c.lat, lng: c.lng }, c.label);

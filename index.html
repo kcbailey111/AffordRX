@@ -19,13 +19,13 @@
     <title>AffordRX - Find Affordable OTC Prescriptions in South Carolina</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.css" />
-    <link rel="stylesheet" href="style.css?v=20261023a">
+    <link rel="stylesheet" href="style.css?v=20261025a">
     <!-- Leaflet markers stay in script.js. MapLibre draws the current OpenFreeMap basemap. -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.js"></script>
     <script src="https://unpkg.com/@maplibre/maplibre-gl-leaflet@0.1.4/leaflet-maplibre-gl.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-    <script src="script.js?v=20261023a" defer></script>
+    <script src="script.js?v=20261025a" defer></script>
 </head>
 <body>
     <div class="container">
@@ -41,8 +41,9 @@
                     <div class="stat-label">Pharmacies</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number" id="avgSavings">32%</div>
+                    <div class="stat-number" id="avgSavings" title="Illustrative estimate until you search. After a search, this is the spread between the highest and lowest prices shown.">32%</div>
                     <div class="stat-label">Average Savings</div>
+                    <p class="stat-note" id="avgSavingsNote">Estimate across listed prices, not a guaranteed discount.</p>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number" id="searchesCount">1K+</div>
@@ -63,6 +64,10 @@
                 <div class="trust-footnote" id="trustFootnote" hidden>
                     Last-updated date may be unavailable depending on hosting/CDN headers.
                 </div>
+                <p class="trust-disclaimer">
+                    Prices are estimates, not a pharmacy quote, and not medical advice. Each drug starts from one scraped strength and quantity, then may be scaled. The freshness badge is the age of that source file.
+                    <a class="trust-report" id="reportPriceLink" href="https://github.com/kcbailey111/AffordRX.github.io/issues/new?title=Wrong%20price%20on%20AffordRX&amp;body=What%20looks%20wrong%3A%0A%0AMedication%3A%0ADosage%3A%0AQuantity%3A%0AArea%3A%0APharmacy%3A%0AListed%20price%3A%0A%0AThese%20prices%20are%20estimates%2C%20not%20pharmacy%20quotes." target="_blank" rel="noopener noreferrer">Report a wrong price</a>
+                </p>
             </div>
         </header>
 
@@ -142,7 +147,7 @@
                     <div class="search-form__location-grid">
                         <div class="form-group form-group--search-near">
                             <label for="searchNear">Near</label>
-                            <select id="searchNear" aria-describedby="searchNearHint">
+                            <select id="searchNear" aria-describedby="searchNearHint areaEstimateHint">
                                 <option value="state">Entire South Carolina</option>
                                 <option value="greenville">Greenville area</option>
                                 <option value="spartanburg">Spartanburg area</option>
@@ -151,6 +156,7 @@
                                 <option value="myrtlebeach">Myrtle Beach area</option>
                                 <option value="geolocation">My current location</option>
                             </select>
+                            <p id="areaEstimateHint" class="field-hint" hidden></p>
                         </div>
                         <div class="form-group form-group--radius" id="radiusGroup">
                             <label for="radiusMiles">Radius</label>

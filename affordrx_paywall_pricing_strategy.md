@@ -28,15 +28,12 @@ Setting **Pro at $4.99/month** and **Pro+ at $12.99–$14.99/month** creates a w
 1. **Price Anchoring & The Decoy Effect**
    * Highlighting **Pro+ ($14.99/mo)** sets a higher mental reference point.
    * By comparison, **Pro ($4.99/mo)** feels low-friction and accessible, shifting the consumer mindset from *"Should I spend $5?"* to *"Compared to $15, $5 is a steal."*
-
 2. **The Compromise Effect (Center-Stage Framing)**
    * When presented with three options (Free, Pro, Pro+), consumers naturally avoid extremes. 
    * Free feels restricted, Pro+ feels like overkill, making **Pro** the natural "compromise choice." Highlight Pro with a **"Most Popular"** badge.
-
 3. **Immediate ROI (Return on Investment) Framing**
    * Prescription drug price spreads across local SC pharmacies often range between **$15 to $50 per refill**.
    * Position the $4.99 fee against instant savings: *"Save an average of $25 on your next refill for less than the cost of a cup of coffee."*
-
 4. **Charm Pricing (.99 Endings)**
    * Leveraging the **left-digit effect**: $4.99 is cognitively processed under the "$4" benchmark rather than "$5", lowering perceived friction by 10–20%.
 

@@ -868,6 +868,350 @@ function membershipNoteHtml(pharmacy) {
     return '<div class="membership-note">Membership usually required</div>';
 }
 
+/**
+ * Snapshot of the search that produced the cards on screen.
+ * Share and print read this instead of the form, so a later edit
+ * does not change a note for a result the user already saw.
+ * A geolocation search stores "your area" and never a lat/lng.
+ */
+let lastSearch = null;
+
+const RESULT_SLIP_DISCLAIMER =
+    'Estimate, not a pharmacy quote, and not medical advice. Prices change. Confirm at the pharmacy.';
+
+/** Public resource pages. The same URLs are linked from the resource cards in index.html. */
+const RESULT_SLIP_RESOURCES = {
+    drugFactsLabel: 'https://www.fda.gov/drugs/understanding-over-counter-medicines/over-counter-drug-facts-label',
+    freeClinics: 'https://www.scfreeclinics.org',
+    healthCenters: 'https://findahealthcenter.hrsa.gov/'
+};
+
+/** True when the typed name is a brand that prices as a different generic. */
+function brandWasResolved(typedName, pricedAs) {
+    const typed = (typedName || '').toString().trim();
+    const generic = (pricedAs || '').toString().trim();
+    if (!typed || !generic) return false;
+    return medicationKey(typed) !== medicationKey(generic);
+}
+
+/** Banner sentence for a brand search. Empty when the query is already the generic. */
+function brandGenericSentence(typedName, pricedAs) {
+    if (!brandWasResolved(typedName, pricedAs)) return '';
+    const brand = formatMedicationDisplayName(typedName);
+    const generic = formatMedicationDisplayName(pricedAs);
+    return `${brand} is a brand name. Prices below are for ${generic}, the generic active ingredient.`;
+}
+
+/** Area wording for a shared note. Omits coordinates on purpose. */
+function slipAreaLabel(searchMode, locationLabel) {
+    if (searchMode === 'state') return 'Entire South Carolina';
+    if (searchMode === 'geolocation') return 'your area';
+    const label = (locationLabel || '').toString().trim();
+    return label || 'the selected area';
+}
+
+function slipAreaSentence(areaLabel) {
+    if (areaLabel === 'Entire South Carolina') return 'Prices across South Carolina.';
+    if (areaLabel === 'your area') return 'Prices near your area.';
+    const area = (areaLabel || '').toString().trim();
+    return area ? `Prices for the ${area}.` : '';
+}
+
+/**
+ * Keep the ranked pharmacies from the search that just rendered.
+ * Inputs: details from displayResults (typed name, priced generic, dose, quantity, area, results).
+ * Output: lastSearch is replaced, or cleared when the payload is incomplete.
+ */
+function rememberSearchSnapshot(details) {
+    if (!details || !Array.isArray(details.results) || details.results.length === 0) {
+        lastSearch = null;
+        return;
+    }
+    const pricedAs = (details.pricedAs || '').toString().trim();
+    const dosage = (details.dosage || '').toString().trim();
+    const quantity = (details.quantity || '').toString().trim();
+    if (!pricedAs || !dosage || !quantity) {
+        console.error('Search snapshot is missing the medication, dosage, or quantity.');
+        lastSearch = null;
+        return;
+    }
+    lastSearch = {
+        typedName: (details.typedName || '').toString().trim(),
+        pricedAs,
+        dosage,
+        quantity,
+        areaLabel: slipAreaLabel(details.searchMode, details.locationLabel),
+        brandResolved: brandWasResolved(details.typedName, pricedAs),
+        bestPrice: details.bestPrice,
+        generatedAt: details.generatedAt instanceof Date ? details.generatedAt : new Date(),
+        results: details.results
+    };
+}
+
+/** Pharmacy object for a card button, or null when the index is stale. */
+function pharmacyForSlip(resultIndexValue) {
+    if (!lastSearch || !Array.isArray(lastSearch.results)) return null;
+    const index = Number(resultIndexValue);
+    if (!Number.isInteger(index) || index < 0 || index >= lastSearch.results.length) return null;
+    return lastSearch.results[index];
+}
+
+function assertSlipInputs(pharmacy, snapshot) {
+    if (!snapshot || !snapshot.pricedAs || !snapshot.dosage || snapshot.quantity == null || snapshot.quantity === '') {
+        throw new Error('Result slip requires a completed search snapshot.');
+    }
+    if (!pharmacy || !pharmacy.name || !pharmacy.address || pharmacy.price == null || pharmacy.price === '') {
+        throw new Error('Result slip requires a pharmacy name, address, and price.');
+    }
+}
+
+function slipBuyLine(snapshot) {
+    const generic = formatMedicationDisplayName(snapshot.pricedAs);
+    const product = `${generic} ${snapshot.dosage}, qty ${snapshot.quantity}`;
+    if (!snapshot.brandResolved) return `Buy ${product}.`;
+    const brand = formatMedicationDisplayName(snapshot.typedName);
+    return `You asked about ${brand}. Buy ${product}.`;
+}
+
+function slipRankLine(pharmacy, snapshot) {
+    const price = parseFloat(pharmacy.price);
+    const best = parseFloat(snapshot.bestPrice);
+    if (!Number.isFinite(price) || !Number.isFinite(best)) return '';
+    if (Math.abs(price - best) < 0.005) return 'Best price in this search.';
+    return `$${(price - best).toFixed(2)} more than the lowest in this search.`;
+}
+
+/** Print-only footer. The text message stays the pharmacy errand. */
+function appendSlipResourceLines(lines) {
+    lines.push(
+        '',
+        'The same active ingredient under a store brand is often cheaper. Compare the Drug Facts label:',
+        RESULT_SLIP_RESOURCES.drugFactsLabel,
+        '',
+        'If the cost is still too high, a free clinic or a community health center on a sliding scale may help:',
+        RESULT_SLIP_RESOURCES.freeClinics,
+        RESULT_SLIP_RESOURCES.healthCenters
+    );
+}
+
+/**
+ * One note for both Share and Print, so the two cannot drift.
+ * includeFooter is true for the printed page only.
+ */
+function buildResultSlipLines(pharmacy, snapshot, includeFooter) {
+    assertSlipInputs(pharmacy, snapshot);
+    const when = snapshot.generatedAt instanceof Date ? snapshot.generatedAt : new Date();
+    const lines = [
+        `AffordRX price note (${formatDateForDisplay(when)})`,
+        slipAreaSentence(snapshot.areaLabel),
+        '',
+        slipBuyLine(snapshot),
+        String(pharmacy.name),
+        String(pharmacy.address),
+        `$${pharmacy.price}`
+    ];
+    const rankLine = slipRankLine(pharmacy, snapshot);
+    if (rankLine) lines.push(rankLine);
+    if (pharmacyRequiresMembership(pharmacy)) lines.push('Membership usually required.');
+    if (pharmacy.priceModeled) lines.push('Modeled estimate.');
+    lines.push('', RESULT_SLIP_DISCLAIMER);
+    if (includeFooter) appendSlipResourceLines(lines);
+    return lines;
+}
+
+function buildResultSlipText(pharmacy, snapshot, includeFooter) {
+    return buildResultSlipLines(pharmacy, snapshot, includeFooter).join('\n');
+}
+
+function slipParagraph(className, text) {
+    if (!text) return '';
+    return `<p class="${className}">${escapeHtml(text)}</p>`;
+}
+
+/** Printable sheet. Pharmacy names are escaped because they are external data. */
+function buildResultSlipHtml(pharmacy, snapshot) {
+    assertSlipInputs(pharmacy, snapshot);
+    const when = snapshot.generatedAt instanceof Date ? snapshot.generatedAt : new Date();
+    const flags = [];
+    if (pharmacyRequiresMembership(pharmacy)) flags.push('Membership usually required.');
+    if (pharmacy.priceModeled) flags.push('Modeled estimate.');
+    const flagHtml = flags.map((line) => slipParagraph('result-slip__flag', line)).join('');
+    return `
+        <article class="result-slip__sheet">
+            <h1>AffordRX price note</h1>
+            ${slipParagraph('result-slip__date', formatDateForDisplay(when))}
+            ${slipParagraph('result-slip__area', slipAreaSentence(snapshot.areaLabel))}
+            ${slipParagraph('result-slip__buy', slipBuyLine(snapshot))}
+            ${slipParagraph('result-slip__pharmacy', pharmacy.name)}
+            ${slipParagraph('result-slip__address', pharmacy.address)}
+            ${slipParagraph('result-slip__price', `$${pharmacy.price}`)}
+            ${slipParagraph('result-slip__rank', slipRankLine(pharmacy, snapshot))}
+            ${flagHtml}
+            ${slipParagraph('result-slip__disclaimer', RESULT_SLIP_DISCLAIMER)}
+            <footer class="result-slip__footer">
+                <p>The same active ingredient under a store brand is often cheaper. Compare the Drug Facts label.</p>
+                <p><a href="${escapeHtml(RESULT_SLIP_RESOURCES.drugFactsLabel)}">${escapeHtml(RESULT_SLIP_RESOURCES.drugFactsLabel)}</a></p>
+                <p>If the cost is still too high, a free clinic or a community health center on a sliding scale may help.</p>
+                <p>Free clinics: <a href="${escapeHtml(RESULT_SLIP_RESOURCES.freeClinics)}">${escapeHtml(RESULT_SLIP_RESOURCES.freeClinics)}</a></p>
+                <p>Community health centers: <a href="${escapeHtml(RESULT_SLIP_RESOURCES.healthCenters)}">${escapeHtml(RESULT_SLIP_RESOURCES.healthCenters)}</a></p>
+            </footer>
+        </article>
+    `;
+}
+
+function resultSlipActionsHtml(resultIndex, pharmacyName) {
+    const index = Number(resultIndex);
+    if (!Number.isInteger(index) || index < 0) return '';
+    const safeName = escapeHtml(pharmacyName || 'this pharmacy');
+    return `
+        <div class="result-slip-actions">
+            <button type="button" class="result-slip-btn" data-slip-action="share" data-result-index="${index}" aria-label="Share the ${safeName} price">Share</button>
+            <button type="button" class="result-slip-btn" data-slip-action="print" data-result-index="${index}" aria-label="Print the ${safeName} price">Print</button>
+        </div>
+    `;
+}
+
+function showSlipActionStatus(button, message) {
+    if (!button) return;
+    const actions = button.closest('.result-slip-actions');
+    if (!actions) return;
+    let status = actions.querySelector('.result-slip-status');
+    if (!status) {
+        status = document.createElement('p');
+        status.className = 'result-slip-status';
+        status.setAttribute('role', 'status');
+        actions.appendChild(status);
+    }
+    status.textContent = message;
+}
+
+function finishResultSlipPrint() {
+    document.body.classList.remove('is-printing-slip');
+    const slip = document.getElementById('resultSlip');
+    if (slip) {
+        slip.hidden = true;
+        slip.innerHTML = '';
+    }
+    window.removeEventListener('afterprint', finishResultSlipPrint);
+}
+
+/** Fill the hidden slip and print only that sheet. */
+function printResultSlip(pharmacy) {
+    const slip = document.getElementById('resultSlip');
+    if (!slip) {
+        console.error('Print slip element is missing from the page.');
+        return;
+    }
+    finishResultSlipPrint();
+    slip.innerHTML = buildResultSlipHtml(pharmacy, lastSearch);
+    slip.hidden = false;
+    document.body.classList.add('is-printing-slip');
+    window.addEventListener('afterprint', finishResultSlipPrint);
+    window.print();
+}
+
+async function writeSlipToClipboard(text) {
+    if (!navigator.clipboard || typeof navigator.clipboard.writeText !== 'function') {
+        throw new Error('Clipboard API is unavailable.');
+    }
+    await navigator.clipboard.writeText(text);
+}
+
+/** Shown when share and clipboard both fail, so the note can still be copied by hand. */
+function openSlipCopyFallback(text) {
+    const dialog = document.getElementById('resultSlipFallback');
+    const field = document.getElementById('resultSlipFallbackText');
+    if (!dialog || !field || typeof dialog.showModal !== 'function') {
+        console.error('Could not open the copy dialog for the price note.');
+        return false;
+    }
+    field.value = text;
+    if (!dialog.open) dialog.showModal();
+    field.focus();
+    field.select();
+    return true;
+}
+
+function setupResultSlipFallback() {
+    const dialog = document.getElementById('resultSlipFallback');
+    const closeButton = document.getElementById('resultSlipFallbackClose');
+    if (!dialog || !closeButton) return;
+    closeButton.addEventListener('click', () => {
+        dialog.close();
+    });
+}
+
+/**
+ * Share one pharmacy note. Web Share first, then the clipboard,
+ * then a selectable dialog. Cancelling the share sheet does not copy.
+ */
+async function shareResultSlip(pharmacy, button) {
+    const text = buildResultSlipText(pharmacy, lastSearch, false);
+    if (typeof navigator.share === 'function') {
+        try {
+            await navigator.share({ title: 'AffordRX price note', text });
+            showSlipActionStatus(button, 'Shared.');
+            return;
+        } catch (error) {
+            if (error && error.name === 'AbortError') return;
+            console.error('Web Share failed. Copying the price note instead.', error);
+        }
+    }
+    try {
+        await writeSlipToClipboard(text);
+        showSlipActionStatus(button, 'Copied. Paste it into a text or email.');
+    } catch (error) {
+        console.error('Could not copy the price note.', error);
+        const opened = openSlipCopyFallback(text);
+        showSlipActionStatus(
+            button,
+            opened ? 'Copy the note in the box, then send it.' : 'Could not share this note. Try print instead.'
+        );
+    }
+}
+
+/**
+ * Capture-phase listener so Share and Print do not also focus the map.
+ * The card click handler runs later, on bubble, and stopPropagation blocks it.
+ */
+function handleResultSlipClick(event) {
+    const button = event.target.closest('.result-slip-btn');
+    if (!button) return;
+    event.preventDefault();
+    event.stopPropagation();
+    const pharmacy = pharmacyForSlip(button.getAttribute('data-result-index'));
+    if (!pharmacy) {
+        console.error('Share or print was used without a matching search result.');
+        showSlipActionStatus(button, 'This result is no longer available. Search again.');
+        return;
+    }
+    const action = button.getAttribute('data-slip-action');
+    if (action === 'print') {
+        try {
+            printResultSlip(pharmacy);
+        } catch (error) {
+            console.error('Could not print this price note.', error);
+            showSlipActionStatus(button, 'Could not print this note.');
+        }
+        return;
+    }
+    if (action === 'share') {
+        shareResultSlip(pharmacy, button).catch((error) => {
+            console.error('Could not share this price note.', error);
+            showSlipActionStatus(button, 'Could not share this note. Try print instead.');
+        });
+        return;
+    }
+    console.error(`Unknown result slip action: ${action}`);
+}
+
+function setupResultSlipActions() {
+    const results = document.getElementById('results');
+    if (!results || results.dataset.slipActionsBound === 'true') return;
+    results.dataset.slipActionsBound = 'true';
+    results.addEventListener('click', handleResultSlipClick, true);
+}
+
 const PRICE_REPORT_URL = 'https://github.com/kcbailey111/AffordRX.github.io/issues/new';
 
 function isSpartanburgPharmacy(pharmacy) {
@@ -1388,6 +1732,8 @@ document.addEventListener('DOMContentLoaded', async function() {
     // Setup form submission
     setupFormHandler();
     setupSearchNearControls();
+    setupResultSlipActions();
+    setupResultSlipFallback();
 
     // Initialize dynamic dosage guidance UI
     const dosageSelect = document.getElementById('dosage');
@@ -1606,6 +1952,7 @@ function pharmacyCardHtml(pharmacy, rankIndex, bestPriceNum) {
                     </div>
                     ${membershipNoteHtml(pharmacy)}
                     ${pharmacy.priceModeled ? '<div class="price-source-note">Modeled estimate</div>' : ''}
+                    ${resultSlipActionsHtml(rankIndex, pharmacy.name)}
                 </div>
             `;
 }
@@ -1912,6 +2259,7 @@ function calculateSavings(prices) {
 
 function displayResults(medication, dosage, quantity, center, radiusMiles, locationLabel, searchMode) {
     const resultsDiv = document.getElementById('results');
+    lastSearch = null;
     
     if (!csvLoaded && !greenvilleCsvLoaded) {
         resultsDiv.innerHTML = '';
@@ -2055,6 +2403,18 @@ function displayResults(medication, dosage, quantity, center, radiusMiles, locat
         const areaLabel =
             searchMode === 'state' ? 'Entire South Carolina' : (locationLabel || 'selected location').trim();
         const modeledNote = searchPriceNote(pricedAs, dosage, quantity, searchMode, results);
+        const brandNote = brandGenericSentence(medication, pricedAs);
+        rememberSearchSnapshot({
+            typedName: medication,
+            pricedAs,
+            dosage,
+            quantity,
+            searchMode,
+            locationLabel,
+            bestPrice: topResults[0].price,
+            generatedAt: new Date(),
+            results
+        });
         const reportHref = priceReportHref({
             medication: searchLabel,
             dosage,
@@ -2069,6 +2429,7 @@ function displayResults(medication, dosage, quantity, center, radiusMiles, locat
             <span class="banner-area">${escapeHtml(areaSummary)}${escapeHtml(showingLine)}</span><br>
             <strong class="banner-best">Best Price:</strong> $${escapeHtml(topResults[0].price)} at ${escapeHtml(topResults[0].name)}<br>
             <strong class="banner-savings">You could save up to ${escapeHtml(savings)}%</strong> among the top results by choosing the best price!
+            ${brandNote ? `<p class="banner-brand">${escapeHtml(brandNote)}</p>` : ''}
             <p class="banner-disclaimer">Estimate, not a pharmacy quote, and not medical advice. That savings figure is the spread between these listed prices.</p>
             ${modeledNote ? `<p class="banner-modeled">${escapeHtml(modeledNote)}</p>` : ''}
             <a class="report-price-link" href="${escapeHtml(reportHref)}" target="_blank" rel="noopener noreferrer">Report a wrong price</a>

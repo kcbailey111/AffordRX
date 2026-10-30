@@ -692,11 +692,17 @@
 .banner-savings { color: #e74c3c; }
 
 .banner-disclaimer,
-.banner-modeled {
+.banner-modeled,
+.banner-brand {
     margin: 10px 0 0;
     font-size: 0.92rem;
     line-height: 1.45;
     color: #34495e;
+}
+
+.banner-brand {
+    color: #1e3c72;
+    font-weight: 600;
 }
 
 .banner-modeled {
@@ -1207,6 +1213,165 @@ h1 {
     .stat-card:hover {
         transform: none !important;
         box-shadow: none !important;
+    }
+}
+
+.result-slip-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    margin-top: 12px;
+    position: relative;
+    z-index: 2;
+}
+
+.result-slip-btn {
+    background: #fff;
+    color: #1e3c72;
+    border: 2px solid #3498db;
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.result-slip-btn:hover,
+.result-slip-btn:focus-visible {
+    background: #3498db;
+    color: #fff;
+    outline: none;
+}
+
+.result-slip-status {
+    flex-basis: 100%;
+    margin: 0;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #1e4b7a;
+}
+
+.result-slip-fallback[open] {
+    display: flex;
+    flex-direction: column;
+    width: min(480px, calc(100% - 32px));
+    border: none;
+    border-radius: 16px;
+    padding: 22px;
+    color: #1e3c72;
+    box-shadow: 0 15px 40px rgba(30, 60, 114, 0.25);
+}
+
+.result-slip-fallback::backdrop {
+    background: rgba(30, 60, 114, 0.45);
+}
+
+.result-slip-fallback h2 {
+    margin-bottom: 8px;
+    font-size: 1.25rem;
+}
+
+.result-slip-fallback p {
+    margin-bottom: 12px;
+    color: #34495e;
+    line-height: 1.45;
+}
+
+.result-slip-fallback__text {
+    width: 100%;
+    min-height: 180px;
+    margin-bottom: 14px;
+    padding: 12px;
+    border: 2px solid #d6eaf8;
+    border-radius: 10px;
+    font: inherit;
+    line-height: 1.45;
+    color: #1e3c72;
+    resize: vertical;
+}
+
+.result-slip-fallback .result-slip-btn {
+    align-self: flex-end;
+}
+
+@media print {
+    body.is-printing-slip {
+        background: #fff !important;
+    }
+
+    body.is-printing-slip * {
+        visibility: hidden;
+    }
+
+    body.is-printing-slip .result-slip,
+    body.is-printing-slip .result-slip * {
+        visibility: visible;
+    }
+
+    body.is-printing-slip .result-slip {
+        display: block !important;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        background: #fff;
+        color: #1a1a1a;
+    }
+
+    .result-slip__sheet {
+        padding: 24px;
+        max-width: 640px;
+    }
+
+    .result-slip__sheet h1 {
+        font-size: 22pt;
+        margin-bottom: 8px;
+        color: #1a1a1a;
+        text-shadow: none;
+    }
+
+    .result-slip__date,
+    .result-slip__area,
+    .result-slip__address,
+    .result-slip__disclaimer,
+    .result-slip__footer {
+        font-size: 11pt;
+        line-height: 1.4;
+        margin-top: 8px;
+    }
+
+    .result-slip__buy,
+    .result-slip__pharmacy {
+        font-size: 14pt;
+        font-weight: 700;
+        margin-top: 14px;
+    }
+
+    .result-slip__price {
+        font-size: 20pt;
+        font-weight: 700;
+        color: #1a7a3a;
+        margin-top: 8px;
+    }
+
+    .result-slip__rank,
+    .result-slip__flag {
+        font-size: 12pt;
+        font-weight: 700;
+        margin-top: 6px;
+    }
+
+    .result-slip__footer {
+        margin-top: 22px;
+        padding-top: 12px;
+        border-top: 1px solid #ccc;
+    }
+
+    .result-slip__footer a {
+        color: #1a1a1a;
+        word-break: break-all;
     }
 }
 

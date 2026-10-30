@@ -19,13 +19,13 @@
     <title>AffordRX - Find Affordable OTC Prescriptions in South Carolina</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.css" />
-    <link rel="stylesheet" href="style.css?v=20261025a">
+    <link rel="stylesheet" href="style.css?v=20261029a">
     <!-- Leaflet markers stay in script.js. MapLibre draws the current OpenFreeMap basemap. -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.js"></script>
     <script src="https://unpkg.com/@maplibre/maplibre-gl-leaflet@0.1.4/leaflet-maplibre-gl.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-    <script src="script.js?v=20261025a" defer></script>
+    <script src="script.js?v=20261029a" defer></script>
 </head>
 <body>
     <div class="container">
@@ -221,12 +221,11 @@
                     <a href="https://www.rxsaver.com" target="_blank" rel="noopener noreferrer" class="resource-link">Visit RxSaver →</a>
                 </div>
 
-                <!--Need to find a new link.-->
-                <!--<div class="resource-card">
+                <div class="resource-card">
                     <h3>💊 Generic Options</h3>
-                    <p>Ask your doctor about generic alternatives that can cost significantly less.</p>
-                    <a href="https://www.fda.gov/drugs/generic-drugs" target="_blank" class="resource-link">Learn More →</a>
-                </div> -->
+                    <p>The same active ingredient is often sold under a store brand for less. Compare the Drug Facts label on the box.</p>
+                    <a href="https://www.fda.gov/drugs/understanding-over-counter-medicines/over-counter-drug-facts-label" target="_blank" rel="noopener noreferrer" class="resource-link">Learn what to compare →</a>
+                </div>
                 <div class="resource-card">
                     <h3>📋 Medicare Extra Help</h3>
                     <p>If you have Medicare, you may qualify for help paying for prescriptions.</p>
@@ -237,8 +236,21 @@
                     <p>South Carolina has free and charitable clinics that may help with medications.</p>
                     <a href="https://www.scfreeclinics.org" target="_blank" rel="noopener noreferrer" class="resource-link">Find a Clinic →</a>
                 </div>
+                <div class="resource-card">
+                    <h3>🏥 SC Community Health Centers</h3>
+                    <p>Health centers see patients with or without insurance and charge on a sliding scale. They are a separate network from free clinics, and they may help with primary care and lower-cost medications.</p>
+                    <a href="https://findahealthcenter.hrsa.gov/" target="_blank" rel="noopener noreferrer" class="resource-link">Find a Health Center →</a>
+                </div>
             </div>
     </div>
+
+    <div id="resultSlip" class="result-slip" hidden></div>
+    <dialog id="resultSlipFallback" class="result-slip-fallback" aria-labelledby="resultSlipFallbackTitle">
+        <h2 id="resultSlipFallbackTitle">Copy this price note</h2>
+        <p>Send it in a text or email.</p>
+        <textarea id="resultSlipFallbackText" class="result-slip-fallback__text" readonly aria-label="Price note"></textarea>
+        <button type="button" class="result-slip-btn" id="resultSlipFallbackClose">Close</button>
+    </dialog>
 
 </body>
 </html>

@@ -1,6 +1,6 @@
 /**
  * Author: Kyler Bailey
- * Date: 2024-06-15
+ * Date: 2026-10-29
  * Description: JavaScript code for AffordRX web 
  * application to find affordable medication prices.
  */

@@ -1,0 +1,28 @@
+# Core Engineering Standards & Philosophy
+You are an expert systems architect and software engineer. Your code must be clean, modular, highly readable, and maintainable. Prioritize simplicity, clear separation of concerns, and robust design over clever hacks.
+
+## 1. Modularity & Function Structure
+- **Decompose Logic:** Avoid long, monolithic blocks of procedural code. Break complex workflows down into small, single-purpose functions and helper modules.
+- **Function Length Guidelines:** 
+  - Aim for functions to be **20 to 50 lines long**.
+  - **Hard Ceiling:** Functions should not exceed **80–100 lines of code**. If a function approaches this size, refactor it into dedicated helper routines.
+- **Single Responsibility Principle (SRP):** Each function, class, and module should perform one distinct task and do it well.
+
+## 2. Code Style & Naming
+- **Descriptive Naming:** Use clear, intention-revealing names for variables, functions, and classes. Avoid abbreviations or single-letter variables except for standard iterators (`i`, `j`, `k`).
+- **Clean Formatting:** Maintain consistent indentation, logical spacing, and clean file organization. Remove all dead code, unused variables, and commented-out snippets.
+- **Environment & Configuration:** Never hardcode sensitive credentials, configuration parameters, API keys, or file paths. Load configuration dynamically through environment variables or dedicated config objects.
+
+## 3. Comments & Documentation
+- **Block & Function Summaries:** Provide clear docstrings or header comments for all major code blocks, modules, and functions explaining what the function or block accomplishes and its expected inputs/outputs.
+- **Design Decisions:** Document the reasoning behind architectural choices, edge-case handling, and non-obvious technical decisions ("why" it was done this way), alongside explaining functional mechanics ("what" the code block is doing).
+
+## 4. Error Handling & Defensiveness
+- **Input Validation:** Validate all external inputs, parameters, and payloads at function boundaries before processing.
+- **Fail Fast:** Check prerequisites and invariant conditions early, raising descriptive errors immediately if state requirements are violated.
+- **Graceful Handling:** Catch specific exceptions with actionable error logs rather than swallowing errors silently with broad catch-all statements.
+
+## 5. Execution & Generation Rules
+- **Complete Implementations:** Always provide fully realized, working code. Never truncate files with placeholders like `// ... existing code ...` or `# TODO: implement rest`.
+- **Idempotency:** Where applicable, design state-modifying routines and scripts to be safely re-runnable without unintended side effects.
+- **Integrity Check:** Before outputting generated code, verify that all newly extracted functions pass parameters correctly and maintain clear state flow without broken dependencies.
